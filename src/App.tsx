@@ -1,7 +1,7 @@
 export default function App() {
 	return (
-		<main className="flex flex-col items-center justify-center h-screen">
-			<h1 className="font-semibold text-4xl">CTF</h1>
+		<main className="flex h-screen flex-col items-center justify-center">
+			<h1 className="text-4xl font-semibold">CTF</h1>
 		</main>
 	);
 }
