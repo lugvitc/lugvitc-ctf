@@ -23,4 +23,9 @@ module.exports = {
 			{ allowConstantExport: true },
 		],
 	},
+	settings: {
+		react: {
+			version: "detect",
+		},
+	},
 };
