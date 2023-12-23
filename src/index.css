@@ -1,7 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-900 text-neutral-100;
+	@apply primary-background text-neutral-100;
+}
+
+@layer utilities {
+	.primary-gradient {
+		background: linear-gradient(20deg, rgb(0, 5, 8) 0%, rgb(25, 28, 30) 100%);
+	}
+	.primary-background {
+		background: linear-gradient(
+			69deg,
+			rgba(5, 8, 11, 1) 0%,
+			rgb(0, 33, 51) 100%
+		);
+	}
 }
