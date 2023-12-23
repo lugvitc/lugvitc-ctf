@@ -16,7 +16,7 @@ const Navbar = () => {
     const isAuthenticated = false; // TODO: Replace with actual auth state
 
     return (
-        <nav className="max-h-[140px] sticky flex justify-between items-center z-50 w-full p-6 shadow-light-300 dark:shadow-none sm:px-12">
+        <nav className="max-h-[140px] fixed flex justify-between items-center z-50 w-full p-6 shadow-light-300 dark:shadow-none sm:px-12">
             <div className="flex gap-4 items-center justify-center">
                 <img
                     src="src/assets/images/club-logo.png"
@@ -55,13 +55,13 @@ const Navbar = () => {
                     {!isAuthenticated && (
                         <>
                             <NavLink to="/log-in">
-                                <button className='text-[15px] font-bold leading-[140%] border rounded-xl w-full px-4 py-2 shadow-none'>
-                                    <span className='text-white'>Log In</span>
+                                <button className='text-[15px] font-bold leading-[140%] hover:text-[#78CBFF] hover:border-[#78CBFF] border rounded-xl w-full px-4 py-2 shadow-none'>
+                                    Log In
                                 </button>
                             </NavLink>
-                            <NavLink to="/sign-in">
-                                <button className='text-[15px] font-bold leading-[140%] border w-full rounded-xl px-4 py-2 shadow-none'>
-                                    <span className='text-white'>Sign In</span>
+                            <NavLink to="/sign-up">
+                                <button className='text-[15px] font-bold leading-[140%] text-[#78CBFF] border-[#78CBFF] hover:text-white hover:border-white border w-full rounded-xl px-4 py-2 shadow-none'>
+                                    Sign Up
                                 </button>
                             </NavLink>
                         </>

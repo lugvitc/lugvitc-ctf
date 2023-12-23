@@ -46,13 +46,13 @@ const LeftSideBar = () => {
 
                 <div className="flex flex-col gap-6">
                     <NavLink to="/log-in">
-                        <button className='text-[15px] font-bold leading-[140%] primary-gradient min-h-[41px] w-full rounded-xl px-4 py-3 shadow-none'>
-                            <span className='text-white'>Log In</span>
+                        <button className='text-[15px] font-bold leading-[140%] hover:text-[#78CBFF] hover:border-[#78CBFF] border rounded-xl w-full px-4 py-2 shadow-none'>
+                            Log In
                         </button>
                     </NavLink>
-                    <NavLink to="/sign-in">
-                        <button className='text-[15px] font-bold leading-[140%] border min-h-[41px] w-full rounded-xl px-4 py-3 shadow-none'>
-                            <span className='text-white'>Sign In</span>
+                    <NavLink to="/sign-up">
+                        <button className='text-[15px] font-bold leading-[140%] text-[#78CBFF] border-[#78CBFF] hover:text-white hover:border-white border w-full rounded-xl px-4 py-2 shadow-none'>
+                            Sign Up
                         </button>
                     </NavLink>
 
