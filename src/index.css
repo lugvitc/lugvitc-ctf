@@ -20,4 +20,22 @@ body {
 			rgb(0, 33, 51) 100%
 		);
 	}
+	.base-bold {
+		@apply text-[15px] font-bold leading-[140%];
+	}
+	.paragraph-bold {
+		@apply text-[18px] font-bold leading-[140%];
+	}
+	.base-semibold {
+		@apply text-[18px] font-semibold leading-[25.2px];
+	}
+	.hover-login {
+		@apply hover:border-[#78CBFF] hover:text-[#78CBFF];
+	}
+	.hover-signup {
+		@apply border-[#78CBFF] text-[#78CBFF] hover:border-white hover:text-white;
+	}
+	.flex-center {
+		@apply flex items-center justify-center;
+	}
 }
