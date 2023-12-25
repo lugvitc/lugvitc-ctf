@@ -16,7 +16,7 @@ const Navbar = () => {
 
 	return (
 		<nav className="shadow-light-300 fixed z-50 flex max-h-[140px] w-full items-center justify-between p-6 dark:shadow-none sm:px-12">
-			<div className="flex items-center justify-center gap-4">
+			<div className="flex-center gap-4">
 				<img
 					src="src/assets/images/club-logo.png"
 					alt="logo"
@@ -26,20 +26,19 @@ const Navbar = () => {
 					Linux Club VITC
 				</span>
 			</div>
-			<div className="flex items-center justify-center gap-6 max-lg:hidden">
-				<div className="flex items-center justify-center gap-4">
-					<div className="flex items-center justify-center gap-4">
+			<div className="flex-center gap-6 max-lg:hidden">
+				<div className="flex-center gap-4">
+					<div className="flex-center gap-4">
 						{homeNavbarLinks.map((item: HomeNavbarLinks) => {
 							const isActive = pathname === item.route;
 							return (
 								<NavLink
 									key={item.label}
 									to={item.route}
-									className={`${
-										isActive
-											? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
-											: ""
-									} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
+									className={`${isActive
+										? "primary-gradient rounded-xl base-bold"
+										: ""
+										} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
 									onClick={() => {
 										if (isMoreActive === true) {
 											setIsMoreActive(false);
@@ -57,12 +56,12 @@ const Navbar = () => {
 					{!isAuthenticated && (
 						<>
 							<NavLink to="/log-in">
-								<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF]">
+								<button className="w-full rounded-xl border px-4 py-2 base-bold shadow-none hover-login">
 									Log In
 								</button>
 							</NavLink>
 							<NavLink to="/sign-up">
-								<button className="w-full rounded-xl border border-[#78CBFF] px-4 py-2 text-[15px] font-bold leading-[140%] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+								<button className="w-full rounded-xl border hover-signup px-4 py-2 base-bold shadow-none">
 									Sign Up
 								</button>
 							</NavLink>
@@ -71,9 +70,8 @@ const Navbar = () => {
 				</div>
 				<NavLink
 					to={`/more`}
-					className={`${
-						isMoreActive ? "bg-[#002133]" : ""
-					} rounded-xl border p-2 px-3`}
+					className={`${isMoreActive ? "bg-[#002133]" : ""
+						} rounded-xl border p-2 px-3`}
 					onClick={() => {
 						setIsMoreActive(!isMoreActive);
 					}}

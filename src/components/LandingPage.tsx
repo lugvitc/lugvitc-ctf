@@ -5,7 +5,7 @@ const isAuthenticated = false; // TODO: replace with actual auth
 const LandingPage = () => {
 	return (
 		<>
-			<div className="mx-24 flex h-screen flex-row items-center justify-center">
+			<div className="mx-24 h-screen flex-row flex-center">
 				<div className="flex flex-col justify-start max-xl:justify-center">
 					<div className="flex flex-col justify-start">
 						<h1 className="font-source-code-pro text-[100px] font-bold leading-[140%] max-xl:text-[80px]">
@@ -27,7 +27,7 @@ const LandingPage = () => {
 						{!isAuthenticated && (
 							<>
 								<NavLink to="/log-in">
-									<button className="w-full rounded-xl border px-4 py-2 text-[24px] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF] hover:transition-all">
+									<button className="w-full rounded-xl border px-4 py-2 text-[24px] shadow-none hover-login hover:transition-all">
 										Log In
 									</button>
 								</NavLink>
@@ -35,7 +35,7 @@ const LandingPage = () => {
 									-or-
 								</span>
 								<NavLink to="/sign-up">
-									<button className="w-full rounded-xl border border-[#78CBFF]  px-4 py-2 text-[24px] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+									<button className="w-full rounded-xl border hover-signup px-4 py-2 text-[24px] shadow-none">
 										Sign Up
 									</button>
 								</NavLink>
