@@ -20,11 +20,10 @@ const LeftSideBar = () => {
 						<NavLink
 							key={link.label}
 							to={link.route}
-							className={`${
-								isActive
+							className={`${isActive
 									? "primary-gradient text-light-900 rounded-lg"
 									: "text-dark300_light900"
-							}  flex justify-start gap-4 rounded-xl bg-transparent p-4`}
+								}  flex justify-start gap-4 rounded-xl bg-transparent p-4`}
 						>
 							<img
 								src={link.img}
@@ -34,11 +33,10 @@ const LeftSideBar = () => {
 								className={`${isActive ? "" : "invert-colors"}`}
 							/>
 							<p
-								className={`${
-									isActive
+								className={`${isActive
 										? "text-[15px] font-bold leading-[140%]"
 										: "text-[18px] font-medium leading-[25.2px]"
-								}`}
+									}`}
 							>
 								{link.label}
 							</p>
@@ -51,12 +49,12 @@ const LeftSideBar = () => {
 			{isAuthenticated === false && (
 				<div className="flex flex-col gap-6">
 					<NavLink to="/log-in">
-						<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF]">
+						<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-sky-blue hover:text-sky-blue">
 							Log In
 						</button>
 					</NavLink>
 					<NavLink to="/sign-up">
-						<button className="w-full rounded-xl border border-[#78CBFF] px-4 py-2 text-[15px] font-bold leading-[140%] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+						<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
 							Sign Up
 						</button>
 					</NavLink>

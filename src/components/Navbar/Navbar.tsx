@@ -35,11 +35,10 @@ const Navbar = () => {
 								<NavLink
 									key={item.label}
 									to={item.route}
-									className={`${
-										isActive
-											? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
-											: ""
-									} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
+									className={`${isActive
+										? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
+										: ""
+										} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
 									onClick={() => {
 										if (isMoreActive === true) {
 											setIsMoreActive(false);
@@ -57,12 +56,12 @@ const Navbar = () => {
 					{!isAuthenticated && (
 						<>
 							<NavLink to="/log-in">
-								<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF]">
+								<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-sky-blue hover:text-sky-blue">
 									Log In
 								</button>
 							</NavLink>
 							<NavLink to="/sign-up">
-								<button className="w-full rounded-xl border border-[#78CBFF] px-4 py-2 text-[15px] font-bold leading-[140%] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+								<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
 									Sign Up
 								</button>
 							</NavLink>
@@ -71,9 +70,8 @@ const Navbar = () => {
 				</div>
 				<NavLink
 					to={`/more`}
-					className={`${
-						isMoreActive ? "bg-[#002133]" : ""
-					} rounded-xl border p-2 px-3`}
+					className={`${isMoreActive ? "bg-midnight-blue" : ""
+						} rounded-xl border p-2 px-3`}
 					onClick={() => {
 						setIsMoreActive(!isMoreActive);
 					}}

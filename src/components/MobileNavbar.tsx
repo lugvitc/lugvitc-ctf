@@ -18,9 +18,8 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 
 	return (
 		<div
-			className={` z-sheet fixed left-0 top-0 hidden h-screen w-9/12 flex-col overflow-auto bg-black px-6 shadow-xl transition-transform duration-300 ease-in-out max-sm:flex ${
-				isOpen ? "translate-x-0 transform" : "-translate-x-full"
-			}`}
+			className={` z-sheet fixed left-0 top-0 hidden h-screen w-9/12 flex-col overflow-auto bg-black px-6 shadow-xl transition-transform duration-300 ease-in-out max-sm:flex ${isOpen ? "translate-x-0 transform" : "-translate-x-full"
+				}`}
 		>
 			<div className="mt-6 flex items-center justify-start gap-4 px-6">
 				<img
@@ -37,11 +36,10 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 						<NavLink
 							key={link.label}
 							to={link.route}
-							className={`${
-								isActive
+							className={`${isActive
 									? "primary-gradient text-light-900 rounded-lg"
 									: "text-dark300_light900"
-							}  flex w-full justify-start gap-4 rounded-xl bg-transparent p-4`}
+								}  flex w-full justify-start gap-4 rounded-xl bg-transparent p-4`}
 							onClick={() => {
 								setIsOpen(!isOpen);
 							}}
@@ -54,11 +52,10 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 								className={`${isActive ? "" : "invert-colors"}`}
 							/>
 							<p
-								className={`${
-									isActive
+								className={`${isActive
 										? "text-[18px] font-bold leading-[140%]"
 										: "text-[18px] font-medium leading-[25.2px]"
-								}`}
+									}`}
 							>
 								{link.label}
 							</p>
@@ -71,12 +68,12 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 			{isAuthenticated === false && (
 				<div className="mb-6 flex flex-col gap-6">
 					<NavLink to="/log-in">
-						<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF]">
+						<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-sky-blue hover:text-sky-blue">
 							Log In
 						</button>
 					</NavLink>
 					<NavLink to="/sign-up">
-						<button className="w-full rounded-xl border border-[#78CBFF] px-4 py-2 text-[15px] font-bold leading-[140%] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+						<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
 							Sign Up
 						</button>
 					</NavLink>

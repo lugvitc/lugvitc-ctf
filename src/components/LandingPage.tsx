@@ -27,7 +27,7 @@ const LandingPage = () => {
 						{!isAuthenticated && (
 							<>
 								<NavLink to="/log-in">
-									<button className="w-full rounded-xl border px-4 py-2 text-[24px] shadow-none hover:border-[#78CBFF] hover:text-[#78CBFF] hover:transition-all">
+									<button className="w-full rounded-xl border px-4 py-2 text-[24px] shadow-none hover:border-sky-blue hover:text-sky-blue hover:transition-all">
 										Log In
 									</button>
 								</NavLink>
@@ -35,7 +35,7 @@ const LandingPage = () => {
 									-or-
 								</span>
 								<NavLink to="/sign-up">
-									<button className="w-full rounded-xl border border-[#78CBFF]  px-4 py-2 text-[24px] text-[#78CBFF] shadow-none hover:border-white hover:text-white">
+									<button className="w-full rounded-xl border border-sky-blue  px-4 py-2 text-[24px] text-sky-blue shadow-none hover:border-white hover:text-white">
 										Sign Up
 									</button>
 								</NavLink>
