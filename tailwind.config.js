@@ -8,6 +8,10 @@ module.exports = {
 	],
 
 	theme: {
+		colors: {
+			'sky-blue': '#78CBFF',
+			'midnight-blue': '#002133',
+		},
 		extend: {
 			fontFamily: {
 				'source-code-pro': ['Source Code Pro', 'monospace'],
