@@ -22,7 +22,7 @@ const Navbar = () => {
 					alt="logo"
 					className="h-[52px] w-[52px]"
 				/>
-				<span className="font-DM-Mono text-white max-lg:hidden">
+				<span className="text-white font-DM-Mono max-lg:hidden">
 					Linux Club VITC
 				</span>
 			</div>
@@ -35,10 +35,11 @@ const Navbar = () => {
 								<NavLink
 									key={item.label}
 									to={item.route}
-									className={`${isActive
-										? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
-										: ""
-										} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
+									className={`${
+										isActive
+											? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
+											: ""
+									} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
 									onClick={() => {
 										if (isMoreActive === true) {
 											setIsMoreActive(false);
@@ -61,7 +62,7 @@ const Navbar = () => {
 								</button>
 							</NavLink>
 							<NavLink to="/sign-up">
-								<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
+								<button className="hover:border-white hover:text-white w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none">
 									Sign Up
 								</button>
 							</NavLink>
@@ -70,8 +71,9 @@ const Navbar = () => {
 				</div>
 				<NavLink
 					to={`/more`}
-					className={`${isMoreActive ? "bg-midnight-blue" : ""
-						} rounded-xl border p-2 px-3`}
+					className={`${
+						isMoreActive ? "bg-midnight-blue" : ""
+					} rounded-xl border p-2 px-3`}
 					onClick={() => {
 						setIsMoreActive(!isMoreActive);
 					}}

@@ -35,7 +35,7 @@ const LandingPage = () => {
 									-or-
 								</span>
 								<NavLink to="/sign-up">
-									<button className="w-full rounded-xl border border-sky-blue  px-4 py-2 text-[24px] text-sky-blue shadow-none hover:border-white hover:text-white">
+									<button className="hover:border-white hover:text-white w-full rounded-xl  border border-sky-blue px-4 py-2 text-[24px] text-sky-blue shadow-none">
 										Sign Up
 									</button>
 								</NavLink>

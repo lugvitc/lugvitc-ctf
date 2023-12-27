@@ -18,8 +18,9 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 
 	return (
 		<div
-			className={` z-sheet fixed left-0 top-0 hidden h-screen w-9/12 flex-col overflow-auto bg-black px-6 shadow-xl transition-transform duration-300 ease-in-out max-sm:flex ${isOpen ? "translate-x-0 transform" : "-translate-x-full"
-				}`}
+			className={` z-sheet bg-black fixed left-0 top-0 hidden h-screen w-9/12 flex-col overflow-auto px-6 shadow-xl transition-transform duration-300 ease-in-out max-sm:flex ${
+				isOpen ? "translate-x-0 transform" : "-translate-x-full"
+			}`}
 		>
 			<div className="mt-6 flex items-center justify-start gap-4 px-6">
 				<img
@@ -27,7 +28,7 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 					alt="logo"
 					className="h-[52px] w-[52px]"
 				/>
-				<span className="font-DM-Mono text-white">Linux Club VITC</span>
+				<span className="text-white font-DM-Mono">Linux Club VITC</span>
 			</div>
 			<div className="mt-24 flex flex-1 flex-col justify-start gap-6  ">
 				{leftSidebarLinks.map((link) => {
@@ -36,10 +37,11 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 						<NavLink
 							key={link.label}
 							to={link.route}
-							className={`${isActive
+							className={`${
+								isActive
 									? "primary-gradient text-light-900 rounded-lg"
 									: "text-dark300_light900"
-								}  flex w-full justify-start gap-4 rounded-xl bg-transparent p-4`}
+							}  bg-transparent flex w-full justify-start gap-4 rounded-xl p-4`}
 							onClick={() => {
 								setIsOpen(!isOpen);
 							}}
@@ -52,10 +54,11 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 								className={`${isActive ? "" : "invert-colors"}`}
 							/>
 							<p
-								className={`${isActive
+								className={`${
+									isActive
 										? "text-[18px] font-bold leading-[140%]"
 										: "text-[18px] font-medium leading-[25.2px]"
-									}`}
+								}`}
 							>
 								{link.label}
 							</p>
@@ -73,7 +76,7 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 						</button>
 					</NavLink>
 					<NavLink to="/sign-up">
-						<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
+						<button className="hover:border-white hover:text-white w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none">
 							Sign Up
 						</button>
 					</NavLink>
