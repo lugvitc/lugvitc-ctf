@@ -22,7 +22,7 @@ const Navbar = () => {
 					alt="logo"
 					className="h-[52px] w-[52px]"
 				/>
-				<span className="text-white font-DM-Mono max-lg:hidden">
+				<span className="font-DM-Mono text-white max-lg:hidden">
 					Linux Club VITC
 				</span>
 			</div>
@@ -62,7 +62,7 @@ const Navbar = () => {
 								</button>
 							</NavLink>
 							<NavLink to="/sign-up">
-								<button className="hover:border-white hover:text-white w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none">
+								<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
 									Sign Up
 								</button>
 							</NavLink>

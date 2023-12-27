@@ -12,7 +12,7 @@ const LeftSideBar = () => {
 	const pathname = location.pathname;
 
 	return (
-		<div className="bg-black fixed left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto p-6 pt-36 max-lg:flex max-lg:w-[200px] max-sm:hidden">
+		<div className="fixed left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto bg-black p-6 pt-36 max-lg:flex max-lg:w-[200px] max-sm:hidden">
 			<div className="flex flex-1 flex-col gap-6">
 				{leftSidebarLinks.map((link) => {
 					const isActive = pathname === link.route;
@@ -24,7 +24,7 @@ const LeftSideBar = () => {
 								isActive
 									? "primary-gradient text-light-900 rounded-lg"
 									: "text-dark300_light900"
-							}  bg-transparent flex justify-start gap-4 rounded-xl p-4`}
+							}  flex justify-start gap-4 rounded-xl bg-transparent p-4`}
 						>
 							<img
 								src={link.img}
@@ -56,7 +56,7 @@ const LeftSideBar = () => {
 						</button>
 					</NavLink>
 					<NavLink to="/sign-up">
-						<button className="hover:border-white hover:text-white w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none">
+						<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
 							Sign Up
 						</button>
 					</NavLink>
