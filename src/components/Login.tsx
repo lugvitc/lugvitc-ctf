@@ -8,10 +8,7 @@ export default function Login() {
 
 				<form action="#" method="POST">
 					<div className="mb-4">
-						<label
-							htmlFor="username"
-							className="mb-2 block text-sm font-medium text-black"
-						>
+						<label htmlFor="username"className="mb-2 block text-sm font-medium text-black">
 							Team Name
 						</label>
 						<input
