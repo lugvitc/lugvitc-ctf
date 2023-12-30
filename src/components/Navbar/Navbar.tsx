@@ -15,7 +15,7 @@ const Navbar = () => {
 	const isAuthenticated = false; // TODO: Replace with actual auth state
 
 	return (
-		<nav className="shadow-light-300 fixed z-50 flex max-h-[140px] w-full items-center justify-between p-6 dark:shadow-none sm:px-12">
+		<nav className="shadow-light-300 fixed z-50 flex max-h-[140px] w-full items-center justify-between p-6 sm:px-12 dark:shadow-none">
 			<div className="flex items-center justify-center gap-4">
 				<img
 					src="src/assets/images/club-logo.png"
