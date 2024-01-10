@@ -9,13 +9,40 @@ const LoginPage = () => {
 
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
+	const [msg, setMsg] = useState({ msg: "", color: "" });
+	const [showPopUp, setShowPopUp] = useState(false);
+	const [submitted, setSubmitted] = useState(false);
+
+	const msgCode = (status: number, msg_code: string) => {
+		if (status >= 200 && status < 400) {
+			setMsg({ msg: msg_code, color: "green" });
+		} else if (status >= 400 && status < 500) {
+			setMsg({ msg: msg_code, color: "red" });
+		}
+		console.log(msg);
+	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("Name:", name);
-		console.log("Pass:", password);
+		setSubmitted(true);
+		// await axios.post("url/signup", {
+		// 	'name': name,
+		// 	'password': password,
+		// }).then((res)=>{
+		// 	msgCode(res.status, res.data.msg_code)
+		// })
+		setTimeout(() => {
+			console.log("hi");
+			setShowPopUp(true);
+			setSubmitted(false);
+		}, 5000);
+		msgCode(200, "Login Successful");
 		setName("");
 		setPassword("");
+	};
+
+	const handlePopup = () => {
+		setShowPopUp(false);
 	};
 	return (
 		<>
@@ -54,6 +81,7 @@ const LoginPage = () => {
 									type="text"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
+									required
 								/>
 							</label>
 							<label className="w-full">
@@ -63,24 +91,52 @@ const LoginPage = () => {
 									type="password"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
+									required
 								/>
 							</label>
-							<NavLink to="/" className="w-full">
-								<button
-									type="submit"
-									className="align-center w-full rounded-xl bg-midnight-blue p-1 font-normal md:p-2"
-								>
-									Sign In
-								</button>
-							</NavLink>
+							<div className="flex h-12 w-full justify-center">
+								{submitted ? (
+									<div className="flex flex-row gap-2">
+										<div className="h-4 w-4 animate-bounce rounded-full bg-blue-700 [animation-delay:.7s]"></div>
+										<div className="h-4 w-4 animate-bounce rounded-full bg-blue-700 [animation-delay:.3s]"></div>
+										<div className="h-4 w-4 animate-bounce rounded-full bg-blue-700 [animation-delay:.7s]"></div>
+									</div>
+								) : (
+									<button
+										type="submit"
+										className="align-center w-full rounded-xl bg-midnight-blue p-1 font-normal md:p-2"
+									>
+										Sign In
+									</button>
+								)}
+							</div>
 						</form>
 					</div>
 				</div>
 				<div className="text-xs md:text-lg">
-					New User? Click{" "}
+					New User?
 					<NavLink to="/sign-up" className="text-blue-500">
-						Here
+						Sign Up
 					</NavLink>
+				</div>
+				<div
+					className={`absolute top-0 z-10 flex h-32 w-52 origin-top flex-col items-center justify-center gap-1 rounded-3xl bg-white p-2 font-source-code-pro duration-200 md:w-96 md:p-4 ${
+						!showPopUp
+							? "scale-y-0"
+							: msg["color"] === "green"
+								? "scale-y-150 border-8 border-green-600 text-green-600"
+								: "scale-y-150 border-8 border-red-600 text-red-600"
+					}`}
+				>
+					<span className="flex basis-3/4 items-center text-base font-semibold md:text-xl">
+						{msg["msg"]}
+					</span>
+					<button
+						onClick={handlePopup}
+						className="duration-400 relative flex items-center self-end overflow-hidden rounded-[50px] bg-black px-8 py-1 text-xs font-bold uppercase text-white shadow-md transition-all ease-in-out before:absolute before:-left-full before:top-0 before:z-[-1] before:h-full before:w-full before:rounded-[50px] before:bg-gradient-to-r before:from-blue-500 before:to-blue-300 before:transition-all before:duration-500 before:ease-in-out hover:scale-105 hover:text-white hover:shadow-lg hover:before:left-0 active:scale-90 md:text-sm"
+					>
+						CLOSE
+					</button>
 				</div>
 			</div>
 		</>
