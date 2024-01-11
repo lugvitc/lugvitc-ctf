@@ -32,7 +32,7 @@ export default function PreEvent() {
 			{questions.map((question, i) => (
 				<div key={i} className="flex flex-col h-screen items-center justify-center">
 					<div className="h-5/6 w-5/6">
-						<Question question={question} />
+						<Question question={question} index={i}/>
 					</div>
 				</div>
 			))}
