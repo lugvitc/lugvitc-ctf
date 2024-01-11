@@ -1,37 +1,21 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
 export interface QuestionData {
 	title: string;
 	description: string;
 	points: number;
 }
 
-export default function Question({ date }: { date: number }) {
-	// set default value as null for production
-	const [question, setQuestion] = useState<QuestionData | null>({
-		title: "Reuben",
-		description: "in the memory of reuben - the pig",
-		points: 500,
-	});
+export interface QuestionProps {
+	question: QuestionData;
+}
 
-	useEffect(() => {
-		axios
-			.get(`/ctf/question/${date}`)
-			.then((res: { data: QuestionData }) => {
-				setQuestion(res.data);
-			})
-			.catch(() => {});
-	});
-
-	if (!question) return <>Loading...</>;
-
+export default function Question({ question }: QuestionProps) {
 	return (
 		<div className="top-0 m-2 flex h-full w-full flex-col rounded-xl border border-gray-700 bg-slate-900 shadow-sm shadow-slate-700/[.7]">
-			<div className="p-4">
-				<h3 className="text-lg font-bold text-white">{question.title}</h3>
+			<div className="p-14">
+				<h3 className="text-2xl text-center font-bold text-white">{question.title}</h3>
+				<h3 className="mt-10 text-xl font-bold text-gray-300">Description</h3>
 				<p className="mt-2 text-gray-300">{question.description}</p>
-				<p className="mt-2 text-gray-500">{question.points}</p>
+				<p className="mt-4 text-gray-500">Points: {question.points}</p>
 			</div>
 		</div>
 	);
