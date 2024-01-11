@@ -31,11 +31,14 @@ const LoginPage = () => {
 		// }).then((res)=>{
 		// 	msgCode(res.status, res.data.msg_code)
 		// })
+
 		setTimeout(() => {
 			console.log("hi");
 			setShowPopUp(true);
 			setSubmitted(false);
 		}, 5000);
+
+		// For testing status codes and msg codes from backend
 		msgCode(200, "Login Successful");
 		setName("");
 		setPassword("");
@@ -120,7 +123,7 @@ const LoginPage = () => {
 					</NavLink>
 				</div>
 				<div
-					className={`absolute top-0 z-10 flex h-32 w-52 origin-top flex-col items-center justify-center gap-1 rounded-3xl bg-white p-2 font-source-code-pro duration-200 md:w-96 md:p-4 ${
+					className={`absolute top-0 z-10 flex h-32 w-52 origin-top flex-col items-center justify-center gap-1 rounded-3xl bg-dark-grayish-blue p-2 font-source-code-pro duration-200 md:w-96 md:p-4 ${
 						!showPopUp
 							? "scale-y-0"
 							: msg["color"] === "green"
