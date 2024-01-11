@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+// import App from "./App.tsx";
 import {
 	createBrowserRouter,
 	createRoutesFromElements,
@@ -10,6 +10,10 @@ import {
 
 import "./index.css";
 import Rules from "./Rules.tsx";
+// import LoginPage from "./components/LoginPage.tsx";
+import SignUp from "./components/SignUp.tsx";
+import LoginPage from "./components/LoginPage.tsx";
+// import LeaderBoard from "./components/LeaderBoard.tsx";
 
 // Read https://reactrouter.com/en/main/route/route
 // loaders and actions might be useful for you
@@ -17,11 +21,13 @@ import Rules from "./Rules.tsx";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
-			<Route path="/" element={<App />} />
+			<Route path="/" element={<SignUp />} />
 			{/* For example */}
 			{/* <Route path="/leaderboard/" element="33" /> */}
 			{/* <Route path="/login" action={TeamLogin} element={<Login />}/> */}
 			<Route path="/rules" element={<Rules />} />
+			<Route path="/log-in" element={<LoginPage />} />
+			<Route path="/sign-up" element={<SignUp />} />
 		</Route>,
 	),
 );
