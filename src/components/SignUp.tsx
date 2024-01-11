@@ -39,8 +39,8 @@ const SignUp = () => {
 			console.log("hi");
 			setShowPopUp(true);
 			setSubmitted(false);
-		}, 10000);
-		msgCode(200, "Team Created");
+		}, 1000);
+		msgCode(400, "Team Created");
 		setName("");
 		setPassword("");
 		setMembers(() => {
@@ -164,7 +164,7 @@ const SignUp = () => {
 					</NavLink>
 				</div>
 				<div
-					className={`absolute top-0 z-10 flex h-32 w-52 origin-top flex-col items-center justify-center gap-1 rounded-3xl bg-white p-2 font-source-code-pro duration-200 md:w-96 md:p-2 ${
+					className={`absolute top-0 z-10 flex h-32 w-52 origin-top flex-col items-center justify-center gap-1 rounded-3xl bg-dark-grayish-blue p-2 font-source-code-pro duration-200 md:w-96 md:p-2 ${
 						!showPopUp
 							? "scale-y-0"
 							: msg["color"] === "green"
