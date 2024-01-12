@@ -1,18 +1,41 @@
+import axios from "axios";
 import { HintModal } from "./Hint";
-
+import { useState } from "react";
 export interface Challenge {
 	id: number;
 	title: string;
 	description: string;
 	points: number;
-	hints: string[];
+
 }
 
 interface CardProps {
 	challenge: Challenge;
 }
 
+interface postResponse{
+	status?: boolean;
+	msg_codes?: string;
+}
+
+
 export function Card({ challenge }: CardProps) {
+	const [status,setStatus] = useState<boolean>(false);
+	const [errormsg, setErrormsg] = useState<string>("");
+	const jwt = localStorage.getItem("jwt_token");
+	const [flag, setFlag] = useState<string>("");
+	const hints: number[] = [1, 2, 3];
+	function handleSubmission() {
+		axios.post(`http://localhost:5000/api/ctf/${challenge.id}/flag`, {
+			flag: flag,
+		},{headers: {
+			Authorization: `Bearer ${jwt}`,
+		}}).then((res) => {
+			setStatus(res.data.status as postResponse["status"]);
+		}).catch((error) => {
+			setErrormsg(res.data.msg_codes as postResponse["msg_codes"]);		}
+		);
+	}
 	return (
 		<div className="m-2 flex w-full flex-col justify-between rounded-xl border border-gray-600 bg-black p-6 shadow-md">
 			<div>
@@ -28,8 +51,8 @@ export function Card({ challenge }: CardProps) {
 					</div>
 
 					<div className="flex space-x-2">
-						{challenge.hints.map((hint, index) => (
-							<HintModal key={index} hintNumber={index + 1} hint={hint} />
+						{hints.map((hint) => (
+							<HintModal key={hint} hintNumber={hint} id={challenge.id} />
 						))}
 					</div>
 				</div>
@@ -38,10 +61,14 @@ export function Card({ challenge }: CardProps) {
 					<input
 						type="text"
 						placeholder="flag{}"
+						onChange={(e) => setFlag(e.target.value)}
 						className="block w-full rounded-lg border border-gray-600 bg-dark-grayish-blue p-2.5 text-sm text-white placeholder-gray-500"
 					/>
 				</div>
-				<button className="mt-4 h-12 w-full rounded-xl bg-midnight-blue text-lg font-bold text-white hover:bg-gray-600">
+				<button
+					className="mt-4 h-12 w-full rounded-xl bg-midnight-blue text-lg font-bold text-white hover:bg-gray-600"
+					onClick={handleSubmission}
+				>
 					Submit
 				</button>
 			</div>

@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Challenge } from "./components/challenges/Card";
+import axios from "axios";
+interface QuestionProp {
+	id: number;
+	name: string;
+	description: string;
+	points: number;
+}
 
 export function CtfPage() {
 	const [challenges, setChallenges] = useState<Challenge[]>([]);
+	const [question, setQuestion] = useState<QuestionProp[]>([])
 
 	// seed some challenges
 	if (challenges.length === 0) {
@@ -12,60 +20,62 @@ export function CtfPage() {
 				title: "Challenge 1",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 2,
 				title: "Challenge 2",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
+
 			},
 			{
 				id: 3,
 				title: "Challenge 3",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 4,
 				title: "Challenge 4",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 5,
 				title: "Challenge 5",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 6,
 				title: "Challenge 6",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 7,
 				title: "Challenge 7",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 8,
 				title: "Challenge 8",
 				description: "This is a description",
 				points: 100,
-				hints: ["hint 1", "hint 2"],
 			},
 		]);
 	}
 
+	useEffect(() => {
+		axios.get('http://localhost:5000/api/ctf/list')
+			.then((res) => {
+				setQuestion(res.data as QuestionProp[]);
+			})
+			.catch((error) => {
+				console.log(error)
+			});
+	}, []);
 	// TODO: Fetch challenges from the server
 
 	return (
