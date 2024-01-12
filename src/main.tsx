@@ -14,6 +14,7 @@ import PreEvent from "./PreEvent.tsx";
 // import LoginPage from "./components/LoginPage.tsx";
 import SignUp from "./components/SignUp.tsx";
 import LoginPage from "./components/LoginPage.tsx";
+import { CtfPage } from "./Ctf.tsx";
 // import LeaderBoard from "./components/LeaderBoard.tsx";
 
 // Read https://reactrouter.com/en/main/route/route
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
 			<Route path="/preevent" element={<PreEvent />} />
 			<Route path="/log-in" element={<LoginPage />} />
 			<Route path="/sign-up" element={<SignUp />} />
+			<Route path="/ctf" element={<CtfPage />} />
 		</Route>,
 	),
 );
