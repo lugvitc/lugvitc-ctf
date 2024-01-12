@@ -1,84 +1,79 @@
 import { useState } from "react";
-import { Card } from "./components/challenges/Card";
+import { Card, Challenge } from "./components/challenges/Card";
 
 export function CtfPage() {
-	const [challenges, setChallenges] = useState<
-		{
-			id: number;
-			title: string;
-			description: string;
-			points: number;
-		}[]
-	>();
+	const [challenges, setChallenges] = useState<Challenge[]>([]);
 
 	// seed some challenges
-	if (!challenges) {
+	if (challenges.length === 0) {
 		setChallenges([
 			{
 				id: 1,
 				title: "Challenge 1",
-				description: "This is the first challenge",
+				description: "This is a description",
 				points: 100,
+				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 2,
 				title: "Challenge 2",
-				description: "This is the second challenge",
-				points: 200,
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
 			},
 			{
 				id: 3,
 				title: "Challenge 3",
-				description: "This is the third challenge",
-				points: 300,
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
 			},
-
 			{
 				id: 4,
 				title: "Challenge 4",
-				description: "This is the fourth challenge",
-				points: 400,
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
 			},
-
 			{
 				id: 5,
 				title: "Challenge 5",
-				description: "This is the fifth challenge",
-				points: 500,
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
+			},
+			{
+				id: 6,
+				title: "Challenge 6",
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
+			},
+			{
+				id: 7,
+				title: "Challenge 7",
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
+			},
+			{
+				id: 8,
+				title: "Challenge 8",
+				description: "This is a description",
+				points: 100,
+				hints: ["hint 1", "hint 2"],
 			},
 		]);
 	}
 
 	// TODO: Fetch challenges from the server
 
-	// return (
-	// 	<main className="flex h-screen flex-col items-center justify-center">
-	// 		<h1 className="text-4xl font-semibold">CTF</h1>
-	// 		<div className="flex flex-row gap-4">
-	// 			{challenges?.map((challenge) => (
-	// 				<Card
-	// 					key={challenge.id}
-	// 					title={challenge.title}
-	// 					description={challenge.description}
-	// 					points={challenge.points}
-	// 				/>
-	// 			))}
-	// 		</div>
-	// 	</main>
-	// );
-
-	// display the ctfs in a grid with 2 columns
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center p-4 font-source-code-pro">
 			<h1 className="text-4xl font-semibold">CTF</h1>
 			<div className="grid w-full max-w-6xl grid-cols-2 gap-4">
-				{challenges?.map((challenge) => (
-					<Card
-						key={challenge.id}
-						title={challenge.title}
-						description={challenge.description}
-						points={challenge.points}
-					/>
+				{challenges.map((challenge) => (
+					<Card challenge={challenge} key={challenge.id} />
 				))}
 			</div>
 		</main>
