@@ -18,9 +18,7 @@ interface postResponse {
 }
 
 export function Card({ challenge }: CardProps) {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [status, setStatus] = useState<boolean | undefined>(false);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const jwt = localStorage.getItem("jwt_token");
 	const [flag, setFlag] = useState<string>("");
 	const hints: number[] = [1, 2, 3];

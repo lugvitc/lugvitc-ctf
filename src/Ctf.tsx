@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Card, Challenge } from "./components/challenges/Card";
 import axios from "axios";
@@ -77,7 +76,7 @@ export function CtfPage() {
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
+	}, [question]);
 	// TODO: Fetch challenges from the server
 
 	return (
