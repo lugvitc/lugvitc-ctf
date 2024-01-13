@@ -25,7 +25,6 @@ export default function App() {
 					<Route index element={<LandingPage />} />
 					<Route path="/rules" element={<Rules />} />
 					<Route path="/leaderboard" element={<Leaderboard />} />
-
 					<Route path="/play" element={<CtfPage />} />
 				</Route>
 			</Routes>
