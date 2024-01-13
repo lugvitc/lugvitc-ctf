@@ -14,10 +14,6 @@ body {
 		background: linear-gradient(20deg, rgb(0, 5, 8) 0%, rgb(25, 28, 30) 100%);
 	}
 	.primary-background {
-		background: linear-gradient(
-			69deg,
-			rgba(5, 8, 11, 1) 0%,
-			rgb(0, 33, 51) 100%
-		);
+		background: linear-gradient(117deg, #09111b 0%, #002133 66.64%);
 	}
 }

@@ -1,12 +1,20 @@
-import { NavLink, Navigate } from "react-router-dom";
-import clubLogo from "../assets/images/club-logo.png";
+import { useNavigate, NavLink, Navigate } from "react-router-dom";
+import clubLogo from "../../assets/images/club-logo.png";
+import axios from "axios";
 
 import { useState } from "react";
+import { useUserContext } from "../../context/AuthContext";
+
+interface LoginResponse {
+	msg_code: string;
+	access_token?: string;
+	token_type?: string;
+}
 
 const LoginPage = () => {
 	// DUMMY AUTHENTICATION
-	const isAuthenticated = false;
-
+	const { isAuthenticated, setIsAuthenticated } = useUserContext();
+	const navigate = useNavigate();
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
 	const [msg, setMsg] = useState({ msg: "", color: "" });
@@ -22,26 +30,49 @@ const LoginPage = () => {
 		console.log(msg);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		setSubmitted(true);
-		// await axios.post("url/signup", {
-		// 	'name': name,
-		// 	'password': password,
-		// }).then((res)=>{
-		// 	msgCode(res.status, res.data.msg_code)
-		// })
 
-		setTimeout(() => {
-			console.log("hi");
-			setShowPopUp(true);
-			setSubmitted(false);
-		}, 5000);
+		// DUMMY AUTHENTICATION
 
-		// For testing status codes and msg codes from backend
-		msgCode(200, "Login Successful");
-		setName("");
-		setPassword("");
+		// localStorage.setItem("jwt_token", "response.data.access_token");
+		// setIsAuthenticated(true);
+		// navigate("/leaderboard");
+
+		// AUTHENTICATION
+
+		axios
+			.post<LoginResponse>("http://localhost:5000/api/auth/login", {
+				name: name,
+				password: password,
+			})
+			.then((response) => {
+				if (
+					response.data.msg_code === "login_success" &&
+					response.data.access_token
+				) {
+					localStorage.setItem("jwt", response.data.access_token);
+					msgCode(response.status, response.data.msg_code);
+					setIsAuthenticated(true);
+
+					setTimeout(() => {
+						navigate("/play");
+					}, 2000);
+				} else if (
+					response.data.msg_code === "team_not_found" ||
+					response.data.msg_code === "wrong_password"
+				) {
+					msgCode(404, response.data.msg_code);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.finally(() => {
+				setName("");
+				setPassword("");
+			});
 	};
 
 	const handlePopup = () => {
@@ -75,7 +106,10 @@ const LoginPage = () => {
 					<div className="basis-3/4 md:w-96">
 						<form
 							className="flex flex-col items-center justify-center gap-2 p-6 text-base md:gap-4 md:p-10 md:text-lg"
-							onSubmit={handleSubmit}
+							onSubmit={(e) => {
+								e.preventDefault();
+								handleSubmit(e);
+							}}
 						>
 							<label className="w-full">
 								Team Name

@@ -2,7 +2,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { HomeNavbarLinks } from "../../types";
 import { homeNavbarLinks } from "../../constants";
-import MobileNavbar from "../MobileNavbar";
+import MobileNavbar from "./MobileNavbar";
+import { useUserContext } from "../../context/AuthContext";
 
 interface Location {
 	pathname: string;
@@ -12,7 +13,7 @@ const Navbar = () => {
 	const [isMoreActive, setIsMoreActive] = useState(false);
 	const location = useLocation() as Location;
 	const pathname = location.pathname;
-	const isAuthenticated = false; // TODO: Replace with actual auth state
+	const isAuthenticated = useUserContext();
 
 	return (
 		<nav className="shadow-light-300 fixed z-50 flex max-h-[140px] w-full items-center justify-between p-6 dark:shadow-none sm:px-12">
@@ -70,7 +71,7 @@ const Navbar = () => {
 					)}
 				</div>
 				<NavLink
-					to={`/more`}
+					to={`/rules`}
 					className={`${
 						isMoreActive ? "bg-midnight-blue" : ""
 					} rounded-xl border p-2 px-3`}
@@ -78,7 +79,7 @@ const Navbar = () => {
 						setIsMoreActive(!isMoreActive);
 					}}
 				>
-					MORE
+					RULES
 				</NavLink>
 			</div>
 			{isOpen ? (
