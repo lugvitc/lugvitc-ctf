@@ -36,7 +36,7 @@ export function Card({ challenge }: CardProps) {
 				},
 			)
 			.then((res: AxiosResponse<postResponse>) => {
-				setStatus(res.data.status as postResponse["status"]);
+				setStatus(res.data.status);
 				console.log(status);
 			})
 			.catch((error) => {
