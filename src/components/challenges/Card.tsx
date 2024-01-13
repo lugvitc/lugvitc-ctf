@@ -21,7 +21,6 @@ export function Card({ challenge }: CardProps) {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [status, setStatus] = useState<boolean | undefined>(false);
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [errormsg, setErrormsg] = useState<string | undefined>("");
 	const jwt = localStorage.getItem("jwt_token");
 	const [flag, setFlag] = useState<string>("");
 	const hints: number[] = [1, 2, 3];
@@ -40,6 +39,7 @@ export function Card({ challenge }: CardProps) {
 			)
 			.then((res: AxiosResponse<postResponse>) => {
 				setStatus(res.data.status as postResponse["status"]);
+				console.log(status);
 			})
 			.catch((error) => {
 				console.log(error);

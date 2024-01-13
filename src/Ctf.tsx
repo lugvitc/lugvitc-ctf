@@ -72,6 +72,7 @@ export function CtfPage() {
 			.get("http://localhost:5000/api/ctf/list")
 			.then((res) => {
 				setQuestion(res.data as QuestionProp[]);
+				console.log(question);
 			})
 			.catch((error) => {
 				console.log(error);
