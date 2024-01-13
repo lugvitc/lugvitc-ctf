@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { HintModal } from "./Hint";
 import { useState } from "react";
 export interface Challenge {
@@ -6,35 +6,44 @@ export interface Challenge {
 	title: string;
 	description: string;
 	points: number;
-
 }
 
 interface CardProps {
 	challenge: Challenge;
 }
 
-interface postResponse{
+interface postResponse {
 	status?: boolean;
 	msg_codes?: string;
 }
 
-
 export function Card({ challenge }: CardProps) {
-	const [status,setStatus] = useState<boolean>(false);
-	const [errormsg, setErrormsg] = useState<string>("");
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [status, setStatus] = useState<boolean | undefined>(false);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [errormsg, setErrormsg] = useState<string | undefined>("");
 	const jwt = localStorage.getItem("jwt_token");
 	const [flag, setFlag] = useState<string>("");
 	const hints: number[] = [1, 2, 3];
 	function handleSubmission() {
-		axios.post(`http://localhost:5000/api/ctf/${challenge.id}/flag`, {
-			flag: flag,
-		},{headers: {
-			Authorization: `Bearer ${jwt}`,
-		}}).then((res) => {
-			setStatus(res.data.status as postResponse["status"]);
-		}).catch((error) => {
-			setErrormsg(res.data.msg_codes as postResponse["msg_codes"]);		}
-		);
+		axios
+			.post(
+				`http://localhost:5000/api/ctf/${challenge.id}/flag`,
+				{
+					flag: flag,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
+				},
+			)
+			.then((res: AxiosResponse<postResponse>) => {
+				setStatus(res.data.status as postResponse["status"]);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 	return (
 		<div className="m-2 flex w-full flex-col justify-between rounded-xl border border-gray-600 bg-black p-6 shadow-md">

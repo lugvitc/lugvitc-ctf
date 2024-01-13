@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Card, Challenge } from "./components/challenges/Card";
 import axios from "axios";
@@ -10,7 +11,7 @@ interface QuestionProp {
 
 export function CtfPage() {
 	const [challenges, setChallenges] = useState<Challenge[]>([]);
-	const [question, setQuestion] = useState<QuestionProp[]>([])
+	const [question, setQuestion] = useState<QuestionProp[]>([]);
 
 	// seed some challenges
 	if (challenges.length === 0) {
@@ -26,7 +27,6 @@ export function CtfPage() {
 				title: "Challenge 2",
 				description: "This is a description",
 				points: 100,
-
 			},
 			{
 				id: 3,
@@ -68,12 +68,13 @@ export function CtfPage() {
 	}
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/ctf/list')
+		axios
+			.get("http://localhost:5000/api/ctf/list")
 			.then((res) => {
 				setQuestion(res.data as QuestionProp[]);
 			})
 			.catch((error) => {
-				console.log(error)
+				console.log(error);
 			});
 	}, []);
 	// TODO: Fetch challenges from the server
