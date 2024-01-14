@@ -14,7 +14,7 @@ type AuthContextType = {
 
 const AuthContextWrap = createContext<AuthContextType>({
 	isAuthenticated: false,
-	setIsAuthenticated: () => { },
+	setIsAuthenticated: () => {},
 });
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -25,7 +25,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		const jwt_token = localStorage.getItem("jwt_token");
 		if (jwt_token && jwt_token !== "" && jwt_token !== "[]") {
 			setIsAuthenticated(true);
-
 
 			// COMMENT OUT BELOW IF WORKING ON FRONTEND AND NO JWT AVAILABLE
 
