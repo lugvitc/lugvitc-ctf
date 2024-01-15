@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { URL_ORIGIN } from "../../constants";
 
 interface LeaderboardResponse {
 	team_name: string;
@@ -17,7 +18,7 @@ const Leaderboard = () => {
 
 	const fetchData = () => {
 		axios
-			.get<LeaderboardResponse[]>("http://localhost:5000/api/leaderboard")
+			.get<LeaderboardResponse[]>(`${URL_ORIGIN}/leaderboard`)
 			.then((response) => response.data)
 			.then((data) => setLeaderboardData(data))
 			.catch((error) => console.error("Error fetching data:", error));

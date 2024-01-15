@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import whiteObject from "../../assets/images/someWhiteObjectImage.png";
 import { useUserContext } from "../../context/AuthContext";
 
 const LandingPage = () => {
@@ -28,7 +27,7 @@ const LandingPage = () => {
 
 							{!isAuthenticated ? (
 								<>
-									<NavLink to="/log-in">
+									<NavLink to="/sign-in">
 										<button className="w-full rounded-xl border px-4 py-2 text-[24px] shadow-none hover:border-sky-blue hover:text-sky-blue hover:transition-all">
 											Log In
 										</button>
@@ -55,11 +54,6 @@ const LandingPage = () => {
 						<img src="src/assets/images/landingPageTux.png" alt="Tux" />
 					</div>
 				</div>
-				<img
-					src={whiteObject}
-					alt="whiteObject"
-					className="absolute bottom-0"
-				/>
 			</div>
 		</>
 	);
