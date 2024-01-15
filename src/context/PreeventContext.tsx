@@ -12,11 +12,11 @@ type AuthContextType = {
 	setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AuthContextWrap = createContext<AuthContextType>({
+const PreEventWrap = createContext<AuthContextType>({
 	isAuthenticated: false,
-	setIsAuthenticated: () => {},
+	setIsAuthenticated: () => { },
 });
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const PreEventProvider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
 	const navigate = useNavigate();
@@ -47,18 +47,27 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			}
 			// ----------------------------------------------------------------
 		} else {
-			// nothing
+			// If no token is present
+			const currentDate = new Date();
+			const targetDate = new Date("2024-01-29");
+
+			if (currentDate < targetDate) {
+				// For dates before January 29, 2024
+				navigate("/preevent");
+			} else {
+				// For dates on or after January 29, 2024
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
-		<AuthContextWrap.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+		<PreEventWrap.Provider value={{ isAuthenticated, setIsAuthenticated }}>
 			{children}
-		</AuthContextWrap.Provider>
+		</PreEventWrap.Provider>
 	);
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useUserContext = () => useContext(AuthContextWrap);
-export default AuthProvider;
+export const useUserContext = () => useContext(PreEventWrap);
+export default PreEventProvider;
