@@ -5,65 +5,82 @@ export interface QuestionData {
 	title: string;
 	description: string;
 	points: number;
+	url: string;
+	id: number;
 }
 
 export interface QuestionProps {
 	question: QuestionData;
-	index: number;
 }
 
-export default function Question({ question, index }: QuestionProps) {
+export default function Question({ question }: QuestionProps) {
 	const [flag, setFlag] = useState<string>("");
 	const [regNo, setRegNo] = useState<string>("");
+	const [email, setEmail] = useState<string>("");
+	const [submitted, setSubmitted] = useState<boolean>(false);
 
-	const submit = () => {
+	const submit = (ev: React.FormEvent) => {
+		ev.preventDefault();
 		axios
-			.post("http://localhost:5000/api/submit", {
+			.post(`http://localhost:5000/api/ctf/pre/${question.id}/submit`, {
 				regNo: regNo,
 				flag: flag,
-				question: question.title,
+				email: email,
 			})
-			.catch(() => {});
+			.then((res) => {
+				if (res.status === 200) setSubmitted(true);
+				else {
+					alert("Incorrect flag, try again!");
+				}
+			})
+			.catch(() => {
+				alert(
+					"Something went wrong while submitting the flag, no internet connection?",
+				);
+			});
+		setEmail("");
+		setFlag("");
+		setEmail("");
 	};
 
-	return (
-		<div className="top-0 m-2 flex h-full w-full flex-col justify-between rounded-xl border border-gray-700 bg-slate-900 p-14 shadow-sm shadow-slate-700/[.7]">
-			<div>
-				<h3 className="text-center text-2xl font-bold text-white">
-					{index + 1}. {question.title}
-				</h3>
-				<h3 className="mt-10 text-xl font-bold text-gray-300">Description</h3>
-				<p className="mt-2 text-gray-300">{question.description}</p>
-				<p className="mt-4 text-gray-500">Points: {question.points}</p>
-			</div>
-			<div>
-				<div className="m-6 flex flex-row gap-4">
-					<div className="flex w-full flex-col gap-2">
-						<label>Reg no.</label>
-						<input
-							type="text"
-							placeholder="23BAI1001"
-							onChange={(e) => setRegNo(e.target.value)}
-							className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400"
-						/>
-					</div>
-					<div className="flex w-full flex-col gap-2">
-						<label>Flag</label>
-						<input
-							type="text"
-							placeholder="flag{}"
-							onChange={(e) => setFlag(e.target.value)}
-							className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400"
-						/>
-					</div>
-				</div>
-				<button
-					onClick={submit}
-					className="h-16 w-full rounded-xl bg-slate-800 text-xl font-bold text-white hover:bg-slate-700"
-				>
-					Submit
-				</button>
-			</div>
-		</div>
+	return submitted ? (
+		"Correct flag submitted :D"
+	) : (
+		<form
+			className="flex flex-col items-center justify-center gap-3 px-4 pb-4 font-DM-Mono text-sm text-[#08FF08]"
+			onSubmit={submit}
+		>
+			<input
+				type="text"
+				className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+				placeholder="Registration Number"
+				onChange={(e) => setRegNo(e.target.value)}
+				value={regNo}
+				required
+			/>
+			<input
+				type="email"
+				className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+				placeholder="Email ID"
+				onChange={(e) => setEmail(e.target.value)}
+				value={email}
+				required
+			/>
+			<input
+				type="text"
+				onChange={(e) => setFlag(e.target.value)}
+				className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+				placeholder="Flag"
+				value={flag}
+				required
+			/>
+			<button type="submit" className=" relative block h-8 overflow-hidden ">
+				Submit
+				<span className="relative -left-full top-1 block h-[2px] w-full animate-btn-anim-1 bg-gradient-to-r from-transparent to-[#03f40f]"></span>
+			</button>
+		</form>
 	);
 }
