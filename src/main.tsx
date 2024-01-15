@@ -3,15 +3,15 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
-import AuthProvider from "./context/AuthContext.tsx";
 import { ReactLenis } from "@studio-freight/react-lenis";
+import PreEventProvider from "./context/PreeventContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<BrowserRouter>
-		<AuthProvider>
+		<PreEventProvider>
 			<ReactLenis root>
 				<App />
 			</ReactLenis>
-		</AuthProvider>
+		</PreEventProvider>
 	</BrowserRouter>,
 );
