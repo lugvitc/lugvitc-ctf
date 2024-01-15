@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "./assets/images/preevent-background.png";
-import { backend } from "./constants";
+import { backend } from "./constants/index";
 
 export default function PreEvent() {
 	const [questions, setQuestions] = useState<QuestionData[]>([
