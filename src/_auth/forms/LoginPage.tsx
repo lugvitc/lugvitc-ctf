@@ -161,8 +161,8 @@ const LoginPage = () => {
 						!showPopUp
 							? "scale-y-0"
 							: msg["color"] === "green"
-								? "scale-y-150 border-8 border-green-600 text-green-600"
-								: "scale-y-150 border-8 border-red-600 text-red-600"
+							? "scale-y-150 border-8 border-green-600 text-green-600"
+							: "scale-y-150 border-8 border-red-600 text-red-600"
 					}`}
 				>
 					<span className="flex basis-3/4 items-center text-base font-semibold md:text-xl">
