@@ -34,3 +34,5 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 		label: "Top",
 	},
 ];
+
+export const URL_ORIGIN = "localhost:5000/api";
