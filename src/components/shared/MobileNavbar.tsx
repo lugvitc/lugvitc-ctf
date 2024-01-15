@@ -1,11 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { leftSidebarLinks } from "../constants";
+import { leftSidebarLinks } from "../../constants";
+import { useUserContext } from "../../context/AuthContext";
 
 interface Location {
 	pathname: string;
 }
-
-const isAuthenticated: boolean = false;
 
 interface Props {
 	isOpen: boolean;
@@ -15,6 +14,7 @@ interface Props {
 const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 	const location = useLocation() as Location;
 	const pathname = location.pathname;
+	const { isAuthenticated } = useUserContext();
 
 	return (
 		<div
@@ -83,10 +83,10 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 				</div>
 			)}
 			<NavLink
-				to={`/more`}
+				to={`/rules`}
 				className={` mb-6 flex justify-center rounded-xl border p-2 px-3`}
 			>
-				MORE
+				RULES
 			</NavLink>
 		</div>
 	);

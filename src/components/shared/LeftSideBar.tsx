@@ -1,15 +1,15 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { leftSidebarLinks } from "../constants";
+import { leftSidebarLinks } from "../../constants";
+import { useUserContext } from "../../context/AuthContext";
 
 interface Location {
 	pathname: string;
 }
 
-const isAuthenticated: boolean = false;
-
 const LeftSideBar = () => {
 	const location = useLocation() as Location;
 	const pathname = location.pathname;
+	const { isAuthenticated } = useUserContext();
 
 	return (
 		<div className="fixed left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto bg-black p-6 pt-36 max-lg:flex max-lg:w-[200px] max-sm:hidden">
@@ -63,10 +63,10 @@ const LeftSideBar = () => {
 				</div>
 			)}
 			<NavLink
-				to={`/more`}
+				to={`/rules`}
 				className={` mb-6 mt-6 flex justify-center rounded-xl border p-2 px-3`}
 			>
-				MORE
+				RULES
 			</NavLink>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Card, Challenge } from "./components/challenges/Card";
+import { Card, Challenge } from "../../components/challenges/Card";
 import axios from "axios";
+
 interface QuestionProp {
 	id: number;
 	name: string;
@@ -80,7 +81,7 @@ export function CtfPage() {
 	// TODO: Fetch challenges from the server
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-center p-4 font-source-code-pro">
+		<main className="flex w-full flex-col items-center justify-center p-20 font-source-code-pro">
 			<h1 className="text-4xl font-semibold">CTF</h1>
 			<div className="grid w-full max-w-6xl grid-cols-2 gap-4">
 				{challenges.map((challenge) => (

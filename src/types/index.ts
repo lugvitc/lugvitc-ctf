@@ -3,3 +3,7 @@ export type HomeNavbarLinks = {
 	route: string;
 	label: string;
 };
+
+export interface ResponseData {
+	msg_code: string;
+}

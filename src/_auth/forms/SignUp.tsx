@@ -1,14 +1,16 @@
-import { NavLink } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import clubLogo from "../assets/images/club-logo.png";
-// import axios from "axios";
-
+import { useNavigate, NavLink, Navigate } from "react-router-dom";
+import clubLogo from "../../assets/images/club-logo.png";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
+import { useUserContext } from "../../context/AuthContext";
+
+interface SignupResponse {
+	msg_code: string;
+}
 
 const SignUp = () => {
-	// DUMMY AUTHENTICATION
-	const isAuthenticated = false;
-
+	const { isAuthenticated } = useUserContext();
+	const navigate = useNavigate();
 	const [name, setName] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [members, setMembers] = useState<string[]>(["", "", ""]);
@@ -25,27 +27,36 @@ const SignUp = () => {
 		console.log(msg);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		setSubmitted(true);
-		// await axios.post("url/signup", {
-		// 	'name': name,
-		// 	'password': password,
-		// 	'tags' : members
-		// }).then((res)=>{
-		// 	msgCode(res.status, res.data.msg_code)
-		// })
-		setTimeout(() => {
-			console.log("hi");
-			setShowPopUp(true);
-			setSubmitted(false);
-		}, 1000);
-		msgCode(400, "Team Created");
-		setName("");
-		setPassword("");
-		setMembers(() => {
-			return ["", "", ""];
-		});
+
+		axios
+			.post<SignupResponse>("http://localhost:5000/api/auth/signup", {
+				name: name,
+				password: password,
+				members: members,
+			})
+			.then((response: AxiosResponse<SignupResponse>) => {
+				if (response.data.msg_code === "team.name") {
+					msgCode(406, response.data.msg_code);
+				} else if (response.data.msg_code === "db_error") {
+					msgCode(500, response.data.msg_code);
+				} else if (response.data.msg_code === "signup_success") {
+					msgCode(response.status, response.data.msg_code);
+					setTimeout(() => {
+						navigate("/sign-in");
+					}, 2000);
+				}
+			})
+			.catch((error: AxiosError) => {
+				console.error(error);
+			})
+			.finally(() => {
+				setName("");
+				setPassword("");
+				setMembers(["", "", ""]);
+			});
 	};
 
 	const handleInputChange = (index: number, value: string) => {
@@ -88,7 +99,10 @@ const SignUp = () => {
 						<form
 							id="sign-up-form"
 							className="flex flex-col items-center justify-center gap-2 p-6 text-base md:gap-4 md:p-10 md:text-lg"
-							onSubmit={handleSubmit}
+							onSubmit={(e) => {
+								e.preventDefault();
+								handleSubmit(e);
+							}}
 						>
 							<label className="w-full">
 								Team Name
@@ -159,7 +173,7 @@ const SignUp = () => {
 				</div>
 				<div className="text-xs md:text-lg">
 					Already Logged In?{" "}
-					<NavLink to="/log-in" className="text-blue-500">
+					<NavLink to="/sign-in" className="text-blue-500">
 						Log In
 					</NavLink>
 				</div>
