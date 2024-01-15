@@ -6,7 +6,7 @@ import RootLayout from "./_root/RootLayout";
 import { LandingPage } from "./_root/pages";
 import Rules from "./_root/pages/Rules";
 import Leaderboard from "./_root/pages/Leaderboard";
-import PreEvent from "./_auth/forms/PreEvent";
+import PreEvent from "./_root/pages/PreEvent";
 import { CtfPage } from "./_root/pages/Ctf";
 
 export default function App() {
@@ -17,7 +17,6 @@ export default function App() {
 				<Route element={<AuthLayout />}>
 					<Route path="/sign-in" element={<LoginPage />} />
 					<Route path="/sign-up" element={<SignUp />} />
-					<Route path="/preevent" element={<PreEvent />} />
 				</Route>
 
 				{/* private route */}
@@ -26,6 +25,7 @@ export default function App() {
 					<Route path="/rules" element={<Rules />} />
 					<Route path="/leaderboard" element={<Leaderboard />} />
 					<Route path="/play" element={<CtfPage />} />
+					<Route path="/preevent" element={<PreEvent />} />
 				</Route>
 			</Routes>
 		</main>
