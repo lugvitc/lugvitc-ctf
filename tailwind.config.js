@@ -115,7 +115,6 @@ module.exports = {
 						"-webkit-clip-path": "polygon(0 70%, 20% 70%, 100% 40%, 0 80%)",
 						"clip-path": "polygon(0 70%, 100% 70%, 20% 40%, 0 80%)",
 					},
-					"9.9":{},
 					"10%, 100%": {
 						transform: "translate3d(0, 0, 0) scale3d(1, 1, 1)",
 						"-webkit-clip-path": "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",

@@ -2,7 +2,7 @@ import Question, { QuestionData } from "../../components/preevent/Question";
 // import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import bg from "./assets/images/preevent-background.png";
+import bg from "../../assets/images/preevent-background.png";
 import { URL_ORIGIN } from "../../constants";
 
 export default function PreEvent() {
