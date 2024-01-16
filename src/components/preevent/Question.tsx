@@ -17,33 +17,43 @@ export interface QuestionProps {
 	day: number;
 }
 
+interface ResponseData {
+	msg_Code?: number;
+	status?: boolean;
+}
 export default function Question({ question, setCoins, day }: QuestionProps) {
 	const [flag, setFlag] = useState<string>("");
 	const [regNo, setRegNo] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
-	const [submitted, setSubmitted] = useState<boolean>((localStorage.getItem("day") === day.toString() && localStorage.getItem(`${question.id}`) ? JSON.parse(localStorage.getItem(`${question.id}`) as string).solved : false));
+	const [submitted, setSubmitted] = useState<boolean>(
+		localStorage.getItem("day") === day.toString() &&
+			localStorage.getItem(`${question.id}`)
+			? true
+			: false,
+	);
 
 	const submit = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		axios
-			.post(`${URL_ORIGIN}/ctf/pre/${question.id}/flag`, {
+			.post<ResponseData>(`${URL_ORIGIN}/ctf/pre/${question.id}/flag`, {
 				regNo: regNo,
 				flag: flag,
 				email: email,
 			})
 			.then((res) => {
-				if (res.data.status === true){
+				if ((res.data.status as boolean) === true) {
 					setSubmitted(true);
-					setCoins(()=>{
-						localStorage.setItem(`${question.id}`, JSON.stringify({"solved":true}));
+					setCoins(() => {
+						localStorage.setItem(
+							`${question.id}`,
+							JSON.stringify({ solved: true }),
+						);
 						localStorage.setItem("coins", JSON.stringify(res.data));
-						return res.data;
+						return res.data as number;
 					});
-				} 
-				else if(res.status >= 500){
-					alert("Something went down, we'll be back soon!")
-				}
-				else {
+				} else if (res.status >= 500) {
+					alert("Something went down, we'll be back soon!");
+				} else {
 					alert("Incorrect flag, try again!");
 				}
 			})
@@ -52,9 +62,9 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 					"Something went wrong while submitting the flag, no internet connection?",
 				);
 			});
-	
+
 		localStorage.setItem("data", JSON.stringify({ regNo, email }));
-		
+
 		setRegNo("");
 		setFlag("");
 		setEmail("");
