@@ -139,66 +139,23 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="right-10 top-0 ml-8 flex h-6 w-36 items-center gap-4 font-source-code-pro mt-4">
+			<div className="right-10 top-0 ml-8 mt-4 flex h-6 w-36 items-center gap-4 font-source-code-pro">
 				<span className="text-[#08FF08]"> Coins: </span>
 				{coins}
 				<img
 					src={coin}
 					alt=""
-					className="h-6 w-6 -ml-2 object-contain transition-all duration-200 hover:-scale-x-100"
+					className="-ml-2 h-6 w-6 object-contain transition-all duration-200 hover:-scale-x-100"
 				/>
 			</div>
 			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
 				{questions.map((question, i) => (
-					<div
+					<Question
 						key={i}
-						className="min-h-72 h-full w-full rounded-3xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl md:w-5/12"
-					>
-						<div className="h-full w-full rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98] hover:shadow-custom">
-							<div className=" flex items-center px-3 pt-3">
-								<div className=" px-1 py-1">
-									<span className="red box inline-block h-3 w-3 items-center rounded-full bg-red-600 p-1"></span>
-								</div>
-								<div className=" px-1 py-1">
-									<span className="yellow box inline-block h-3 w-3 items-center rounded-full bg-yellow-500 p-1"></span>
-								</div>
-								<div className=" px-1 py-1">
-									<span className="green box inline-block h-3 w-3 items-center rounded-full bg-green-500 p-1"></span>
-								</div>
-							</div>
-							<div className="conten mt-1 flex flex-col gap-3 px-4 py-2 font-source-code-pro text-white">
-								<div className="font-source-code-pro text-[#08FF08]">
-									<span className="text-white">
-										lug@ctf:<span className="font-bold text-sky-blue">~</span>$
-									</span>
-									{` sudo get-ctf --id ${i + 1}`}
-								</div>
-								<div className="pl-4">
-									<div className="title text-xl font-bold">
-										{question.title}
-									</div>
-									<div className="desc text-lg">{question.description}</div>
-									<a className=" text-[#08FF08]" href={question.url}>
-										Start at <span className="underline">{question.url}</span>
-									</a>
-								</div>
-								<div className="sikka"></div>
-								<div className="url text-base">
-									<span className="text-white">
-										lug@ctf:<span className="font-bold text-sky-blue">~</span>$
-									</span>{" "}
-									<span className="text-[#08FF08]">
-										sudo submit-flag --id {question.id}
-									</span>
-								</div>
-								<Question
-									question={question}
-									setCoins={setCoins}
-									day={day}
-								></Question>
-							</div>
-						</div>
-					</div>
+						question={question}
+						setCoins={setCoins}
+						day={day}
+					></Question>
 				))}
 			</div>
 		</div>
