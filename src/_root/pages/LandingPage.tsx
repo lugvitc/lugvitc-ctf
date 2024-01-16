@@ -31,7 +31,7 @@ const LandingPage = () => {
 
 	return (
 		<>
-			<div className="flex w-full flex-col items-start justify-center bg-opacity-55 bg-landing bg-cover bg-fixed bg-landingPos bg-repeat-x">
+			<div className="bg-opacity-55 flex w-full flex-col items-start justify-center bg-landing bg-cover bg-fixed bg-landingPos bg-repeat-x">
 				<div className="bg-black bg-opacity-30">
 					<Element name="home" className="h-screen w-screen ">
 						{!isScrolledDown && (
