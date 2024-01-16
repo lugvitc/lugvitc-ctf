@@ -1,9 +1,9 @@
-import Question, { QuestionData } from "./components/preevent/Question";
-import Navbar from "./components/Navbar/Navbar";
+import Question, { QuestionData } from "../../components/preevent/Question";
+// import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "./assets/images/preevent-background.png";
-import { backend } from "./constants/index";
+import { URL_ORIGIN } from "../../constants";
 
 export default function PreEvent() {
 	const [questions, setQuestions] = useState<QuestionData[]>([
@@ -33,12 +33,14 @@ export default function PreEvent() {
 
 	useEffect(() => {
 		axios
-			.get(`http://${backend}/api/ctf/pre/today`)
+			.get(`${URL_ORIGIN}/ctf/pre/today`)
 			.then((res) => {
 				setQuestions(res.data as QuestionData[]);
 			})
-			.catch(() => {});
-	});
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
 
 	const letters = "01";
 
@@ -82,7 +84,7 @@ export default function PreEvent() {
 
 	return (
 		<div className="bg-black">
-			<Navbar />
+			{/* <Navbar /> */}
 			<div className="flex h-screen items-center justify-start bg-black-green">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
 					<h1

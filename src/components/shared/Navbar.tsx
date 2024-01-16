@@ -2,27 +2,29 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { HomeNavbarLinks } from "../../types";
 import { homeNavbarLinks } from "../../constants";
-import MobileNavbar from "../MobileNavbar";
+import MobileNavbar from "./MobileNavbar";
+import { useUserContext } from "../../context/AuthContext";
 
 interface Location {
 	pathname: string;
 }
+
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [isMoreActive, setIsMoreActive] = useState(false);
 	const location = useLocation() as Location;
 	const pathname = location.pathname;
-	const isAuthenticated = false; // TODO: Replace with actual auth state
+	const { isAuthenticated } = useUserContext();
 
 	return (
-		<nav className="shadow-light-300 fixed z-50 flex max-h-[140px] w-full items-center justify-between p-6 sm:px-12 dark:shadow-none">
+		<nav className=" shadow-light-300 fixed z-50 flex h-[80px]  w-full items-center justify-between border-b-2 border-[#f8fafc0f] bg-[#0f172abf] p-6 backdrop-blur-lg sm:px-12">
 			<div className="flex items-center justify-center gap-4">
 				<img
 					src="src/assets/images/club-logo.png"
 					alt="logo"
-					className="h-[52px] w-[52px]"
+					className="h-[60px] w-[60px]"
 				/>
-				<span className="font-DM-Mono text-white max-lg:hidden">
+				<span className="font-DM-Mono text-[20px] font-bold text-animation-green max-lg:hidden">
 					Linux Club VITC
 				</span>
 			</div>
@@ -37,9 +39,9 @@ const Navbar = () => {
 									to={item.route}
 									className={`${
 										isActive
-											? "primary-gradient rounded-xl text-[15px] font-bold leading-[140%]"
+											? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
 											: ""
-									} flex w-[80px] justify-center px-4 py-2 font-DM-Mono outline-none`}
+									} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
 									onClick={() => {
 										if (isMoreActive === true) {
 											setIsMoreActive(false);
@@ -52,34 +54,21 @@ const Navbar = () => {
 						})}
 					</div>
 
-					{/* TODO: Replace with actual auth state */}
-
 					{!isAuthenticated && (
 						<>
-							<NavLink to="/log-in">
-								<button className="w-full rounded-xl border px-4 py-2 text-[15px] font-bold leading-[140%] shadow-none hover:border-sky-blue hover:text-sky-blue">
+							<NavLink to="/sign-in">
+								<button className=" rounded-md border border-animation-green px-4 py-2 font-DM-Mono text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green hover:text-animation-green">
 									Log In
 								</button>
 							</NavLink>
 							<NavLink to="/sign-up">
-								<button className="w-full rounded-xl border border-sky-blue px-4 py-2 text-[15px] font-bold leading-[140%] text-sky-blue shadow-none hover:border-white hover:text-white">
+								<button className=" rounded-md border border-animation-green  px-4 py-2 font-DM-Mono text-[15px] font-bold text-white shadow-sm shadow-animation-green   hover:text-animation-green">
 									Sign Up
 								</button>
 							</NavLink>
 						</>
 					)}
 				</div>
-				<NavLink
-					to={`/more`}
-					className={`${
-						isMoreActive ? "bg-midnight-blue" : ""
-					} rounded-xl border p-2 px-3`}
-					onClick={() => {
-						setIsMoreActive(!isMoreActive);
-					}}
-				>
-					MORE
-				</NavLink>
 			</div>
 			{isOpen ? (
 				<img

@@ -3,6 +3,7 @@ module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
 	theme: {
+
 		extend: {
 			boxShadow:{
 				"custom": "0px 0px 60px 10px rgba(0, 255, 117, 0.30)"
@@ -10,11 +11,24 @@ module.exports = {
 			dropShadow:{
 				"3xl": "0 3px 3px rgba(57, 255, 20, 1)"
 			},
+			transitionDuration: {
+				'1500': '1.5s',
+			},
+			animation: {
+				animateToptoBottom: 'hackerEffect 5s linear infinite'
+			},
+			keyframes: {
+				hackerEffect: {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(100%)' },
+				},
+			},
 			colors: {
-				"sky-blue": "#78CBFF",
-				"midnight-blue": "#002133",
-				"gray36": "#5C5C5C",
-				"dark-grayish-blue": "#262626B2",
+				'sky-blue': '#78CBFF',
+				'midnight-blue': '#002133',
+				'gray36': '#5C5C5C',
+				'dark-grayish-blue': "#262626B2",
+				'animation-green': '#039d00',
 				"black-green": "#00640010",
 				"navy-blue": "#011522"
 			},

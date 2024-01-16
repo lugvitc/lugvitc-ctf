@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
+import { URL_ORIGIN } from "../../constants";
 
 export interface QuestionData {
+	id: number;
 	title: string;
 	description: string;
 	points: number;
 	url: string;
-	id: number;
+	author: string;
 }
 
 export interface QuestionProps {
@@ -22,7 +24,7 @@ export default function Question({ question }: QuestionProps) {
 	const submit = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		axios
-			.post(`http://localhost:5000/api/ctf/pre/${question.id}/submit`, {
+			.post(`${URL_ORIGIN}/ctf/pre/${question.id}/submit`, {
 				regNo: regNo,
 				flag: flag,
 				email: email,
