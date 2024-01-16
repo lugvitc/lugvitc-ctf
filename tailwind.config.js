@@ -8,6 +8,10 @@ module.exports = {
 			boxShadow:{
 				"custom": "0px 0px 60px 10px rgba(0, 255, 117, 0.30)"
 			},
+			backgroundImage:{
+				landing:"url('./src/assets/images/background.svg')"},
+			backgroundPosition:{
+				landingPos :"left 10em top 12em"},
 			dropShadow:{
 				"3xl": "0 3px 3px rgba(57, 255, 20, 1)"
 			},
@@ -125,7 +129,7 @@ module.exports = {
 					"0%": {
 					  "left": "-100%"
 					},
-				  
+
 					"50%, 100%": {
 					  "left": "100%"
 					}
