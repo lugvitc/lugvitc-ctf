@@ -46,7 +46,7 @@ export default function Question({ question }: QuestionProps) {
 	};
 
 	return submitted ? (
-		<>"Correct flag submitted :D"</>
+		<>Correct flag submitted :D</>
 	) : (
 		<form
 			className="flex flex-col items-center justify-center gap-3 px-4 pb-4 font-DM-Mono text-sm text-[#08FF08]"
