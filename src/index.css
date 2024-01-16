@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap");
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +10,12 @@ body {
 	@apply primary-background text-neutral-100;
 }
 
+@font-face {
+	font-family: 'phelix-boomgartner';
+	src: url('./assets/fonts/Phelix-Boomgartner/PhelixBoomgartner.ttf');
+}
+
+
 @layer utilities {
 	.primary-gradient {
 		background: linear-gradient(20deg, rgb(0, 5, 8) 0%, rgb(25, 28, 30) 100%);
@@ -16,4 +23,8 @@ body {
 	.primary-background {
 		background: linear-gradient(117deg, #09111b 0%, #002133 66.64%);
 	}
+}
+
+.phelix-boomgartner {
+	font-family: 'phelix-boomgartner';
 }
