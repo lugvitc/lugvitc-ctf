@@ -61,7 +61,7 @@ export default function Question({
 		ev.preventDefault();
 		axios
 			.post<ResponseData>(`${URL_ORIGIN}/ctf/pre/${question.id}/flag`, {
-				regNo: regNo,
+				tag: regNo,
 				flag: flag,
 				email: email,
 			})
