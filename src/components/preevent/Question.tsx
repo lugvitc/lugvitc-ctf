@@ -20,11 +20,26 @@ export interface QuestionProps {
 interface ResponseData {
 	msg_Code?: number;
 	status?: boolean;
+	coins?: number;
 }
+
+type x = {
+	regNo: string;
+	email: string;
+} | null;
+
 export default function Question({ question, setCoins, day }: QuestionProps) {
 	const [flag, setFlag] = useState<string>("");
-	const [regNo, setRegNo] = useState<string>("");
-	const [email, setEmail] = useState<string>("");
+	const [regNo, setRegNo] = useState<string>(
+		JSON.parse(localStorage.getItem("data") as string)
+			? (JSON.parse(localStorage.getItem("data") as string) as x)?.regNo as string
+			: "",
+	);
+	const [email, setEmail] = useState<string>(
+		JSON.parse(localStorage.getItem("data") as string)
+			? (JSON.parse(localStorage.getItem("data") as string) as x)?.email as string
+			: "",
+	);
 	const [submitted, setSubmitted] = useState<boolean>(
 		localStorage.getItem("day") === day.toString() &&
 			localStorage.getItem(`${question.id}`)
@@ -48,8 +63,8 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 							`${question.id}`,
 							JSON.stringify({ solved: true }),
 						);
-						localStorage.setItem("coins", JSON.stringify(res.data));
-						return res.data as number;
+						localStorage.setItem("coins", JSON.stringify(res.data.coins));
+						return res.data.coins as number;
 					});
 				} else if (res.status >= 500) {
 					alert("Something went down, we'll be back soon!");
@@ -63,11 +78,14 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 				);
 			});
 
-		localStorage.setItem("data", JSON.stringify({ regNo, email }));
+		localStorage.setItem(
+			"data",
+			JSON.stringify({ regNo: regNo, email: email }),
+		);
 
-		setRegNo("");
+		// setRegNo("");
 		setFlag("");
-		setEmail("");
+		// setEmail("");
 	};
 
 	return submitted ? (

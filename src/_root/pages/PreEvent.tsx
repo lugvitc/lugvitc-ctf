@@ -139,14 +139,14 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="right-10 top-0 ml-3 flex h-10 w-36 items-center gap-4 font-source-code-pro">
+			<div className="right-10 top-0 ml-8 flex h-6 w-36 items-center gap-4 font-source-code-pro mt-4">
+				<span className="text-[#08FF08]"> Coins: </span>
+				{coins}
 				<img
 					src={coin}
 					alt=""
-					className="h-full w-full object-contain transition-all duration-200 hover:-scale-x-100"
+					className="h-6 w-6 -ml-2 object-contain transition-all duration-200 hover:-scale-x-100"
 				/>
-				<span className="text-[#08FF08]"> Coins: </span>
-				{coins}
 			</div>
 			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
 				{questions.map((question, i) => (
