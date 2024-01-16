@@ -13,24 +13,36 @@ export interface QuestionData {
 
 export interface QuestionProps {
 	question: QuestionData;
+	setCoins: React.Dispatch<React.SetStateAction<number>>;
+	day: number;
 }
 
-export default function Question({ question }: QuestionProps) {
+export default function Question({ question, setCoins, day }: QuestionProps) {
 	const [flag, setFlag] = useState<string>("");
 	const [regNo, setRegNo] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
-	const [submitted, setSubmitted] = useState<boolean>(false);
+	const [submitted, setSubmitted] = useState<boolean>((localStorage.getItem("day") === day.toString() && localStorage.getItem(`${question.id}`) ? JSON.parse(localStorage.getItem(`${question.id}`) as string).solved : false));
 
 	const submit = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		axios
-			.post(`${URL_ORIGIN}/ctf/pre/${question.id}/submit`, {
+			.post(`${URL_ORIGIN}/ctf/pre/${question.id}/flag`, {
 				regNo: regNo,
 				flag: flag,
 				email: email,
 			})
 			.then((res) => {
-				if (res.status === 200) setSubmitted(true);
+				if (res.data.status === true){
+					setSubmitted(true);
+					setCoins(()=>{
+						localStorage.setItem(`${question.id}`, JSON.stringify({"solved":true}));
+						localStorage.setItem("coins", JSON.stringify(res.data));
+						return res.data;
+					});
+				} 
+				else if(res.status >= 500){
+					alert("Something went down, we'll be back soon!")
+				}
 				else {
 					alert("Incorrect flag, try again!");
 				}
@@ -40,7 +52,10 @@ export default function Question({ question }: QuestionProps) {
 					"Something went wrong while submitting the flag, no internet connection?",
 				);
 			});
-		setEmail("");
+	
+		localStorage.setItem("data", JSON.stringify({ regNo, email }));
+		
+		setRegNo("");
 		setFlag("");
 		setEmail("");
 	};

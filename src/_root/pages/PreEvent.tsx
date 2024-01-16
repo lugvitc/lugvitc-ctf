@@ -3,34 +3,42 @@ import Question, { QuestionData } from "../../components/preevent/Question";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "../../assets/images/preevent-background.png";
+import coin from "../../assets/icons/coin.svg";
 import { URL_ORIGIN } from "../../constants";
 
 export default function PreEvent() {
+	const [coins, setCoins] = useState<number>((localStorage.getItem("coins") )? parseInt(localStorage.getItem("coins") as string) : 0);
 	const [questions, setQuestions] = useState<QuestionData[]>([
-		// {
-		// 	title: "reuben",
-		// 	description: "help me with this",
-		// 	points: 200,
-		// 	url: "https://www.google.com",
-		// 	id: 1,
-		// },
-		// {
-		// 	title: "reuben 2",
-		// 	description: "send help please",
-		// 	points: 300,
-		// 	url: "https://www.google.com",
-		// 	id: 2,
-		// },
-		// {
-		// 	title: "reuben 3",
-		// 	description: "send help please",
-		// 	points: 400,
-		// 	url: "https://www.google.com",
-		// 	id: 3,
-		// },
+		{
+			title: "reuben",
+			description: "help me with this",
+			points: 200,
+			url: "https://www.google.com",
+			id: 1,
+			author: "reuben",
+		},
+		{
+			title: "reuben 2",
+			description: "send help please",
+			points: 300,
+			url: "https://www.google.com",
+			id: 2,
+			author: "reuben2"
+		},
+		{
+			title: "reuben 3",
+			description: "send help please",
+			points: 400,
+			url: "https://www.google.com",
+			id: 3,
+			author: "reuben3"
+		},
 	]);
 	const dateStr = formatDateToCustomFormat();
-
+	const currentDate: Date = new Date();
+	const day: number = currentDate.getDate();
+	localStorage.setItem("day", day.toString());
+	console.log(localStorage.getItem("day"))
 	useEffect(() => {
 		axios
 			.get(`${URL_ORIGIN}/ctf/pre/today`)
@@ -40,6 +48,7 @@ export default function PreEvent() {
 			.catch((error) => {
 				console.error(error);
 			});
+
 	}, []);
 
 	const letters = "01";
@@ -83,7 +92,7 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div className="bg-black">
+		<div className="bg-black w-full">
 			{/* <Navbar /> */}
 			<div className="flex h-screen items-center justify-start bg-black-green">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
@@ -112,22 +121,23 @@ export default function PreEvent() {
 					<div className="flex h-full flex-col items-center justify-center gap-10 whitespace-nowrap uppercase md:hidden">
 						<h1
 							data-value="Password CTF"
-							className="phelix-boomgartner animate-glitch-anim-text text-4xl tracking-wide text-white"
+							className="phelix-boomgartner animate-glitch-anim-text text-4xl tracking-wide text-white drop-shadow-3xl"
 							onMouseOver={handleMouse}
 						>
 							010101101010
 						</h1>
-						<h1 className="phelix-boomgartner animate-glitch-anim-text-2 text-3xl text-white">
+						<h1 className="phelix-boomgartner animate-glitch-anim-text-2 text-3xl text-white drop-shadow-3xl">
 							Pre-Event CTF
 						</h1>
-						<h1 className="text-xl text-gray-300">{dateStr}</h1>
-						<p className="mt-4 text-gray-500 md:text-sm">
+						<h1 className="text-xl text-gray-300 drop-shadow-3xl">{dateStr}</h1>
+						<p className="mt-4 text-gray-500 md:text-sm drop-shadow-3xl">
 							Scroll down for questions
 						</p>
 					</div>
 				</div>
 			</div>
-			<div className="flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
+			<div className="flex top-0 right-10 font-source-code-pro items-center h-10 w-36 gap-4 ml-3"><img src={coin} alt="" className="object-contain h-full w-full transition-all hover:-scale-x-100 duration-200"/><span className="text-[#08FF08]"> Coins: </span>{coins}</div>
+			<div className="flex h-full w-full flex-wrap items-center justify-center gap-20 p-10 relative">
 				{questions.map((question, i) => (
 					<div
 						key={i}
@@ -170,7 +180,7 @@ export default function PreEvent() {
 										sudo submit-flag --id {question.id}
 									</span>
 								</div>
-								<Question question={question}></Question>
+								<Question question={question} setCoins={setCoins} day={day}></Question>
 							</div>
 						</div>
 					</div>
