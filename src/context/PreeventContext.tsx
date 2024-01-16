@@ -14,7 +14,7 @@ type AuthContextType = {
 
 const PreEventWrap = createContext<AuthContextType>({
 	isAuthenticated: false,
-	setIsAuthenticated: () => { },
+	setIsAuthenticated: () => {},
 });
 const PreEventProvider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

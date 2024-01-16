@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Card, Challenge } from "../../components/challenges/Card";
 import axios from "axios";
 
-
 import { URL_ORIGIN } from "../../constants";
 
 interface QuestionProp {
