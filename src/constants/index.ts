@@ -13,7 +13,7 @@ export const leftSidebarLinks: HomeNavbarLinks[] = [
 	},
 	{
 		img: "/src/assets/icons/leaderboard1.png",
-		route: "/top",
+		route: "/leaderboard",
 		label: "Top",
 	},
 ];
@@ -30,7 +30,9 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 	},
 	{
 		img: "/src/assets/icons/home.svg",
-		route: "/top",
+		route: "/leaderboard",
 		label: "Top",
 	},
 ];
+
+export const URL_ORIGIN = "localhost:5000/api";

@@ -1,35 +1,41 @@
-import Question, { QuestionData } from "./components/preevent/Question";
-import Navbar from "./components/Navbar/Navbar";
+import Question, { QuestionData } from "../../components/preevent/Question";
+// import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { URL_ORIGIN } from "../../constants";
 
 export default function PreEvent() {
 	const [questions, setQuestions] = useState<QuestionData[]>([
 		{
-			title: "reuben",
+			id: 1,
+			name: "reuben",
 			description: "help me with this",
 			points: 200,
+			author: "abc",
 		},
 		{
-			title: "reuben 2",
+			id: 2,
+			name: "reuben 2",
 			description: "send help please",
 			points: 300,
+			author: "xyz",
 		},
 	]);
 	const dateStr = formatDateToCustomFormat();
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/questions")
+			.get(`${URL_ORIGIN}/ctf/pre/today`)
 			.then((res) => {
 				setQuestions(res.data as QuestionData[]);
 			})
-			.catch(() => {});
-	});
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
 
 	return (
 		<div>
-			<Navbar />
 			<div className="flex h-screen flex-col items-center justify-center gap-4">
 				<h1 className="text-5xl font-bold text-white">PreEvent CTF</h1>
 				<h1 className="text-2xl font-bold text-gray-300">{dateStr}</h1>
