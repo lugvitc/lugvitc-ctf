@@ -86,10 +86,22 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 					if (error.response.status >= 500) {
 						notify1();
 					} else if (error.response.status === 401) {
-						if (error.response.data.msg_code === 12) { toast("You have already solved this challenge", {icon: '👨‍💻'}); setSubmitted(true); localStorage.setItem(`${question.id}`, JSON.stringify({ solved: true })); }
-						else if (error.response.data.msg_code === 23) toast.error("That seems to someone else's email, use another email")
+						if (error.response.data.msg_code === 12) {
+							toast("You have already solved this challenge", { icon: "👨‍💻" });
+							setSubmitted(true);
+							localStorage.setItem(
+								`${question.id}`,
+								JSON.stringify({ solved: true }),
+							);
+						} else if (error.response.data.msg_code === 23)
+							toast.error(
+								"That seems to someone else's email, use another email",
+							);
 					} else if (error.response.status === 404) {
-						if (error.response.data.msg_code === 2) toast.error("Challenge not found... are you solving other day's questions?")
+						if (error.response.data.msg_code === 2)
+							toast.error(
+								"Challenge not found... are you solving other day's questions?",
+							);
 					}
 				} else notify3();
 			});
@@ -208,46 +220,50 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 							/>
 						</div>
 					)}
-					{submitted ? (<div>Correct flag submitted :D</div>) : display[2] && (
-						<form
-							className="flex flex-col items-center justify-center gap-3 px-4 pb-4 font-DM-Mono text-sm text-[#08FF08]"
-							onSubmit={submit}
-						>
-							<input
-								type="text"
-								className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
-			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
-								placeholder="Registration Number"
-								onChange={(e) => setRegNo(e.target.value)}
-								value={regNo}
-								required
-							/>
-							<input
-								type="email"
-								className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
-			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
-								placeholder="Email ID"
-								onChange={(e) => setEmail(e.target.value)}
-								value={email}
-								required
-							/>
-							<input
-								type="text"
-								onChange={(e) => setFlag(e.target.value)}
-								className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
-			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
-								placeholder="Flag"
-								value={flag}
-								required
-							/>
-							<button
-								type="submit"
-								className=" relative block h-8 overflow-hidden "
+					{submitted ? (
+						<div>Correct flag submitted :D</div>
+					) : (
+						display[2] && (
+							<form
+								className="flex flex-col items-center justify-center gap-3 px-4 pb-4 font-DM-Mono text-sm text-[#08FF08]"
+								onSubmit={submit}
 							>
-								Submit
-								<span className="relative -left-full top-1 block h-[2px] w-full animate-btn-anim-1 bg-gradient-to-r from-transparent to-[#03f40f]"></span>
-							</button>
-						</form>
+								<input
+									type="text"
+									className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+									placeholder="Registration Number"
+									onChange={(e) => setRegNo(e.target.value)}
+									value={regNo}
+									required
+								/>
+								<input
+									type="email"
+									className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+									placeholder="Email ID"
+									onChange={(e) => setEmail(e.target.value)}
+									value={email}
+									required
+								/>
+								<input
+									type="text"
+									onChange={(e) => setFlag(e.target.value)}
+									className="mt-1 block w-full border-2 border-green-600 bg-transparent p-1
+			px-2 placeholder-green-500 outline-none transition-all duration-150 focus:border-[#08FF08]"
+									placeholder="Flag"
+									value={flag}
+									required
+								/>
+								<button
+									type="submit"
+									className=" relative block h-8 overflow-hidden "
+								>
+									Submit
+									<span className="relative -left-full top-1 block h-[2px] w-full animate-btn-anim-1 bg-gradient-to-r from-transparent to-[#03f40f]"></span>
+								</button>
+							</form>
+						)
 					)}
 					{display[2] && (
 						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">

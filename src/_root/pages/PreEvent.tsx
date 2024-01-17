@@ -56,19 +56,17 @@ export default function PreEvent() {
 	}, []);
 
 	useEffect(() => {
-		type f = {coins: number}
-		let tag: string = JSON.parse(localStorage.getItem("data") as string)?.regNo
+		type f = { coins: number };
+		let tag: string = JSON.parse(localStorage.getItem("data") as string)?.regNo;
 
 		if (tag)
-
-		axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`)
-		.then((res) => {
-			if (res.status === 200) {
-				localStorage.setItem("coins", res.data.coins.toString());
-				setCoins(res.data.coins)
-			}
-		})
-	})
+			axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`).then((res) => {
+				if (res.status === 200) {
+					localStorage.setItem("coins", res.data.coins.toString());
+					setCoins(res.data.coins);
+				}
+			});
+	});
 
 	const letters = "01";
 
@@ -134,7 +132,9 @@ export default function PreEvent() {
 				</div>
 				<div
 					className="absolute top-0 h-full w-full bg-cover bg-center bg-no-repeat md:left-1/3 md:w-2/3 lg:left-1/2 lg:w-1/2 "
-					style={{ backgroundImage: `linear-gradient(#00000000 80%, #000502), url(${bg})` }}
+					style={{
+						backgroundImage: `linear-gradient(#00000000 80%, #000502), url(${bg})`,
+					}}
 				>
 					<div className="before:absolute before:left-0 before:top-0 before:h-full before:w-full before:bg-green-400 before:mix-blend-color before:contrast-200"></div>
 					<div className="flex h-full flex-col items-center justify-center gap-10 whitespace-nowrap uppercase md:hidden">
@@ -155,7 +155,7 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="flex justify-between px-8 mt-7 mb-5">
+			<div className="mb-5 mt-7 flex justify-between px-8">
 				<div className="ml-8 flex h-6 w-36 items-center gap-4 font-source-code-pro">
 					<span className="text-[#08FF08]"> Coins: </span>
 					{coins}
@@ -165,7 +165,16 @@ export default function PreEvent() {
 						className="-ml-2 h-10 w-10 object-contain transition-all duration-200 hover:-scale-x-100"
 					/>
 				</div>
-				<button className=" font-DM-Mono text-[#08FF08] border-2 border-green-600 bg-transparent p-1 px-2" onClick={(_) => {localStorage.clear(); toast.success("Cleared your data"); location.reload()} }>Clear data</button>
+				<button
+					className=" border-2 border-green-600 bg-transparent p-1 px-2 font-DM-Mono text-[#08FF08]"
+					onClick={(_) => {
+						localStorage.clear();
+						toast.success("Cleared your data");
+						location.reload();
+					}}
+				>
+					Clear data
+				</button>
 			</div>
 			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
 				{questions.map((question, i) => (
