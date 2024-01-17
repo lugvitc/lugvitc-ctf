@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { URL_ORIGIN } from "../../constants";
 import Typewriter from "typewriter-effect";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface QuestionData {
 	id: number;
@@ -16,7 +17,6 @@ export interface QuestionProps {
 	question: QuestionData;
 	setCoins: React.Dispatch<React.SetStateAction<number>>;
 	day: number;
-	key: number;
 }
 
 interface ResponseData {
@@ -30,12 +30,13 @@ type x = {
 	email: string;
 } | null;
 
-export default function Question({
-	question,
-	setCoins,
-	day,
-	key,
-}: QuestionProps) {
+export default function Question({ question, setCoins, day }: QuestionProps) {
+	const notify1 = () => toast.error("Something went down, we'll be back soon!");
+	const notify2 = () => toast.error("Incorrect flag, try again!");
+	const notify3 = () =>
+		toast.error(
+			"Something went wrong while submitting the flag, no internet connection?",
+		);
 	const [display, setDisplay] = useState<boolean[]>([false, false]);
 	const [flag, setFlag] = useState<string>("");
 	const [regNo, setRegNo] = useState<string>(
@@ -77,15 +78,13 @@ export default function Question({
 						return res.data.coins as number;
 					});
 				} else if (res.status >= 500) {
-					alert("Something went down, we'll be back soon!");
+					notify1();
 				} else {
-					alert("Incorrect flag, try again!");
+					notify2();
 				}
 			})
 			.catch(() => {
-				alert(
-					"Something went wrong while submitting the flag, no internet connection?",
-				);
+				notify3();
 			});
 
 		localStorage.setItem(
@@ -116,13 +115,11 @@ export default function Question({
 		}, 10000);
 	}, []);
 	return submitted ? (
-		<div key={key}>Correct flag submitted :D</div>
+		<div>Correct flag submitted :D</div>
 	) : (
-		<div
-			key={key}
-			className="min-h-72 h-full w-full rounded-3xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl md:w-5/12"
-		>
-			<div className="h-full w-full rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98] hover:shadow-custom">
+		<div className=" h-full w-full overflow-x-clip rounded-3xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl ">
+			<Toaster position="top-center" />
+			<div className="h-full w-full overflow-y-auto rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98]">
 				<div className=" flex items-center px-3 pt-3">
 					<div className=" px-1 py-1">
 						<span className="red box inline-block h-3 w-3 items-center rounded-full bg-red-600 p-1"></span>
@@ -167,7 +164,7 @@ export default function Question({
 								}}
 								onInit={(typewriter) => {
 									typewriter
-										.typeString(` sudo get-ctf --id ${key + 1}`)
+										.typeString(` sudo get-ctf --id ${question.id}`)
 										.start();
 								}}
 							/>
@@ -183,7 +180,7 @@ export default function Question({
 						</div>
 					)}
 					{display[1] && (
-						<div className="flex gap-1 font-source-code-pro text-base text-xs text-[#08FF08] md:text-sm lg:text-base">
+						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 							<span className="text-white">
 								{question.author}@lugctf:
 								<span className="font-bold text-sky-blue">~</span>$

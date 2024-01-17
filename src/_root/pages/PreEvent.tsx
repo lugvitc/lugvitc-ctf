@@ -39,8 +39,7 @@ export default function PreEvent() {
 		},
 	]);
 	const dateStr = formatDateToCustomFormat();
-	const currentDate: Date = new Date();
-	const day: number = currentDate.getDate();
+	const day: number = new Date().getDate();
 	localStorage.setItem("day", day.toString());
 	console.log(localStorage.getItem("day"));
 	useEffect(() => {
@@ -150,12 +149,16 @@ export default function PreEvent() {
 			</div>
 			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
 				{questions.map((question, i) => (
-					<Question
+					<div
 						key={i}
-						question={question}
-						setCoins={setCoins}
-						day={day}
-					></Question>
+						className="relative h-96 w-full hover:shadow-custom md:w-5/12"
+					>
+						<Question
+							question={question}
+							setCoins={setCoins}
+							day={day}
+						></Question>
+					</div>
 				))}
 			</div>
 		</div>
