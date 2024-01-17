@@ -33,7 +33,7 @@ module.exports = {
 				'gray36': '#5C5C5C',
 				'dark-grayish-blue': "#262626B2",
 				'animation-green': '#039d00',
-				"black-green": "#00640010",
+				"black-green": "#000502",
 				"navy-blue": "#011522"
 			},
 			fontFamily: {

@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 export interface QuestionData {
 	id: number;
-	title: string;
+	name: string;
 	description: string;
 	points: number;
 	url: string;
@@ -20,7 +20,7 @@ export interface QuestionProps {
 }
 
 interface ResponseData {
-	msg_Code?: number;
+	msg_code?: number;
 	status?: boolean;
 	coins?: number;
 }
@@ -77,14 +77,21 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 						localStorage.setItem("coins", JSON.stringify(res.data.coins));
 						return res.data.coins as number;
 					});
-				} else if (res.status >= 500) {
-					notify1();
 				} else {
 					notify2();
 				}
 			})
-			.catch(() => {
-				notify3();
+			.catch((error) => {
+				if (error.response) {
+					if (error.response.status >= 500) {
+						notify1();
+					} else if (error.response.status === 401) {
+						if (error.response.data.msg_code === 12) { toast("You have already solved this challenge", {icon: '👨‍💻'}); setSubmitted(true); localStorage.setItem(`${question.id}`, JSON.stringify({ solved: true })); }
+						else if (error.response.data.msg_code === 23) toast.error("That seems to someone else's email, use another email")
+					} else if (error.response.status === 404) {
+						if (error.response.data.msg_code === 2) toast.error("Challenge not found... are you solving other day's questions?")
+					}
+				} else notify3();
 			});
 
 		localStorage.setItem(
@@ -114,9 +121,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 			});
 		}, 4200);
 	}, []);
-	return submitted ? (
-		<div>Correct flag submitted :D</div>
-	) : (
+	return (
 		<div className=" min-h-[80vh] w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl ">
 			<Toaster position="top-center" />
 			<div className=" min-h-[80vh] w-full rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98]">
@@ -174,7 +179,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 					)}
 					{display[1] && (
 						<div className="pl-4">
-							<div className="title text-xl font-bold">{question.title}</div>
+							<div className="title text-xl font-bold">{question.name}</div>
 							<div className="desc text-lg">{question.description}</div>
 							<a className=" text-[#08FF08]" href={question.url}>
 								Start at <span className="underline">{question.url}</span>
@@ -203,7 +208,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 							/>
 						</div>
 					)}
-					{display[2] && (
+					{submitted ? (<div>Correct flag submitted :D</div>) : display[2] && (
 						<form
 							className="flex flex-col items-center justify-center gap-3 px-4 pb-4 font-DM-Mono text-sm text-[#08FF08]"
 							onSubmit={submit}

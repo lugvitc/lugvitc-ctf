@@ -1,10 +1,11 @@
 import Question, { QuestionData } from "../../components/preevent/Question";
-// import Navbar from "./components/Navbar/Navbar";
+// import Navbar from "../../components/shared/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "../../assets/images/preevent-background.png";
-import coin from "../../assets/icons/coin.svg";
+import coin from "../../assets/icons/coin.png";
 import { URL_ORIGIN } from "../../constants";
+import toast from "react-hot-toast";
 
 export default function PreEvent() {
 	const [coins, setCoins] = useState<number>(
@@ -12,6 +13,7 @@ export default function PreEvent() {
 			? parseInt(localStorage.getItem("coins") as string)
 			: 0,
 	);
+
 	const [questions, setQuestions] = useState<QuestionData[]>([
 		// {
 		// 	title: "reuben",
@@ -52,6 +54,21 @@ export default function PreEvent() {
 				console.error(error);
 			});
 	}, []);
+
+	useEffect(() => {
+		type f = {coins: number}
+		let tag: string = JSON.parse(localStorage.getItem("data") as string)?.regNo
+
+		if (tag)
+
+		axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`)
+		.then((res) => {
+			if (res.status === 200) {
+				localStorage.setItem("coins", res.data.coins.toString());
+				setCoins(res.data.coins)
+			}
+		})
+	})
 
 	const letters = "01";
 
@@ -94,7 +111,7 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div className="w-full bg-black">
+		<div className="w-full bg-black-green">
 			{/* <Navbar /> */}
 			<div className="flex h-screen items-center justify-start bg-black-green">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
@@ -117,7 +134,7 @@ export default function PreEvent() {
 				</div>
 				<div
 					className="absolute top-0 h-full w-full bg-cover bg-center bg-no-repeat md:left-1/3 md:w-2/3 lg:left-1/2 lg:w-1/2 "
-					style={{ backgroundImage: `url(${bg})` }}
+					style={{ backgroundImage: `linear-gradient(#00000000 80%, #000502), url(${bg})` }}
 				>
 					<div className="before:absolute before:left-0 before:top-0 before:h-full before:w-full before:bg-green-400 before:mix-blend-color before:contrast-200"></div>
 					<div className="flex h-full flex-col items-center justify-center gap-10 whitespace-nowrap uppercase md:hidden">
@@ -138,14 +155,17 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="right-10 top-0 ml-8 mt-4 flex h-6 w-36 items-center gap-4 font-source-code-pro">
-				<span className="text-[#08FF08]"> Coins: </span>
-				{coins}
-				<img
-					src={coin}
-					alt=""
-					className="-ml-2 h-6 w-6 object-contain transition-all duration-200 hover:-scale-x-100"
-				/>
+			<div className="flex justify-between px-8 mt-7 mb-5">
+				<div className="ml-8 flex h-6 w-36 items-center gap-4 font-source-code-pro">
+					<span className="text-[#08FF08]"> Coins: </span>
+					{coins}
+					<img
+						src={coin}
+						alt=""
+						className="-ml-2 h-10 w-10 object-contain transition-all duration-200 hover:-scale-x-100"
+					/>
+				</div>
+				<button className=" font-DM-Mono text-[#08FF08] border-2 border-green-600 bg-transparent p-1 px-2" onClick={(_) => {localStorage.clear(); toast.success("Cleared your data"); location.reload()} }>Clear data</button>
 			</div>
 			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
 				{questions.map((question, i) => (
