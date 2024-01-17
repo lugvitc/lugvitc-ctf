@@ -100,26 +100,26 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 	useEffect(() => {
 		setTimeout(() => {
 			setDisplay([true]);
-		}, 2200);
+		}, 1000);
 
 		setTimeout(() => {
 			setDisplay((prev) => {
 				return [...prev, true];
 			});
-		}, 6000);
+		}, 2500);
 
 		setTimeout(() => {
 			setDisplay((prev) => {
 				return [...prev, true];
 			});
-		}, 10000);
+		}, 4200);
 	}, []);
 	return submitted ? (
 		<div>Correct flag submitted :D</div>
 	) : (
-		<div className=" h-full w-full overflow-x-clip rounded-3xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl ">
+		<div className=" min-h-[80vh] w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150 hover:rounded-xl ">
 			<Toaster position="top-center" />
-			<div className="h-full w-full overflow-y-auto rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98]">
+			<div className=" min-h-[80vh] w-full rounded-xl bg-midnight-blue transition-all duration-150 hover:scale-[0.98]">
 				<div className=" flex items-center px-3 pt-3">
 					<div className=" px-1 py-1">
 						<span className="red box inline-block h-3 w-3 items-center rounded-full bg-red-600 p-1"></span>
@@ -142,6 +142,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 								// autoStart: true,
 								loop: false,
 								cursor: "", // Set the cursor to an empty string initially
+								delay: 50,
 							}}
 							onInit={(typewriter) => {
 								typewriter.typeString("echo $USER").start();
@@ -161,6 +162,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 									// autoStart: true,
 									loop: false,
 									cursor: "", // Set the cursor to an empty string initially
+									delay: 50,
 								}}
 								onInit={(typewriter) => {
 									typewriter
@@ -191,6 +193,7 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 									// autoStart: true,
 									loop: false,
 									cursor: "", // Set the cursor to an empty string initially
+									delay: 50,
 								}}
 								onInit={(typewriter) => {
 									typewriter
@@ -240,6 +243,25 @@ export default function Question({ question, setCoins, day }: QuestionProps) {
 								<span className="relative -left-full top-1 block h-[2px] w-full animate-btn-anim-1 bg-gradient-to-r from-transparent to-[#03f40f]"></span>
 							</button>
 						</form>
+					)}
+					{display[2] && (
+						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
+							<span className="text-white">
+								{question.author}@lugctf:
+								<span className="font-bold text-sky-blue">~</span>$
+							</span>
+							<Typewriter
+								options={{
+									strings: [""],
+									// autoStart: true,
+									loop: false,
+									delay: 50,
+								}}
+								onInit={(typewriter) => {
+									typewriter.typeString(``).start();
+								}}
+							/>
+						</div>
 					)}
 				</div>
 			</div>

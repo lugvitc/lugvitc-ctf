@@ -13,30 +13,30 @@ export default function PreEvent() {
 			: 0,
 	);
 	const [questions, setQuestions] = useState<QuestionData[]>([
-		{
-			title: "reuben",
-			description: "help me with this",
-			points: 200,
-			url: "https://www.google.com",
-			id: 1,
-			author: "reuben",
-		},
-		{
-			title: "reuben 2",
-			description: "send help please",
-			points: 300,
-			url: "https://www.google.com",
-			id: 2,
-			author: "reuben2",
-		},
-		{
-			title: "reuben 3",
-			description: "send help please",
-			points: 400,
-			url: "https://www.google.com",
-			id: 3,
-			author: "reuben3",
-		},
+		// {
+		// 	title: "reuben",
+		// 	description: "help me with this",
+		// 	points: 200,
+		// 	url: "https://www.google.com",
+		// 	id: 1,
+		// 	author: "reuben",
+		// },
+		// {
+		// 	title: "reuben 2",
+		// 	description: "send help please",
+		// 	points: 300,
+		// 	url: "https://www.google.com",
+		// 	id: 2,
+		// 	author: "reuben2",
+		// },
+		// {
+		// 	title: "reuben 3",
+		// 	description: "send help please",
+		// 	points: 400,
+		// 	url: "https://www.google.com",
+		// 	id: 3,
+		// 	author: "reuben3",
+		// },
 	]);
 	const dateStr = formatDateToCustomFormat();
 	const day: number = new Date().getDate();
@@ -151,7 +151,7 @@ export default function PreEvent() {
 				{questions.map((question, i) => (
 					<div
 						key={i}
-						className="relative h-96 w-full hover:shadow-custom md:w-5/12"
+						className="relative min-h-[80vh] w-full hover:shadow-custom md:w-5/12"
 					>
 						<Question
 							question={question}
