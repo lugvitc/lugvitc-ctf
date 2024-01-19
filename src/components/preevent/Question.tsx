@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { URL_ORIGIN } from "../../constants";
 import Typewriter from "typewriter-effect";
@@ -93,7 +93,7 @@ export default function Question({ question, day }: QuestionProps) {
 					notify2();
 				}
 			})
-			.catch((error) => {
+			.catch((error: AxiosError<ResponseData>) => {
 				if (error.response) {
 					if (error.response.status >= 500) {
 						notify1();
@@ -130,8 +130,7 @@ export default function Question({ question, day }: QuestionProps) {
 
 	useEffect(() => {
 		setTimeout(() => {
-			const a = [...display];
-			a[0] = true;
+			const a = [true, false, false];
 			setDisplay(a);
 		}, delays[0]);
 

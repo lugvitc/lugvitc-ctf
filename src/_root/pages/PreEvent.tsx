@@ -63,13 +63,13 @@ export default function PreEvent() {
 	// 	let tag: string = JSON.parse(localStorage.getItem("data") as string)?.regNo;
 
 	// 	if (tag)
-			// axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`)
-			// // .then((res) => {
-			// // 	if (res.status === 200) {
-			// 		// localStorage.setItem("coins", res.data.coins.toString());
-			// 		// setCoins(res.data.coins);
-			// // 	}
-			// // });
+	// axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`)
+	// // .then((res) => {
+	// // 	if (res.status === 200) {
+	// 		// localStorage.setItem("coins", res.data.coins.toString());
+	// 		// setCoins(res.data.coins);
+	// // 	}
+	// // });
 	// });
 
 	const letters = "01";
@@ -113,10 +113,11 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div
-			className="w-full bg-black-green"
-		>
-			<img src={long_lg} className="-rotate-90 fixed w-[20vh] right-[-20vh] bottom-2 origin-bottom-left z-10"/>
+		<div className="w-full bg-black-green">
+			<img
+				src={long_lg}
+				className="fixed bottom-2 right-[-20vh] z-10 w-[20vh] origin-bottom-left -rotate-90"
+			/>
 			<div className="shadow-light-300 fixed z-50 flex h-auto w-full justify-between border-b-2 border-[#f8fafc0f] bg-[#0a1309bf] px-6 py-2 backdrop-blur-lg sm:px-8">
 				<div className="flex items-center justify-center gap-4">
 					<img src={clubLogo} className=" z-10 h-16 object-contain sm:h-20" />
@@ -195,12 +196,12 @@ export default function PreEvent() {
 					/>
 				</div> */}
 				<p className="font-DM-Mono text-[#08FF08]">
-					You may solve today's solved challenges again with some other
+					You may solve today&apos;s solved challenges again with some other
 					credentials
 				</p>
 				<button
 					className="ml-1 w-fit border-2 border-green-600 bg-transparent p-1 px-2 font-DM-Mono text-[#08FF08]"
-					onClick={(_) => {
+					onClick={() => {
 						localStorage.clear();
 						toast.success("Logged out!");
 						location.reload();
