@@ -18,15 +18,6 @@ module.exports = {
 			transitionDuration: {
 				'1500': '1.5s',
 			},
-			animation: {
-				animateToptoBottom: 'hackerEffect 5s linear infinite'
-			},
-			keyframes: {
-				hackerEffect: {
-					'0%': { transform: 'translateY(-100%)' },
-					'100%': { transform: 'translateY(100%)' },
-				},
-			},
 			colors: {
 				'sky-blue': '#78CBFF',
 				'midnight-blue': '#002133',
@@ -34,7 +25,8 @@ module.exports = {
 				'dark-grayish-blue': "#262626B2",
 				'animation-green': '#039d00',
 				"black-green": "#00640010",
-				"navy-blue": "#011522"
+				"navy-blue": "#011522",
+				"flouroscent-green":"#08FF08",
 			},
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
@@ -134,6 +126,10 @@ module.exports = {
 					  "left": "100%"
 					}
 				  },
+				  hackerEffect: {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(100%)' },
+				},
 			},
 		},
 	},
