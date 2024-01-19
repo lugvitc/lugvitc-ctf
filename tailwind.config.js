@@ -13,7 +13,8 @@ module.exports = {
 			backgroundPosition:{
 				landingPos :"left 10em top 12em"},
 			dropShadow:{
-				"3xl": "0 3px 3px rgba(57, 255, 20, 1)"
+				"3xl": "0 3px 3px rgba(57, 255, 20, 1)",
+				"4xl": "0 1px 1px rgba(57, 255, 20, 1)"
 			},
 			transitionDuration: {
 				'1500': '1.5s',
