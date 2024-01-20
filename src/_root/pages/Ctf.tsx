@@ -32,8 +32,8 @@ export interface ChallengeBackend {
 	author: string;
 	name: string;
 	description: string;
-	points: unknown; // actually number
-	tags: number;
+	points: number;
+	tags: unknown; // actually number
 }
 
 const categoryArr = [
@@ -169,7 +169,7 @@ export function CtfPage() {
 			.then((res) => {
 				setChallenges(
 					res.data.map((x: ChallengeBackend) => {
-						x.tags = bsToTags(x.tags);
+						x.tags = bsToTags(x.tags as number);
 						return x as unknown as Challenge;
 					}) as unknown as Challenge[],
 				);
