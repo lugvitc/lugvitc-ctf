@@ -14,9 +14,7 @@ interface LeaderboardResponse {
 
 const Leaderboard = () => {
 	const glitch = useGlitch();
-	const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse[]>(
-		[],
-	);
+	const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse[]>();
 	const [isPageVisible, setIsPageVisible] = useState(true);
 	const [intervalId, setIntervalId] = useState<number>(0);
 
@@ -85,7 +83,7 @@ const Leaderboard = () => {
 				ref={glitch.ref}
 				className="fixed left-0 top-0 -z-20 h-96 w-full animate-leader-anime rounded-l bg-opacity-0 bg-gradient-to-b from-transparent to-[#03f40f20] blur-lg"
 			></div>
-			<div className="flex h-full min-h-screen w-full flex-col items-center justify-center gap-10 bg-leaderboard bg-cover bg-fixed bg-no-repeat p-10 pt-20 sm:gap-20 sm:p-20">
+			<div className="flex h-full min-h-screen w-full flex-col items-center justify-center gap-10 sm:gap-20 bg-leaderboard bg-cover bg-fixed bg-no-repeat p-10 pt-20 sm:p-20">
 				<div className="flex gap-1 self-start font-source-code-pro text-sm text-[#08FF08] md:text-2xl lg:text-4xl">
 					<span className="text-red-700">
 						lugvitc@ctf:<span className="font-bold text-sky-blue">~</span>${" "}
@@ -104,9 +102,9 @@ const Leaderboard = () => {
 						}}
 					/>
 				</div>
-				<div className="top3 relative flex h-full w-full items-center justify-center gap-2 font-DM-Mono text-lg font-extrabold uppercase sm:gap-10 sm:text-2xl">
-					<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
-						<div className="relative h-24 w-24 rounded-full border-4 border-fluorescent-green bg-black sm:h-40 sm:w-40">
+				{leaderboardData && <div className="top3 relative flex h-full w-full items-center justify-center gap-2 sm:gap-10 font-DM-Mono font-extrabold text-lg sm:text-2xl uppercase">
+					<div className="flex h-full w-full flex-col items-center justify-center hover:drop-shadow-circle transition-all duration-200 hover:scale-125">
+						<div className="relative rounded-full border-4 border-fluorescent-green bg-black h-24 w-24 sm:h-40 sm:w-40">
 							<div className="h-full w-full before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-full before:bg-silver before:mix-blend-color">
 								<img
 									src={eventLogo}
@@ -115,12 +113,10 @@ const Leaderboard = () => {
 								/>
 							</div>
 						</div>
-						<div className="rounded-lg py-2 text-fluorescent-green sm:px-10 ">
-							{leaderboardData[1].team_name}
-						</div>
+						<div className=" py-2 text-fluorescent-green rounded-lg ">{leaderboardData[1].team_name}</div>
 					</div>
-					<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
-						<div className="relative h-32 w-32 rounded-full border-4 border-fluorescent-green bg-black sm:h-48 sm:w-48">
+					<div className="flex h-full w-full flex-col items-center justify-center hover:drop-shadow-circle transition-all duration-200 hover:scale-125">
+						<div className="relative rounded-full border-4 border-fluorescent-green bg-black h-32 w-32 sm:h-48 sm:w-48">
 							<div className="h-full w-full before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-full before:bg-gold before:mix-blend-color">
 								<img
 									src={eventLogo}
@@ -129,12 +125,10 @@ const Leaderboard = () => {
 								/>
 							</div>
 						</div>
-						<div className="rounded-lg py-2 text-fluorescent-green sm:px-10 ">
-							{leaderboardData[0].team_name}
-						</div>
+						<div className=" py-2 text-fluorescent-green rounded-lg ">{leaderboardData[0].team_name}</div>
 					</div>
-					<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
-						<div className="relative h-24 w-24 rounded-full border-4 border-fluorescent-green bg-black sm:h-40 sm:w-40">
+					<div className="flex h-full w-full flex-col items-center justify-center hover:drop-shadow-circle transition-all duration-200 hover:scale-125">
+						<div className="relative rounded-full border-4 border-fluorescent-green bg-black h-24 w-24 sm:h-40 sm:w-40">
 							<div className="h-full w-full before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-full before:bg-bronze before:mix-blend-color">
 								<img
 									src={eventLogo}
@@ -143,11 +137,9 @@ const Leaderboard = () => {
 								/>
 							</div>
 						</div>
-						<div className="rounded-lg py-2 text-fluorescent-green sm:px-10 ">
-							{leaderboardData[2].team_name}
-						</div>
+						<div className=" py-2 text-fluorescent-green rounded-lg ">{leaderboardData[2].team_name}</div>
 					</div>
-				</div>
+				</div>}
 				<div className="h-full w-full overflow-auto rounded-xl p-6 pt-0 ">
 					<div className="flex h-full w-full flex-col items-center border-4 border-fluorescent-green text-fluorescent-green">
 						<div className="h-full w-full bg-green-900">
@@ -155,30 +147,30 @@ const Leaderboard = () => {
 								HackerBoard
 							</div>
 							<div className="flex w-full font-source-code-pro font-bold uppercase drop-shadow-black sm:text-2xl lg:text-4xl">
-								<div className="w-full border-2 border-l-0 border-fluorescent-green py-4 text-center">
+								<div className="w-full basis-1/5 border-2 border-l-0 border-fluorescent-green py-4 text-center">
 									[Ranking]
 								</div>
-								<div className="w-full border-2 border-fluorescent-green py-4 text-center">
+								<div className="w-full basis-3/5 border-2 border-fluorescent-green py-4 text-center">
 									[Team]
 								</div>
-								<div className="w-full border-2 border-r-0 border-fluorescent-green py-4 text-center">
+								<div className="w-full basis-1/5 border-2 border-r-0 border-fluorescent-green py-4 text-center">
 									[Points]
 								</div>
 							</div>
 						</div>
 						<div className="flex h-full w-full flex-col bg-black bg-opacity-50 font-source-code-pro">
-							{leaderboardData.map((team, index) => (
+							{leaderboardData && leaderboardData.map((team, index) => (
 								<div
 									className="flex w-full drop-shadow-3xl sm:text-3xl"
 									key={index}
 								>
-									<div className="w-full border-2 border-l-0 border-fluorescent-green border-opacity-50 py-3 text-center">
+									<div className="w-full basis-1/5 border-2 border-l-0 border-fluorescent-green border-opacity-50 py-3 text-center">
 										{index + 1}
 									</div>
-									<div className="w-full border-2 border-fluorescent-green border-opacity-50 py-3 text-center">
+									<div className="w-full basis-3/5 border-2 border-fluorescent-green border-opacity-50 py-3 text-center">
 										{team.team_name}
 									</div>
-									<div className="w-full border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
+									<div className="w-full basis-1/5 border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
 										{team.score}
 									</div>
 								</div>
