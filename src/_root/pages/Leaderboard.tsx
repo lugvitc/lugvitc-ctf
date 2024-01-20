@@ -6,11 +6,7 @@ import { URL_ORIGIN } from "../../constants";
 import { useGlitch } from "react-powerglitch";
 import Typewriter from "typewriter-effect";
 import eventLogo from "../../assets/images/passwordctf-logo.png";
-
-interface LeaderboardResponse {
-	team_name: string;
-	score: number;
-}
+import { LeaderboardResponse } from "../../types";
 
 const Leaderboard = () => {
 	const glitch = useGlitch();
