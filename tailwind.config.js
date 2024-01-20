@@ -3,38 +3,47 @@ module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
 	theme: {
-
 		extend: {
-			boxShadow:{
-				"custom": "0px 0px 60px 10px rgba(0, 255, 117, 0.30)"
+			boxShadow: {
+				custom: "0px 0px 60px 10px rgba(0, 255, 117, 0.30)",
 			},
-			backgroundImage:{
-				landing:"url('./src/assets/images/background.svg')"},
-			backgroundPosition:{
-				landingPos :"left 10em top 12em"},
-			dropShadow:{
-				"3xl": "0 3px 3px rgba(57, 255, 20, 1)"
+			backgroundImage: {
+				landing: "url('./src/assets/images/background.svg')",
+				leaderboard: "url('./src/assets/images/leaderboard.png')",
+			},
+
+			backgroundPosition: {
+				landingPos: "left 10em top 12em",
+			},
+			dropShadow: {
+				"3xl": "0 3px 3px rgba(57, 255, 20, 1)",
+				"black": "4.5px 3px 0px #000000",
+				"circle": "0 0 25px rgba(57, 255, 20, 1)",
 			},
 			transitionDuration: {
-				'1500': '1.5s',
+				1500: "1.5s",
 			},
 			animation: {
-				animateToptoBottom: 'hackerEffect 5s linear infinite'
+				animateToptoBottom: "hackerEffect 5s linear infinite",
 			},
 			keyframes: {
 				hackerEffect: {
-					'0%': { transform: 'translateY(-100%)' },
-					'100%': { transform: 'translateY(100%)' },
+					"0%": { transform: "translateY(-100%)" },
+					"100%": { transform: "translateY(100%)" },
 				},
 			},
 			colors: {
-				'sky-blue': '#78CBFF',
-				'midnight-blue': '#002133',
-				'gray36': '#5C5C5C',
-				'dark-grayish-blue': "#262626B2",
-				'animation-green': '#039d00',
+				"sky-blue": "#78CBFF",
+				"midnight-blue": "#002133",
+				gray36: "#5C5C5C",
+				"dark-grayish-blue": "#262626B2",
+				"animation-green": "#039d00",
 				"black-green": "#00640010",
-				"navy-blue": "#011522"
+				"navy-blue": "#011522",
+				"fluorescent-green": "#08FF08",
+				"gold":"#FFD700",
+				"silver":"#c0c0c0",
+				"bronze":"#CD7F32",
 			},
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
@@ -44,8 +53,17 @@ module.exports = {
 				"glitch-anim-text": "glitchAnimText 4s linear 4.5s infinite",
 				"glitch-anim-text-2": "glitchAnimText2 4s linear 5.5s infinite",
 				"btn-anim-1": "btnanim1 2s linear infinite",
+				"leader-anime": "leaderAnime 4s linear infinite",
 			},
 			keyframes: {
+				leaderAnime:{
+					"from":{
+						top: "-50%",
+					},
+					"to":{
+						top: "100%",
+					}
+				},
 				glitchAnimText: {
 					"0%": {
 						// transform: 'translate3d(calc(-1 * var(--gap-horizontal)), 0, 0) scale3d(-1, -1, 1)',
@@ -127,13 +145,13 @@ module.exports = {
 				},
 				btnanim1: {
 					"0%": {
-					  "left": "-100%"
+						left: "-100%",
 					},
 
 					"50%, 100%": {
-					  "left": "100%"
-					}
-				  },
+						left: "100%",
+					},
+				},
 			},
 		},
 	},
