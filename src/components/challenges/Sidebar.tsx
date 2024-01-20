@@ -25,7 +25,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 	];
 	return (
 		<div className="fixed mb-8 h-screen overflow-y-scroll bg-midnight-blue bg-opacity-40 px-6 py-6">
-			<h1 className=" mt-4 text-2xl font-semibold text-flouroscent-green">
+			<h1 className=" text-flouroscent-green mt-4 text-2xl font-semibold">
 				Categories
 			</h1>
 			<ul className="mt-6 w-full px-4">
@@ -36,7 +36,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
 								sideState !== category
 									? "bg-transparent "
-									: "border border-flouroscent-green bg-midnight-blue text-flouroscent-green "
+									: "border-flouroscent-green text-flouroscent-green border bg-midnight-blue "
 							}`}
 							onClick={() => {
 								setSideState(category);

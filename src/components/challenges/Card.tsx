@@ -61,7 +61,7 @@ export function Card({ challenge }: CardProps) {
 							{challenge.tags.map((tag, index) => (
 								<div
 									key={index}
-									className="line-clamp-1 h-9 w-[8.5rem] rounded bg-flouroscent-green bg-opacity-10 p-2 text-center"
+									className="bg-flouroscent-green line-clamp-1 h-9 w-[8.5rem] rounded bg-opacity-10 p-2 text-center"
 									data-tooltip-id={`tags${challenge.id}`}
 									data-tooltip-content={tag}
 									data-tooltip-place="bottom"
