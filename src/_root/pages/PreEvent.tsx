@@ -162,7 +162,7 @@ export default function PreEvent() {
 							className="phelix-boomgartner animate-glitch-anim-text text-4xl tracking-wide text-white drop-shadow-3xl"
 							onMouseOver={handleMouse}
 						>
-							01010110101010100
+							010101101010
 						</h1>
 						<h1 className="phelix-boomgartner animate-glitch-anim-text-2 text-3xl text-white drop-shadow-3xl">
 							Pre-Event CTF
