@@ -1,16 +1,13 @@
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
-import clubLogo from "../../assets/images/club-logo.png";
 import eventLogo from "../../assets/images/passwordctf-logo.png";
 
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { useUserContext } from "../../context/AuthContext";
-import { URL_ORIGIN } from "../../constants";
+import { TOAST_MESSAGES, URL_ORIGIN } from "../../constants";
 import Background from "../../components/shared/Background";
-
-interface SignupResponse {
-	msg_code: string;
-}
+import toast, { Toaster } from "react-hot-toast";
+import { SignupResponse } from "../../types";
 
 const SignUp = () => {
 	const { isAuthenticated } = useUserContext();
@@ -18,22 +15,22 @@ const SignUp = () => {
 	const [name, setName] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [members, setMembers] = useState<string[]>(["", "", ""]);
-	const [msg, setMsg] = useState({ msg: "", color: "" });
-	const [showPopUp, setShowPopUp] = useState(false);
+	// const [msg, setMsg] = useState({ msg: "", color: "" });
+	// const [showPopUp, setShowPopUp] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 
-	const msgCode = (status: number, msg_code: string) => {
-		if (status >= 200 && status < 400) {
-			setMsg({ msg: msg_code, color: "green" });
-			handlePopup();
-			setShowPopUp(true);
-		} else if (status >= 400 && status < 500) {
-			setMsg({ msg: msg_code, color: "red" });
-			handlePopup();
-			setShowPopUp(true);
-		}
-		console.log(msg);
-	};
+	// const msgCode = (status: number, msg_code: string) => {
+	// 	if (status >= 200 && status < 400) {
+	// 		setMsg({ msg: msg_code, color: "green" });
+	// 		handlePopup();
+	// 		setShowPopUp(true);
+	// 	} else if (status >= 400 && status < 500) {
+	// 		setMsg({ msg: msg_code, color: "red" });
+	// 		handlePopup();
+	// 		setShowPopUp(true);
+	// 	}
+	// 	console.log(msg);
+	// };
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
@@ -46,12 +43,12 @@ const SignUp = () => {
 				members: members,
 			})
 			.then((response: AxiosResponse<SignupResponse>) => {
-				if (response.data.msg_code === "team.name") {
-					msgCode(406, response.data.msg_code);
-				} else if (response.data.msg_code === "db_error") {
-					msgCode(500, response.data.msg_code);
-				} else if (response.data.msg_code === "signup_success") {
-					msgCode(response.status, response.data.msg_code);
+				if (response.data.msg_code === 17) {
+					toast(TOAST_MESSAGES.TEAM_EXISTS);
+				} else if (response.data.msg_code === 0) {
+					toast(TOAST_MESSAGES.DB_ERROR);
+				} else if (response.data.msg_code === 13) {
+					toast(TOAST_MESSAGES.SIGNUP_SUCCESS);
 					setTimeout(() => {
 						navigate("/sign-in");
 					}, 2000);
@@ -73,13 +70,13 @@ const SignUp = () => {
 		setMembers(updatedTeamMembers);
 	};
 
-	const handlePopup = () => {
-		setShowPopUp(true);
-		setTimeout(() => {
-			setShowPopUp(false);
-			setSubmitted(false);
-		}, 1800);
-	};
+	// const handlePopup = () => {
+	// 	setShowPopUp(true);
+	// 	setTimeout(() => {
+	// 		setShowPopUp(false);
+	// 		setSubmitted(false);
+	// 	}, 1800);
+	// };
 
 	console.log(submitted);
 	return (
@@ -94,11 +91,6 @@ const SignUp = () => {
 							<div
 								className={`flex h-12 w-48 items-center justify-center gap-4 text-lg font-bold md:h-16 md:w-60 md:text-xl`}
 							>
-								<img
-									src={clubLogo}
-									alt="logo"
-									className="h-16 w-16 object-contain"
-								/>
 								<h2
 									className="hero glitch layers font-source-code-pro"
 									data-text="Linux Club"
@@ -201,20 +193,20 @@ const SignUp = () => {
 					<NavLink to="/sign-in" className="font-bold text-animation-green">
 						Sign In
 					</NavLink>
+					<Toaster position="bottom-right" />
 				</div>
-				<div
-					className={`absolute top-0 z-10 flex h-16 w-[30rem] border-spacing-2 origin-top flex-col items-center justify-center gap-1 rounded-3xl  bg-dark-grayish-blue p-2 font-source-code-pro tracking-widest duration-200  md:p-4 ${
-						!showPopUp
-							? "scale-y-0"
-							: msg["color"] === "green"
+				{/* <div
+					className={`absolute top-0 z-10 flex h-16 w-[30rem] border-spacing-2 origin-top flex-col items-center justify-center gap-1 rounded-3xl  bg-dark-grayish-blue p-2 font-source-code-pro tracking-widest duration-200  md:p-4 ${!showPopUp
+						? "scale-y-0"
+						: msg["color"] === "green"
 							? "scale-y-150 border-b-2 border-l-2 border-r-2 border-green-600 text-green-600"
 							: "scale-y-150 border-b-2 border-l-2 border-r-2 border-red-600 text-red-600"
-					}`}
+						}`}
 				>
 					<span className="flex basis-3/4 items-center text-base  font-semibold md:text-xl">
 						{msg["msg"]}
 					</span>
-				</div>
+				</div> */}
 			</div>
 		</>
 	);
