@@ -9,7 +9,8 @@ on:
 permissions:
   contents: read
   pages: write
-
+  id-token: write
+  
 concurrency:
   group: 'event-page'
   cancel-in-progress: true
