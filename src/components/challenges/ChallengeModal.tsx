@@ -302,8 +302,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-									hints[selectedHint] &&
-									localStorage.getItem(`hints_${question.id}`)
+								hints[selectedHint] &&
+								localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -311,8 +311,9 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
-							}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
+							isClicked ? "" : "hidden"
+						}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
