@@ -229,7 +229,7 @@ export function CtfPage() {
 						</div>
 					) : (
 						<>
-							<h1 className="my-10 text-4xl font-bold text-flouroscent-green ">
+							<h1 className="text-flouroscent-green my-10 text-4xl font-bold ">
 								{sideState}
 							</h1>
 							<div className="grid w-10/12 grid-cols-2 gap-10 ">
