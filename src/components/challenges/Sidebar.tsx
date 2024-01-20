@@ -1,15 +1,4 @@
-export interface Challenge {
-	id: number;
-	author: string;
-	title: string;
-	description: string;
-	points: number;
-	tags: string[];
-}
-interface SidebarProps {
-	sideState: string;
-	setSideState: (newState: string) => void;
-}
+import { SidebarProps } from "../../types";
 
 const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 	const categoryArr = [
