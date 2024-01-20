@@ -1,17 +1,22 @@
 import Question, { QuestionData } from "../../components/preevent/Question";
-// import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "../../assets/images/preevent-background.png";
-import coin from "../../assets/icons/coin.svg";
+import logo from "../../assets/icons/logo.png";
+import long_lg from "../../assets/icons/long_logo.png";
+// import coin from "../../assets/icons/coin.png";
+import clubLogo from "../../assets/images/club-logo.png";
+
 import { URL_ORIGIN } from "../../constants";
+import toast from "react-hot-toast";
 
 export default function PreEvent() {
-	const [coins, setCoins] = useState<number>(
-		localStorage.getItem("coins")
-			? parseInt(localStorage.getItem("coins") as string)
-			: 0,
-	);
+	// const [coins, setCoins] = useState<number>(
+	// 	localStorage.getItem("coins")
+	// 		? parseInt(localStorage.getItem("coins") as string)
+	// 		: 0,
+	// );
+
 	const [questions, setQuestions] = useState<QuestionData[]>([
 		// {
 		// 	title: "reuben",
@@ -52,6 +57,20 @@ export default function PreEvent() {
 				console.error(error);
 			});
 	}, []);
+
+	// useEffect(() => {
+	// 	type f = { coins: number };
+	// 	let tag: string = JSON.parse(localStorage.getItem("data") as string)?.regNo;
+
+	// 	if (tag)
+	// axios.get<f>(`${URL_ORIGIN}/ctf/pre/coins/${tag}`)
+	// // .then((res) => {
+	// // 	if (res.status === 200) {
+	// 		// localStorage.setItem("coins", res.data.coins.toString());
+	// 		// setCoins(res.data.coins);
+	// // 	}
+	// // });
+	// });
 
 	const letters = "01";
 
@@ -94,8 +113,23 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div className="w-full bg-black">
-			{/* <Navbar /> */}
+		<div className="w-full bg-black-green">
+			<img
+				src={long_lg}
+				className="fixed bottom-2 right-[-20vh] z-10 w-[20vh] origin-bottom-left -rotate-90"
+			/>
+			<div className="shadow-light-300 fixed z-50 flex h-auto w-full justify-between border-b-2 border-[#f8fafc0f] bg-[#0a1309bf] px-6 py-2 backdrop-blur-lg sm:px-8">
+				<div className="flex items-center justify-center gap-4">
+					<img src={clubLogo} className=" z-10 h-16 object-contain sm:h-20" />
+					<span className="font-DM-Mono text-[20px] font-bold text-animation-green max-lg:hidden">
+						Linux Club VITC
+					</span>
+				</div>
+				<img
+					src={logo}
+					className="z-10 h-16 object-contain drop-shadow-4xl sm:h-20"
+				/>
+			</div>
 			<div className="flex h-screen items-center justify-start bg-black-green">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
 					<h1
@@ -111,13 +145,15 @@ export default function PreEvent() {
 					<h1 className="text-gray-300 drop-shadow-3xl md:text-xl lg:text-2xl xl:text-3xl">
 						{dateStr}
 					</h1>
-					<p className="mt-4 text-gray-500 drop-shadow-3xl md:text-sm">
+					<p className="mt-4 italic text-gray-500 drop-shadow-3xl md:text-sm">
 						Scroll down for questions
 					</p>
 				</div>
 				<div
 					className="absolute top-0 h-full w-full bg-cover bg-center bg-no-repeat md:left-1/3 md:w-2/3 lg:left-1/2 lg:w-1/2 "
-					style={{ backgroundImage: `url(${bg})` }}
+					style={{
+						backgroundImage: `linear-gradient(#00000000 80%, #000502), url(${bg})`,
+					}}
 				>
 					<div className="before:absolute before:left-0 before:top-0 before:h-full before:w-full before:bg-green-400 before:mix-blend-color before:contrast-200"></div>
 					<div className="flex h-full flex-col items-center justify-center gap-10 whitespace-nowrap uppercase md:hidden">
@@ -126,7 +162,7 @@ export default function PreEvent() {
 							className="phelix-boomgartner animate-glitch-anim-text text-4xl tracking-wide text-white drop-shadow-3xl"
 							onMouseOver={handleMouse}
 						>
-							010101101010
+							01010110101010100
 						</h1>
 						<h1 className="phelix-boomgartner animate-glitch-anim-text-2 text-3xl text-white drop-shadow-3xl">
 							Pre-Event CTF
@@ -138,28 +174,41 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="right-10 top-0 ml-8 mt-4 flex h-6 w-36 items-center gap-4 font-source-code-pro">
-				<span className="text-[#08FF08]"> Coins: </span>
-				{coins}
-				<img
-					src={coin}
-					alt=""
-					className="-ml-2 h-6 w-6 object-contain transition-all duration-200 hover:-scale-x-100"
-				/>
-			</div>
-			<div className="relative flex h-full w-full flex-wrap items-center justify-center gap-20 p-10">
+			<div className="relative flex h-full w-full flex-col items-center justify-center gap-10 p-10">
 				{questions.map((question, i) => (
-					<div
-						key={i}
-						className="relative min-h-[80vh] w-full hover:shadow-custom md:w-5/12"
-					>
+					<div key={i} className="relative w-full md:w-6/12">
 						<Question
 							question={question}
-							setCoins={setCoins}
+							// setCoins={setCoins}
 							day={day}
 						></Question>
 					</div>
 				))}
+			</div>
+			<div className="mb-5 mt-7 flex flex-col justify-start gap-2 px-8">
+				{/* <div className="ml-8 flex h-6 w-36 items-center gap-4 font-source-code-pro">
+					<span className="text-[#08FF08]"> Coins: </span>
+					{coins}
+					<img
+						src={coin}
+						alt=""
+						className="-ml-2 h-10 w-10 object-contain transition-all duration-200 hover:-scale-x-100"
+					/>
+				</div> */}
+				<p className="font-DM-Mono text-[#08FF08]">
+					You may solve today&apos;s solved challenges again with some other
+					credentials
+				</p>
+				<button
+					className="ml-1 w-fit border-2 border-green-600 bg-transparent p-1 px-2 font-DM-Mono text-[#08FF08]"
+					onClick={() => {
+						localStorage.clear();
+						toast.success("Logged out!");
+						location.reload();
+					}}
+				>
+					Solve again
+				</button>
 			</div>
 		</div>
 	);
@@ -209,8 +258,4 @@ function getDaySuffix(day: number): string {
 		default:
 			return "th";
 	}
-}
-
-{
-	/* <Question question={question} index={i} /> */
 }

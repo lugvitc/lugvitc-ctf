@@ -8,10 +8,10 @@ import PreEventProvider from "./context/PreeventContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<BrowserRouter>
-		<PreEventProvider>
-			<ReactLenis root>
-				<App />
-			</ReactLenis>
-		</PreEventProvider>
+		{/* <PreEventProvider> */}
+		<ReactLenis root>
+			<App />
+		</ReactLenis>
+		{/* </PreEventProvider> */}
 	</BrowserRouter>,
 );

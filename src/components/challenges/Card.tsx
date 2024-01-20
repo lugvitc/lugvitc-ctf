@@ -1,83 +1,81 @@
-import axios, { AxiosResponse } from "axios";
-import { HintModal } from "./Hint";
-import { useState } from "react";
+import { Tooltip } from "react-tooltip";
 export interface Challenge {
 	id: number;
-	title: string;
+	author: string;
+	name: string;
 	description: string;
 	points: number;
+	tags: string[];
 }
 
 interface CardProps {
 	challenge: Challenge;
 }
 
-interface postResponse {
-	status?: boolean;
-	msg_codes?: string;
-}
-
 export function Card({ challenge }: CardProps) {
-	const [status, setStatus] = useState<boolean | undefined>(false);
-	const jwt = localStorage.getItem("jwt_token");
-	const [flag, setFlag] = useState<string>("");
-	const hints: number[] = [1, 2, 3];
-	function handleSubmission() {
-		axios
-			.post(
-				`http://localhost:5000/api/ctf/${challenge.id}/flag`,
-				{
-					flag: flag,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${jwt}`,
-					},
-				},
-			)
-			.then((res: AxiosResponse<postResponse>) => {
-				setStatus(res.data.status);
-				console.log(status);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}
 	return (
-		<div className="m-2 flex w-full flex-col justify-between rounded-xl border border-gray-600 bg-black p-6 shadow-md">
-			<div>
-				<h3 className="text-center text-3xl font-extrabold text-sky-blue">
-					{challenge.title}
-				</h3>
+		<div>
+			<div className=" h-[20rem] w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150">
+				<div className=" h-[20rem] w-full bg-midnight-blue transition-all duration-150 hover:scale-[0.99] hover:rounded-xl">
+					<div className=" flex items-center px-3 ">
+						<div className="flex items-center">
+							<div className=" px-1 ">
+								<span className="red box inline-block h-3 w-3 items-center rounded-full bg-red-600 p-1"></span>
+							</div>
+							<div className=" px-1 py-1">
+								<span className="yellow box inline-block h-3 w-3 items-center rounded-full bg-yellow-500 p-1"></span>
+							</div>
+							<div className=" px-1 py-1">
+								<span className="green box inline-block h-3 w-3 items-center rounded-full bg-green-500 p-1"></span>
+							</div>
+						</div>
 
-				<div className="flex items-start justify-between">
-					<div>
-						<h3 className="text-xl font-bold text-gray-300">Description</h3>
-						<p className="mt-2 text-gray-300">{challenge.description}</p>
-						<p className="mt-4 text-gray-400">Points: {challenge.points}</p>
+						<div className="mb-3 mt-3 grow text-center text-2xl font-semibold text-[#08FF08]">
+							{challenge.name}
+						</div>
 					</div>
-
-					<div className="flex space-x-2">
-						{hints.map((hint) => (
-							<HintModal key={hint} hintNumber={hint} id={challenge.id} />
-						))}
+					<hr className="m-auto w-[95%] border border-[#08FF08] opacity-30" />
+					<div className="content mt-1 flex flex-col gap-3 px-4 py-2 font-source-code-pro text-white">
+						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
+							<span className="text-white">
+								author@lug.ctf:
+								<span className="font-bold text-sky-blue">~</span>${" "}
+							</span>
+							{challenge.author}
+						</div>
+						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
+							<span className="text-white">
+								description@lug@ctf:
+								<span className="font-bold text-sky-blue">~</span>${" "}
+							</span>
+							{challenge.description}
+						</div>
+						<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
+							<span className="text-white">
+								points@lug@ctf:
+								<span className="font-bold text-sky-blue">~</span>${" "}
+							</span>
+							{challenge.points}
+						</div>
+						<div className="my-4 flex flex-wrap items-center gap-3">
+							{challenge.tags.map((tag, index) => (
+								<div
+									key={index}
+									className="line-clamp-1 h-9 w-[8.5rem] rounded bg-flouroscent-green bg-opacity-10 p-2 text-center"
+									data-tooltip-id={`tags${challenge.id}`}
+									data-tooltip-content={tag}
+									data-tooltip-place="bottom"
+								>
+									{tag}
+								</div>
+							))}
+							<Tooltip
+								id={`tags${challenge.id}`}
+								style={{ backgroundColor: "rgb(0, 255, 30)", color: "#222" }}
+							/>
+						</div>
 					</div>
 				</div>
-				<div className="flex w-full flex-col gap-1">
-					<label className="text-gray-400">Flag</label>
-					<input
-						type="text"
-						placeholder="flag{}"
-						onChange={(e) => setFlag(e.target.value)}
-						className="block w-full rounded-lg border border-gray-600 bg-dark-grayish-blue p-2.5 text-sm text-white placeholder-gray-500"
-					/>
-				</div>
-				<button
-					className="mt-4 h-12 w-full rounded-xl bg-midnight-blue text-lg font-bold text-white hover:bg-gray-600"
-					onClick={handleSubmission}
-				>
-					Submit
-				</button>
 			</div>
 		</div>
 	);
