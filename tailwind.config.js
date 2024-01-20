@@ -13,7 +13,8 @@ module.exports = {
 			backgroundPosition:{
 				landingPos :"left 10em top 12em"},
 			dropShadow:{
-				"3xl": "0 3px 3px rgba(57, 255, 20, 1)"
+				"3xl": "0 3px 3px rgba(57, 255, 20, 1)",
+				"4xl": "0 1px 1px rgba(57, 255, 20, 1)"
 			},
 			transitionDuration: {
 				'1500': '1.5s',
@@ -24,9 +25,10 @@ module.exports = {
 				'gray36': '#5C5C5C',
 				'dark-grayish-blue': "#262626B2",
 				'animation-green': '#039d00',
-				"black-green": "#00640010",
 				"navy-blue": "#011522",
 				"flouroscent-green":"#08FF08",
+				"black-green": "#000502",
+				"navy-blue": "#011522"
 			},
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
