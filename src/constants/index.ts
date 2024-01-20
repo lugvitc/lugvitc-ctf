@@ -35,4 +35,4 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 	},
 ];
 
-export const URL_ORIGIN = "http://localhost:8000/api";
+export const URL_ORIGIN = "https://pwncore.lugvitc.org/api";
