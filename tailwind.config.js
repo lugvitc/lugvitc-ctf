@@ -36,7 +36,8 @@ module.exports = {
 				"gold": "#FFD700",
 				"silver": "#c0c0c0",
 				"bronze": "#CD7F32",
-			},
+        "green-black": "#000502",
+      },
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
 				"DM-Mono": ["DM Mono", "monospace"],

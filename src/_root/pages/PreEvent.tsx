@@ -114,7 +114,7 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div className="w-full bg-black-green">
+		<div className="w-full bg-green-black">
 			<img
 				src={long_lg}
 				className="fixed bottom-2 right-[-20vh] z-10 w-[20vh] origin-bottom-left -rotate-90"
@@ -131,7 +131,7 @@ export default function PreEvent() {
 					className="z-10 h-16 object-contain drop-shadow-4xl sm:h-20"
 				/>
 			</div>
-			<div className="flex h-screen items-center justify-start bg-black-green">
+			<div className="flex h-screen items-center justify-start bg-green-black">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
 					<h1
 						className="phelix-boomgartner animate-glitch-anim-text text-white drop-shadow-3xl md:text-3xl lg:text-5xl xl:text-7xl"

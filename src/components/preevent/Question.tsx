@@ -51,6 +51,7 @@ export default function Question({ question, day }: QuestionProps) {
 			.then((res) => {
 				if ((res.data.status as boolean) === true) {
 					setSubmitted(true);
+					toast.success(`Correct Flag! you now have ${res.data.coins} coins`);
 					// setCoins(() => {
 					// 	localStorage.setItem(
 					// 		`${question.id}`,
