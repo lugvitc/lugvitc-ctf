@@ -2,7 +2,7 @@ import "./GlitchEffect.css";
 
 const Background = () => {
 	return (
-		<div className='sect-1 before:animate-animateToptoBottom absolute left-0 top-0 z-0 flex h-[150vh] w-full flex-1 flex-wrap items-center justify-center overflow-hidden bg-black before:absolute before:h-full before:w-full before:rotate-45 before:content-[""]'>
+		<div className='sect-1 absolute left-0 top-0 z-0 flex h-[150vh] w-full flex-1 flex-wrap items-center justify-center overflow-hidden bg-black before:absolute before:h-full before:w-full before:rotate-45 before:animate-animateToptoBottom before:content-[""]'>
 			{Array.from({ length: 2800 }).map((_, i) => (
 				<div
 					key={i}
