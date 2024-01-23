@@ -137,16 +137,18 @@ const SignUp = () => {
 							{selected ? (
 								selected.map((e, i) => {
 									if (e === true) {
-										return (<label key={i} className="w-full">
-											Member {i+1}:
-											<input
-												className="my-1 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-2"
-												type="text"
-												value={members[i]}
-												onChange={(e) => handleInputChange(i, e.target.value)}
-												required
-											/>
-										</label>);
+										return (
+											<label key={i} className="w-full">
+												Member {i + 1}:
+												<input
+													className="my-1 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-2"
+													type="text"
+													value={members[i]}
+													onChange={(e) => handleInputChange(i, e.target.value)}
+													required
+												/>
+											</label>
+										);
 									}
 								})
 							) : (
