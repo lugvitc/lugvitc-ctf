@@ -175,7 +175,7 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="relative flex h-full w-full flex-col items-center justify-center gap-10 p-10">
+			<div className="flex w-full flex-col items-center justify-center gap-10 p-10">
 				{questions.map((question: QuestionData, i) => (
 					<div key={i} className="relative w-full md:w-6/12">
 						<Question
