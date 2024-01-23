@@ -178,49 +178,43 @@ export function CtfPage() {
 	const { isAuthenticated } = useUserContext();
 	return (
 		<React.Fragment>
-			{
-				isAuthenticated ? (
-					<>
-						<main className="flex w-full flex-col bg-[#020202] font-source-code-pro" >
-							<div className="flex h-[80px] w-full p-10 "></div>
-							<div className="flex w-screen">
-								<div className="relative h-screen w-1/5">
-									<Sidebar sideState={sideState} setSideState={setSideState} />
-								</div>
-								<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
-									{loading ? (
-										<div className="flex h-screen items-center justify-center">
-											<Circles
-												height="80"
-												width="80"
-												color="green"
-												ariaLabel="three-dots-loading"
-											/>
-										</div>
-									) : (
-										<>
-											<h1 className="text-flouroscent-green my-10 text-4xl font-bold ">
-												{sideState}
-											</h1>
-											<div className="grid w-10/12 grid-cols-2 gap-10 ">
-												{questionList.map((challenge) => (
-													<Card challenge={challenge} key={challenge.id} />
-												))}
-											</div>
-										</>
-									)}
-								</div>
+			{isAuthenticated ? (
+				<>
+					<main className="flex w-full flex-col bg-[#020202] font-source-code-pro">
+						<div className="flex h-[80px] w-full p-10 "></div>
+						<div className="flex w-screen">
+							<div className="relative h-screen w-1/5">
+								<Sidebar sideState={sideState} setSideState={setSideState} />
 							</div>
-						</main>
-					</>
-
-				) : (
-					<Navigate to={'/sign-in'} />
-				)
-			}
-
+							<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
+								{loading ? (
+									<div className="flex h-screen items-center justify-center">
+										<Circles
+											height="80"
+											width="80"
+											color="green"
+											ariaLabel="three-dots-loading"
+										/>
+									</div>
+								) : (
+									<>
+										<h1 className="text-flouroscent-green my-10 text-4xl font-bold ">
+											{sideState}
+										</h1>
+										<div className="grid w-10/12 grid-cols-2 gap-10 ">
+											{questionList.map((challenge) => (
+												<Card challenge={challenge} key={challenge.id} />
+											))}
+										</div>
+									</>
+								)}
+							</div>
+						</div>
+					</main>
+				</>
+			) : (
+				<Navigate to={"/sign-in"} />
+			)}
 		</React.Fragment>
-
-
 	);
 }
