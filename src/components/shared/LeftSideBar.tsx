@@ -1,11 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { leftSidebarLinks } from "../../constants";
 import { useUserContext } from "../../context/AuthContext";
-
-interface Location {
-	pathname: string;
-}
-
+import { Location } from "../../types";
 const LeftSideBar = () => {
 	const location = useLocation() as Location;
 	const pathname = location.pathname;

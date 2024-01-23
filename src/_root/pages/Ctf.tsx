@@ -5,47 +5,8 @@ import axios from "axios";
 import { URL_ORIGIN } from "../../constants";
 import Sidebar from "../../components/challenges/Sidebar";
 import { Circles } from "react-loader-spinner";
-
-interface ChallengeCategories {
-	[key: string]: Challenge[];
-	All: Challenge[];
-	"Web exploitation": Challenge[];
-	Cryptography: Challenge[];
-	"Binary exploitation": Challenge[];
-	"Reverse engineering": Challenge[];
-	Forensics: Challenge[];
-	OSINT: Challenge[];
-	Scripting: Challenge[];
-	Miscellaneous: Challenge[];
-}
-export interface Challenge {
-	id: number;
-	author: string;
-	name: string;
-	description: string;
-	points: number;
-	tags: string[];
-}
-
-export interface ChallengeBackend {
-	id: number;
-	author: string;
-	name: string;
-	description: string;
-	points: number;
-	tags: unknown; // actually number
-}
-
-const categoryArr = [
-	"Web exploitation",
-	"Cryptography",
-	"Binary exploitation",
-	"Reverse engineering",
-	"Forensics",
-	"OSINT",
-	"Scripting",
-	"Miscellaneous",
-].reverse();
+import { ChallengeCategories, Challenge, ChallengeBackend } from "../../types";
+import { categoryArr } from "../../constants";
 
 const bsToTags = (bs: number) => {
 	const tags = [];

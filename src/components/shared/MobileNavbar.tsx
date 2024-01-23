@@ -1,15 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { leftSidebarLinks } from "../../constants";
 import { useUserContext } from "../../context/AuthContext";
-
-interface Location {
-	pathname: string;
-}
-
-interface Props {
-	isOpen: boolean;
-	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { Location, Props } from "../../types";
 
 const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 	const location = useLocation() as Location;

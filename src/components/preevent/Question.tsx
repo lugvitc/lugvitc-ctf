@@ -3,36 +3,7 @@ import { useEffect, useState } from "react";
 import { URL_ORIGIN } from "../../constants";
 import Typewriter from "typewriter-effect";
 import toast, { Toaster } from "react-hot-toast";
-
-export interface QuestionData {
-	id: number;
-	name: string;
-	description: string;
-	points: number;
-	url: string;
-	author: string;
-}
-
-export interface QuestionProps {
-	question: QuestionData;
-	// setCoins: React.Dispatch<React.SetStateAction<number>>;
-	day: number;
-}
-
-interface ResponseData {
-	msg_code?: number;
-	status?: boolean;
-	coins?: number;
-}
-
-type x = {
-	regNo: string;
-	email: string;
-} | null;
-
-type Hider = {
-	[key: string]: { opacity: number };
-};
+import { QuestionProps, ResponseData, x, Hider } from "../../types";
 
 const hider: Hider = {
 	true: { opacity: 100 },

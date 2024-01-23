@@ -1,14 +1,13 @@
-import Question from "../../components/preevent/Question";
+import Question from "../components/preevent/Question";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import bg from "../../assets/images/preevent-background.png";
-import logo from "../../assets/icons/logo.png";
-import long_lg from "../../assets/icons/long_logo.png";
+import bg from "../assets/images/preevent-background.png";
+import logo from "../assets/icons/logo.png";
+import long_lg from "../assets/icons/long_logo.png";
 // import coin from "../../assets/icons/coin.png";
-import clubLogo from "../../assets/images/club-logo.png";
-import { QuestionData } from "../../types";
-
-import { URL_ORIGIN } from "../../constants";
+import clubLogo from "../assets/images/club-logo.png";
+import { QuestionData } from "../types";
+import { URL_ORIGIN } from "../constants";
 import toast from "react-hot-toast";
 
 export default function PreEvent() {
@@ -114,7 +113,7 @@ export default function PreEvent() {
 	}
 
 	return (
-		<div className="w-full bg-green-black">
+		<div className="w-full bg-black">
 			<img
 				src={long_lg}
 				className="fixed bottom-2 right-[-20vh] z-10 w-[20vh] origin-bottom-left -rotate-90"
@@ -131,7 +130,7 @@ export default function PreEvent() {
 					className="z-10 h-16 object-contain drop-shadow-4xl sm:h-20"
 				/>
 			</div>
-			<div className="flex h-screen items-center justify-start bg-green-black">
+			<div className=" flex h-screen items-center justify-start bg-black-green">
 				<div className="flex h-full basis-1/4 flex-col items-start justify-center self-start whitespace-nowrap uppercase max-md:hidden md:gap-20 md:pl-10 lg:basis-1/3 lg:gap-10 lg:pl-28">
 					<h1
 						className="phelix-boomgartner animate-glitch-anim-text text-white drop-shadow-3xl md:text-3xl lg:text-5xl xl:text-7xl"
@@ -163,7 +162,7 @@ export default function PreEvent() {
 							className="phelix-boomgartner animate-glitch-anim-text text-4xl tracking-wide text-white drop-shadow-3xl"
 							onMouseOver={handleMouse}
 						>
-							010101101010
+							01010110101010100
 						</h1>
 						<h1 className="phelix-boomgartner animate-glitch-anim-text-2 text-3xl text-white drop-shadow-3xl">
 							Pre-Event CTF
@@ -176,7 +175,7 @@ export default function PreEvent() {
 				</div>
 			</div>
 			<div className="relative flex h-full w-full flex-col items-center justify-center gap-10 p-10">
-				{questions.map((question: QuestionData, i) => (
+				{questions.map((question, i) => (
 					<div key={i} className="relative w-full md:w-6/12">
 						<Question
 							question={question}

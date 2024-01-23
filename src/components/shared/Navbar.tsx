@@ -4,10 +4,7 @@ import { HomeNavbarLinks } from "../../types";
 import { homeNavbarLinks } from "../../constants";
 import MobileNavbar from "./MobileNavbar";
 import { useUserContext } from "../../context/AuthContext";
-
-interface Location {
-	pathname: string;
-}
+import { Location } from "../../types";
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
