@@ -123,7 +123,7 @@ export default function Question({ question, day }: QuestionProps) {
 		}, delays[2]);
 	}, []);
 
-	console.log(display);
+	// console.log(display);
 	return (
 		<div className=" w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150 hover:shadow-custom ">
 			<Toaster position="top-center" />
@@ -188,9 +188,11 @@ export default function Question({ question, day }: QuestionProps) {
 					<div className="pl-4" style={hider[display[1].toString()]}>
 						<div className="title text-xl font-bold">{question.name}</div>
 						<div className="desc text-lg">{question.description}</div>
-						<a className=" text-[#08FF08]" href={question.url}>
-							Start at <span className="underline">{question.url}</span>
-						</a>
+						{question.url && (
+							<a className=" text-[#08FF08]" href={question.url}>
+								Start at <span className="underline">{question.url}</span>
+							</a>
+						)}
 					</div>
 
 					<div
