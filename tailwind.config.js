@@ -16,9 +16,10 @@ module.exports = {
 			},
 			dropShadow: {
 				"3xl": "0 3px 3px rgba(57, 255, 20, 1)",
+				"3xl-v2": "0 2px 6px #74ff14 ",
 				"black": "4.5px 3px 0px #000000",
 				"circle": "0 0 25px rgba(57, 255, 20, 1)",
-        "4xl": "0 1px 1px rgba(57, 255, 20, 1)"
+				"4xl": "0 1px 1px rgba(57, 255, 20, 1)"
 			},
 			transitionDuration: {
 				1500: "1.5s",
@@ -32,10 +33,10 @@ module.exports = {
 				"black-green": "#00640010",
 				"navy-blue": "#011522",
 				"fluorescent-green": "#08FF08",
-				"gold":"#FFD700",
-				"silver":"#c0c0c0",
-				"bronze":"#CD7F32",
-				"green-black": "#000502",
+				"gold": "#FFD700",
+				"silver": "#c0c0c0",
+				"bronze": "#CD7F32",
+        "green-black": "#000502",
       },
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
@@ -46,16 +47,32 @@ module.exports = {
 				"glitch-anim-text-2": "glitchAnimText2 4s linear 5.5s infinite",
 				"btn-anim-1": "btnanim1 2s linear infinite",
 				"leader-anime": "leaderAnime 4s linear infinite",
-        "animateToptoBottom": "hackerEffect 5s linear infinite",
+				"animateToptoBottom": "hackerEffect 5s linear infinite",
+				'crtAnimation': 'crtEffect 5s linear infinite',
+				'tv-flicker': 'flicker 1s infinte'
 			},
 			keyframes: {
-				leaderAnime:{
-					"from":{
+				leaderAnime: {
+					"from": {
 						top: "-50%",
 					},
-					"to":{
+					"to": {
 						top: "100%",
 					}
+				},
+				hackerEffect: {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(100%)' },
+				},
+				crtEffect: {
+					'0%': { transform: 'translateY(-200%)' },
+					'100%': { transform: 'translateY(5%)' },
+				},
+				flicker: {
+
+					'0%': { transform: 'translateY(1px)' },
+					'100%': { transform: 'translateY(0px)' },
+
 				},
 				glitchAnimText: {
 					"0%": {
@@ -141,10 +158,10 @@ module.exports = {
 						left: "-100%",
 					},
 					"50%, 100%": {
-					  "left": "100%"
+						"left": "100%"
 					}
-				  },
-				  hackerEffect: {
+				},
+				hackerEffect: {
 					'0%': { transform: 'translateY(-100%)' },
 					'100%': { transform: 'translateY(100%)' },
 				},

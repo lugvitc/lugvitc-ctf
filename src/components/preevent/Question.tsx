@@ -3,36 +3,7 @@ import { useEffect, useState } from "react";
 import { URL_ORIGIN } from "../../constants";
 import Typewriter from "typewriter-effect";
 import toast, { Toaster } from "react-hot-toast";
-
-export interface QuestionData {
-	id: number;
-	name: string;
-	description: string;
-	points: number;
-	url: string;
-	author: string;
-}
-
-export interface QuestionProps {
-	question: QuestionData;
-	// setCoins: React.Dispatch<React.SetStateAction<number>>;
-	day: number;
-}
-
-interface ResponseData {
-	msg_code?: number;
-	status?: boolean;
-	coins?: number;
-}
-
-type x = {
-	regNo: string;
-	email: string;
-} | null;
-
-type Hider = {
-	[key: string]: { opacity: number };
-};
+import { QuestionProps, ResponseData, x, Hider } from "../../types";
 
 const hider: Hider = {
 	true: { opacity: 100 },
@@ -152,7 +123,7 @@ export default function Question({ question, day }: QuestionProps) {
 		}, delays[2]);
 	}, []);
 
-	console.log(display);
+	// console.log(display);
 	return (
 		<div className=" w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150 hover:shadow-custom ">
 			<Toaster position="top-center" />
@@ -217,9 +188,13 @@ export default function Question({ question, day }: QuestionProps) {
 					<div className="pl-4" style={hider[display[1].toString()]}>
 						<div className="title text-xl font-bold">{question.name}</div>
 						<div className="desc text-lg">{question.description}</div>
-						<a className=" text-[#08FF08]" href={question.url}>
-							Start at <span className="underline">{question.url}</span>
-						</a>
+						{
+							question.url && (
+								<a className=" text-[#08FF08]" href={question.url}>
+									Start at <span className="underline">{question.url}</span>
+								</a>
+							)
+						}
 					</div>
 
 					<div

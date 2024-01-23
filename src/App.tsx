@@ -25,8 +25,9 @@ export default function App() {
 					<Route path="/rules" element={<Rules />} />
 					<Route path="/leaderboard" element={<Leaderboard />} />
 					<Route path="/play" element={<CtfPage />} />
-					<Route path="/preevent" element={<PreEvent />} />
 				</Route>
+
+				<Route path="/preevent" element={<PreEvent />} />
 			</Routes>
 		</main>
 	);
