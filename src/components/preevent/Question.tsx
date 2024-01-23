@@ -123,7 +123,7 @@ export default function Question({ question, day }: QuestionProps) {
 		}, delays[2]);
 	}, []);
 
-	console.log(display);
+	// console.log(display);
 	return (
 		<div className=" w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150 hover:shadow-custom ">
 			<Toaster position="top-center" />

@@ -6,7 +6,7 @@ import RootLayout from "./_root/RootLayout";
 import { LandingPage } from "./_root/pages";
 import Rules from "./_root/pages/Rules";
 import Leaderboard from "./_root/pages/Leaderboard";
-import PreEvent from "./_root/PreEvent";
+import PreEvent from "./_root/pages/PreEvent";
 import { CtfPage } from "./_root/pages/Ctf";
 
 export default function App() {
