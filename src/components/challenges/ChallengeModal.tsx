@@ -255,23 +255,28 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-								{portsFetched && portsFetched.length > 0 && <div className="text-[20px]">
-									<Typewriter
-										options={{
-											strings: ["Ports"],
-											// autoStart: true,
-											loop: false,
-											cursor: "|",
-											delay: 25,
-										}}
-										onInit={(typewriter) => {
-											typewriter
-												.typeString(`Your challenge has started! Available Ports: ${portsFetched?.join(',')}`)
-												.start();
-										}}
-									/>
-								</div>
-								}
+								{portsFetched && portsFetched.length > 0 && (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: ["Ports"],
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(
+														`Your challenge has started! Available Ports: ${portsFetched?.join(
+															",",
+														)}`,
+													)
+													.start();
+											}}
+										/>
+									</div>
+								)}
 								<div className="mt-10 flex justify-between">
 									<div className=" flex gap-4">
 										<input
@@ -322,8 +327,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-									hints[selectedHint] &&
-									localStorage.getItem(`hints_${question.id}`)
+								hints[selectedHint] &&
+								localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -331,8 +336,9 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
-							}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
+							isClicked ? "" : "hidden"
+						}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
