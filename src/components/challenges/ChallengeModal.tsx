@@ -32,7 +32,9 @@ export const ChallengeModal = ({
 	// 	setSelectedHint(null);
 	// };
 
-	const hintList: number[] = [1, 2, 3];
+	const hintList = [1, 2, 3];
+	const [fetchedHints, setFetchedHints] = useState(0);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -65,6 +67,7 @@ export const ChallengeModal = ({
 						setHints(newHints);
 						setSelectedHint(hintNumber);
 					}
+					setFetchedHints(fetchedHints + 1);
 				})
 				.catch((error) => {
 					console.error("Failed to fetch hint", error);
@@ -84,7 +87,7 @@ export const ChallengeModal = ({
 	};
 	const handleFlagSubmit = (e: React.MouseEvent) => {
 		axios
-			.post(`/ctf/${question.id}/flag`, flag)
+			.post(`${URL_ORIGIN}/ctf/${question.id}/flag`, flag)
 			.then((response: AxiosResponse<FlagResponse>) => {
 				if (response.data.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
@@ -127,9 +130,9 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
 				}
 				const ports = response.data.ports;
-				const ctf_id = response.data.ctf_id;
+				// const ctf_id = response.data.ctf_id;
 
-				console.log(ports, ctf_id);
+				setPortsFetched(ports);
 			})
 			.catch((error) => {
 				console.error("Failed to start container", error);
@@ -252,7 +255,23 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-
+								{portsFetched && portsFetched.length > 0 && <div className="text-[20px]">
+									<Typewriter
+										options={{
+											strings: ["Ports"],
+											// autoStart: true,
+											loop: false,
+											cursor: "|",
+											delay: 25,
+										}}
+										onInit={(typewriter) => {
+											typewriter
+												.typeString(`Your challenge has started! Available Ports: ${portsFetched?.join(',')}`)
+												.start();
+										}}
+									/>
+								</div>
+								}
 								<div className="mt-10 flex justify-between">
 									<div className=" flex gap-4">
 										<input
@@ -294,6 +313,7 @@ export const ChallengeModal = ({
 											className="h-16 w-16 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
 											key={hint}
 											onClick={() => handleHintClick(hint)}
+											disabled={hint > fetchedHints + 1}
 										>
 											{hint}
 										</button>
@@ -302,8 +322,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-								hints[selectedHint] &&
-								localStorage.getItem(`hints_${question.id}`)
+									hints[selectedHint] &&
+									localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -311,9 +331,8 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
-							isClicked ? "" : "hidden"
-						}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
+							}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
