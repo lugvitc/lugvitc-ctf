@@ -31,7 +31,7 @@ const LandingPage = () => {
 
 	return (
 		<>
-			<div className="bg-opacity-55 flex w-full flex-col items-start justify-center bg-landing bg-cover bg-fixed bg-landingPos bg-repeat-x">
+			<div className="bg-opacity-55 flex w-full flex-col items-start justify-center bg-landing bg-cover bg-fixed bg-landingPos bg-repeat-x overflow-x-hidden">
 				<div className="bg-black bg-opacity-30">
 					<Element name="home" className="h-screen w-screen ">
 						{!isScrolledDown && (
@@ -70,7 +70,7 @@ const LandingPage = () => {
 						)}
 					</Element>
 
-					<Element name="rules" className="h-screen w-screen">
+					<Element name="rules" className="h-screen w-full">
 						{isScrolledDown && (
 							<div>
 								<div className="flex h-screen flex-col justify-start pl-40 pt-60">
@@ -100,7 +100,7 @@ const LandingPage = () => {
 							</div>
 						)}
 					</Element>
-					<footer className="mt-auto flex w-screen items-center justify-between bg-transparent px-12 py-4 font-source-code-pro text-[#9FEF00] backdrop-blur-sm max-md:flex-col">
+					<footer className="mt-auto flex w-full items-center justify-between bg-transparent px-12 py-4 font-source-code-pro text-[#9FEF00] backdrop-blur-sm max-md:flex-col">
 						<p>
 							Made with love, <span> sweat and tears</span> by THE LINUX CLUB{" "}
 						</p>

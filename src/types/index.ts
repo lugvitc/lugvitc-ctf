@@ -81,8 +81,8 @@ export interface LoginResponse {
 	token_type?: string;
 }
 export interface LeaderboardResponse {
-	team_name: string;
-	score: number;
+	name: string;
+	tpoints: number;
 }
 export interface Challenge {
 	id: number;

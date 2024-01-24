@@ -44,8 +44,13 @@ export const ChallengeModal = ({
 			console.log("Hint:", storedHints[hintNumber]);
 			setSelectedHint(hintNumber);
 		} else {
+			const jwt = localStorage.getItem("jwt_token")
 			axios
-				.get(`${URL_ORIGIN}/ctf/${question.id}/hint`)
+				.get(`${URL_ORIGIN}/ctf/${question.id}/hint`, {
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
+				},)
 				.then((response: AxiosResponse<hintResponseData>) => {
 					if (response.data.msg_code === 2) {
 						toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
@@ -83,8 +88,13 @@ export const ChallengeModal = ({
 		}
 	};
 	const handleFlagSubmit = (e: React.MouseEvent) => {
+		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.post(`/ctf/${question.id}/flag`, flag)
+			.post(`${URL_ORIGIN}/ctf/${question.id}/flag`, { flag: flag }, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
 			.then((response: AxiosResponse<FlagResponse>) => {
 				if (response.data.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
@@ -106,7 +116,7 @@ export const ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 		axios
 			.post(
-				`${URL_ORIGIN}/${question.id}/start`,
+				`${URL_ORIGIN}/ctf/${question.id}/start`,
 				{},
 				{
 					headers: {
@@ -139,7 +149,7 @@ export const ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 		axios
 			.post(
-				`${URL_ORIGIN}/${question.id}/stop`,
+				`${URL_ORIGIN}/ctf/${question.id}/stop`,
 				{},
 				{
 					headers: {
@@ -164,8 +174,13 @@ export const ChallengeModal = ({
 	};
 	useEffect(() => {
 		// viewed hints from the server
+		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`)
+			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, 				{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
 			.then((response: AxiosResponse<hintResponseData[]>) => {
 				const viewedHints = response.data.reduce((acc, hint) => {
 					if (hint.order !== undefined) {
