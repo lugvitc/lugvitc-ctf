@@ -1,4 +1,4 @@
-import Question, { QuestionData } from "../../components/preevent/Question";
+import Question from "../../components/preevent/Question";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import bg from "../../assets/images/preevent-background.png";
@@ -6,6 +6,7 @@ import logo from "../../assets/icons/logo.png";
 import long_lg from "../../assets/icons/long_logo.png";
 // import coin from "../../assets/icons/coin.png";
 import clubLogo from "../../assets/images/club-logo.png";
+import { QuestionData } from "../../types";
 
 import { URL_ORIGIN } from "../../constants";
 import toast from "react-hot-toast";
@@ -174,8 +175,8 @@ export default function PreEvent() {
 					</div>
 				</div>
 			</div>
-			<div className="relative flex h-full w-full flex-col items-center justify-center gap-10 p-10">
-				{questions.map((question, i) => (
+			<div className="flex w-full flex-col items-center justify-center gap-10 p-10">
+				{questions.map((question: QuestionData, i) => (
 					<div key={i} className="relative w-full md:w-6/12">
 						<Question
 							question={question}

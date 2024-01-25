@@ -1,0 +1,3 @@
+.crtBackground::after {
+	background: linear-gradient(#00ff0008, #00ff000c, #00ff0008);
+}

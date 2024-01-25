@@ -1,18 +1,13 @@
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
-import clubLogo from "../../assets/images/club-logo.png";
 import eventLogo from "../../assets/images/passwordctf-logo.png";
 import axios from "axios";
 
 import { useState } from "react";
 import { useUserContext } from "../../context/AuthContext";
-import { URL_ORIGIN } from "../../constants";
+import { TOAST_MESSAGES, URL_ORIGIN } from "../../constants";
 import Background from "../../components/shared/Background";
-
-interface LoginResponse {
-	msg_code: string;
-	access_token?: string;
-	token_type?: string;
-}
+import toast, { Toaster } from "react-hot-toast";
+import { LoginResponse } from "../../types";
 
 const LoginPage = () => {
 	// DUMMY AUTHENTICATION
@@ -20,22 +15,22 @@ const LoginPage = () => {
 	const navigate = useNavigate();
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
-	const [msg, setMsg] = useState({ msg: "", color: "" });
-	const [showPopUp, setShowPopUp] = useState(false);
+	// const [msg, setMsg] = useState({ msg: "", color: "" });
+	// const [showPopUp, setShowPopUp] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 
-	const msgCode = (status: number, msg_code: string) => {
-		if (status >= 200 && status < 400) {
-			setMsg({ msg: msg_code, color: "green" });
-			handlePopup();
-			setShowPopUp(true);
-		} else if (status >= 400 && status < 500) {
-			setMsg({ msg: msg_code, color: "red" });
-			handlePopup();
-			setShowPopUp(true);
-		}
-		console.log(msg);
-	};
+	// const msgCode = (status: number, msg_code: string) => {
+	// 	if (status >= 200 && status < 400) {
+	// 		setMsg({ msg: msg_code, color: "green" });
+	// 		handlePopup();
+	// 		setShowPopUp(true);
+	// 	} else if (status >= 400 && status < 500) {
+	// 		setMsg({ msg: msg_code, color: "red" });
+	// 		handlePopup();
+	// 		setShowPopUp(true);
+	// 	}
+	// 	console.log(msg);
+	// };
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
@@ -55,22 +50,18 @@ const LoginPage = () => {
 				password: password,
 			})
 			.then((response) => {
-				if (
-					response.data.msg_code === "login_success" &&
-					response.data.access_token
-				) {
-					localStorage.setItem("jwt", response.data.access_token);
-					msgCode(response.status, response.data.msg_code);
+				if (response.data.msg_code === 15 && response.data.access_token) {
+					localStorage.setItem("jwt_token", response.data.access_token);
+					toast(TOAST_MESSAGES.LOGIN_SUCCESS);
 					setIsAuthenticated(true);
 
 					setTimeout(() => {
 						navigate("/play");
 					}, 2000);
-				} else if (
-					response.data.msg_code === "team_not_found" ||
-					response.data.msg_code === "wrong_password"
-				) {
-					msgCode(404, response.data.msg_code);
+				} else if (response.data.msg_code === 10) {
+					toast(TOAST_MESSAGES.TEAM_NOT_FOUND);
+				} else if (response.data.msg_code === 14) {
+					toast(TOAST_MESSAGES.WRONG_PASSWORD);
 				}
 			})
 			.catch((error) => {
@@ -82,13 +73,13 @@ const LoginPage = () => {
 			});
 	};
 
-	const handlePopup = () => {
-		setShowPopUp(true);
-		setTimeout(() => {
-			setShowPopUp(false);
-			setSubmitted(false);
-		}, 1800);
-	};
+	// const handlePopup = () => {
+	// 	setShowPopUp(true);
+	// 	setTimeout(() => {
+	// 		setShowPopUp(false);
+	// 		setSubmitted(false);
+	// 	}, 1800);
+	// };
 
 	return (
 		<>
@@ -101,11 +92,6 @@ const LoginPage = () => {
 							<div
 								className={`flex h-12 w-48 items-center justify-center gap-4 text-lg font-bold md:h-16 md:w-60 md:text-xl`}
 							>
-								<img
-									src={clubLogo}
-									alt="logo"
-									className="h-16 w-16 object-contain"
-								/>
 								<h2
 									className="hero glitch layers font-source-code-pro"
 									data-text="Linux Club"
@@ -178,20 +164,21 @@ const LoginPage = () => {
 					<NavLink to="/sign-up" className="font-bold text-animation-green ">
 						Sign Up
 					</NavLink>
+					<Toaster position="bottom-right" />
 				</div>
-				<div
-					className={`absolute top-0 z-10 flex h-16 w-[30rem] border-spacing-2 origin-top flex-col items-center justify-center gap-1 rounded-3xl  bg-dark-grayish-blue p-2 font-source-code-pro tracking-widest duration-200  md:p-4 ${
-						!showPopUp
-							? "scale-y-0"
-							: msg["color"] === "green"
+
+				{/* <div
+					className={`absolute top-0 z-10 flex h-16 w-[30rem] border-spacing-2 origin-top flex-col items-center justify-center gap-1 rounded-3xl  bg-dark-grayish-blue p-2 font-source-code-pro tracking-widest duration-200  md:p-4 ${!showPopUp
+						? "scale-y-0"
+						: msg["color"] === "green"
 							? "scale-y-150 border-b-2 border-l-2 border-r-2 border-green-600 text-green-600"
 							: "scale-y-150 border-b-2 border-l-2 border-r-2 border-red-600 text-red-600"
-					}`}
+						}`}
 				>
 					<span className="flex basis-3/4 items-center text-base  font-semibold md:text-xl">
 						{msg["msg"]}
 					</span>
-				</div>
+				</div> */}
 			</div>
 		</>
 	);

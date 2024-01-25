@@ -13,20 +13,30 @@ export default function App() {
 	return (
 		<main className="flex">
 			<Routes>
-				{/* public route */}
-				<Route element={<AuthLayout />}>
-					<Route path="/sign-in" element={<LoginPage />} />
-					<Route path="/sign-up" element={<SignUp />} />
-				</Route>
+				{new Date() < new Date("2024-01-29") ? (
+					<>
+						<Route path="/preevent" element={<PreEvent />} />
+						<Route index element={<PreEvent />} />
+					</>
+				) : (
+					<>
+						{/* public route */}
+						<Route element={<AuthLayout />}>
+							<Route path="/sign-in" element={<LoginPage />} />
+							<Route path="/sign-up" element={<SignUp />} />
+						</Route>
 
-				{/* private route */}
-				<Route element={<RootLayout />}>
-					<Route index element={<LandingPage />} />
-					<Route path="/rules" element={<Rules />} />
-					<Route path="/leaderboard" element={<Leaderboard />} />
-					<Route path="/play" element={<CtfPage />} />
-					<Route path="/preevent" element={<PreEvent />} />
-				</Route>
+						{/* private route */}
+						<Route element={<RootLayout />}>
+							<Route index element={<LandingPage />} />
+							<Route path="/rules" element={<Rules />} />
+							<Route path="/leaderboard" element={<Leaderboard />} />
+							<Route path="/play" element={<CtfPage />} />
+						</Route>
+
+						<Route path="/preevent" element={<PreEvent />} />
+					</>
+				)}
 			</Routes>
 		</main>
 	);
