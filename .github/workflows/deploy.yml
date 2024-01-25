@@ -10,7 +10,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  
+
 concurrency:
   group: 'event-page'
   cancel-in-progress: true
@@ -37,6 +37,8 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm run build
+      - name: Create 404
+        run: cp ./dist/index.html ./dist/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
