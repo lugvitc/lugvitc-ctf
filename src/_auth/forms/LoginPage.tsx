@@ -51,7 +51,7 @@ const LoginPage = () => {
 			})
 			.then((response) => {
 				if (response.data.msg_code === 15 && response.data.access_token) {
-					localStorage.setItem("jwt", response.data.access_token);
+					localStorage.setItem("jwt_token", response.data.access_token);
 					toast(TOAST_MESSAGES.LOGIN_SUCCESS);
 					setIsAuthenticated(true);
 

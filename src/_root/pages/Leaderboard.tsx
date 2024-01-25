@@ -10,8 +10,9 @@ import { LeaderboardResponse } from "../../types";
 
 const Leaderboard = () => {
 	const glitch = useGlitch();
-	const [leaderboardData, setLeaderboardData] =
-		useState<LeaderboardResponse[]>();
+	const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse[]>(
+		[],
+	);
 	const [isPageVisible, setIsPageVisible] = useState(true);
 	const [intervalId, setIntervalId] = useState<number>(0);
 
@@ -99,7 +100,7 @@ const Leaderboard = () => {
 						}}
 					/>
 				</div>
-				{leaderboardData && (
+				{leaderboardData?.length >= 3 && (
 					<div className="top3 relative flex h-full w-full items-center justify-center gap-2 font-DM-Mono text-lg font-extrabold uppercase sm:gap-10 sm:text-2xl">
 						<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
 							<div className="relative h-24 w-24 rounded-full border-4 border-fluorescent-green bg-black sm:h-40 sm:w-40">
@@ -112,7 +113,7 @@ const Leaderboard = () => {
 								</div>
 							</div>
 							<div className=" rounded-lg py-2 text-fluorescent-green ">
-								{leaderboardData[1].team_name}
+								{leaderboardData[1].name}
 							</div>
 						</div>
 						<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
@@ -126,7 +127,7 @@ const Leaderboard = () => {
 								</div>
 							</div>
 							<div className=" rounded-lg py-2 text-fluorescent-green ">
-								{leaderboardData[0].team_name}
+								{leaderboardData[0].name}
 							</div>
 						</div>
 						<div className="flex h-full w-full flex-col items-center justify-center transition-all duration-200 hover:scale-125 hover:drop-shadow-circle">
@@ -140,7 +141,7 @@ const Leaderboard = () => {
 								</div>
 							</div>
 							<div className=" rounded-lg py-2 text-fluorescent-green ">
-								{leaderboardData[2].team_name}
+								{leaderboardData[2].name}
 							</div>
 						</div>
 					</div>
@@ -174,10 +175,10 @@ const Leaderboard = () => {
 											{index + 1}
 										</div>
 										<div className="w-full basis-3/5 border-2 border-fluorescent-green border-opacity-50 py-3 text-center">
-											{team.team_name}
+											{team.name}
 										</div>
 										<div className="w-full basis-1/5 border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
-											{team.score}
+											{team.tpoints}
 										</div>
 									</div>
 								))}

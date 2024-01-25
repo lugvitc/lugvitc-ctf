@@ -24,105 +24,105 @@ export function CtfPage() {
 	// const [question, setQuestion] = useState<Challenge[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	// seed some challenges
-	if (challenges.length === 0) {
-		setChallenges([
-			{
-				id: 1,
-				author: "author",
-				name: "Challenge 1",
-				description: "This is a description",
-				points: 100,
-				tags: ["Web exploitation", "Cryptography"],
-			},
-			{
-				id: 2,
-				author: "author",
-				name: "Challenge 2",
-				description: "This is a description",
-				points: 100,
-				tags: ["Cryptography", "Forensics"],
-			},
-			{
-				id: 3,
-				author: "author",
-				name: "Challenge 3",
-				description: "This is a description",
-				points: 100,
-				tags: ["Web exploitation", "Forensics", "Miscellaneous"],
-			},
-			{
-				id: 4,
-				author: "author",
-				name: "Challenge 4",
-				description: "This is a description",
-				points: 100,
-				tags: ["Cryptography", "Reverse engineering"],
-			},
-			{
-				id: 5,
-				author: "author",
-				name: "Challenge 5",
-				description: "This is a description",
-				points: 100,
-				tags: ["Web exploitation", "Binary exploitation"],
-			},
-			{
-				id: 6,
-				author: "author",
-				name: "Challenge 6",
-				description: "This is a description",
-				points: 100,
-				tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
-			},
-			{
-				id: 7,
-				author: "author",
-				name: "Challenge 7",
-				description: "This is a description",
-				points: 100,
-				tags: ["Reverse engineering", "OSINT"],
-			},
-			{
-				id: 8,
-				author: "author",
-				name: "Challenge 8",
-				description: "This is a description",
-				points: 100,
-				tags: [
-					"Binary exploitation",
-					"Reverse engineering",
-					"Miscellaneous",
-					"OSINT",
-					"Scripting",
-				],
-			},
-			{
-				id: 9,
-				author: "author",
-				name: "Challenge 6",
-				description: "This is a description",
-				points: 100,
-				tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
-			},
-			{
-				id: 10,
-				author: "author",
-				name: "Challenge 7",
-				description: "This is a description",
-				points: 100,
-				tags: ["Reverse engineering", "OSINT"],
-			},
-			{
-				id: 11,
-				author: "author",
-				name: "Challenge 8",
-				description: "This is a description",
-				points: 100,
-				tags: ["Binary exploitation", "Reverse engineering", "Miscellaneous"],
-			},
-		]);
-	}
+	// // seed some challenges
+	// if (challenges.length === 0) {
+	// 	setChallenges([
+	// 		{
+	// 			id: 1,
+	// 			author: "author",
+	// 			name: "Challenge 1",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Web exploitation", "Cryptography"],
+	// 		},
+	// 		{
+	// 			id: 2,
+	// 			author: "author",
+	// 			name: "Challenge 2",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Cryptography", "Forensics"],
+	// 		},
+	// 		{
+	// 			id: 3,
+	// 			author: "author",
+	// 			name: "Challenge 3",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Web exploitation", "Forensics", "Miscellaneous"],
+	// 		},
+	// 		{
+	// 			id: 4,
+	// 			author: "author",
+	// 			name: "Challenge 4",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Cryptography", "Reverse engineering"],
+	// 		},
+	// 		{
+	// 			id: 5,
+	// 			author: "author",
+	// 			name: "Challenge 5",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Web exploitation", "Binary exploitation"],
+	// 		},
+	// 		{
+	// 			id: 6,
+	// 			author: "author",
+	// 			name: "Challenge 6",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
+	// 		},
+	// 		{
+	// 			id: 7,
+	// 			author: "author",
+	// 			name: "Challenge 7",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Reverse engineering", "OSINT"],
+	// 		},
+	// 		{
+	// 			id: 8,
+	// 			author: "author",
+	// 			name: "Challenge 8",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: [
+	// 				"Binary exploitation",
+	// 				"Reverse engineering",
+	// 				"Miscellaneous",
+	// 				"OSINT",
+	// 				"Scripting",
+	// 			],
+	// 		},
+	// 		{
+	// 			id: 9,
+	// 			author: "author",
+	// 			name: "Challenge 6",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
+	// 		},
+	// 		{
+	// 			id: 10,
+	// 			author: "author",
+	// 			name: "Challenge 7",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Reverse engineering", "OSINT"],
+	// 		},
+	// 		{
+	// 			id: 11,
+	// 			author: "author",
+	// 			name: "Challenge 8",
+	// 			description: "This is a description",
+	// 			points: 100,
+	// 			tags: ["Binary exploitation", "Reverse engineering", "Miscellaneous"],
+	// 		},
+	// 	]);
+	// }
 
 	useEffect(() => {
 		axios
@@ -172,7 +172,7 @@ export function CtfPage() {
 	};
 	const questionList: Challenge[] = categories[sideState];
 	return (
-		<main className="flex w-full flex-col bg-[#020202] font-source-code-pro">
+		<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
 			<div className="flex h-[80px] w-full p-10 "></div>
 			<div className="flex w-screen">
 				<div className="relative h-screen w-1/5">
@@ -190,7 +190,7 @@ export function CtfPage() {
 						</div>
 					) : (
 						<>
-							<h1 className="text-flouroscent-green my-10 text-4xl font-bold ">
+							<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
 								{sideState}
 							</h1>
 							<div className="grid w-10/12 grid-cols-2 gap-10 ">

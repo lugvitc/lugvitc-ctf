@@ -30,7 +30,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 			// GETTING THE EXPIRY OF TOKEN
 			const decodedToken = jwtDecode<DecodedToken>(jwt_token);
-			const currentTime = Date.now() * 1000;
+			const currentTime = Date.now() / 1000;
+
+			// console.log(decodedToken, currentTime)
 
 			// IF TOKEN HAS EXPIRED
 			if (decodedToken.exp < currentTime) {

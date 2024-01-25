@@ -40,7 +40,7 @@ const SignUp = () => {
 			.post<SignupResponse>(`${URL_ORIGIN}/auth/signup`, {
 				name: name,
 				password: password,
-				members: members,
+				tags: members.filter((val) => val),
 			})
 			.then((response: AxiosResponse<SignupResponse>) => {
 				if (response.data.msg_code === 17) {
