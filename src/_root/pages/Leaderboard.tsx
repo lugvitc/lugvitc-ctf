@@ -10,8 +10,9 @@ import { LeaderboardResponse } from "../../types";
 
 const Leaderboard = () => {
 	const glitch = useGlitch();
-	const [leaderboardData, setLeaderboardData] =
-		useState<LeaderboardResponse[]>();
+	const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse[]>(
+		[],
+	);
 	const [isPageVisible, setIsPageVisible] = useState(true);
 	const [intervalId, setIntervalId] = useState<number>(0);
 

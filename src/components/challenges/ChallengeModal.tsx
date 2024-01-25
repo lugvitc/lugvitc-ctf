@@ -44,13 +44,13 @@ export const ChallengeModal = ({
 			console.log("Hint:", storedHints[hintNumber]);
 			setSelectedHint(hintNumber);
 		} else {
-			const jwt = localStorage.getItem("jwt_token")
+			const jwt = localStorage.getItem("jwt_token");
 			axios
 				.get(`${URL_ORIGIN}/ctf/${question.id}/hint`, {
 					headers: {
 						Authorization: `Bearer ${jwt}`,
 					},
-				},)
+				})
 				.then((response: AxiosResponse<hintResponseData>) => {
 					if (response.data.msg_code === 2) {
 						toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
@@ -90,11 +90,15 @@ export const ChallengeModal = ({
 	const handleFlagSubmit = (e: React.MouseEvent) => {
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.post(`${URL_ORIGIN}/ctf/${question.id}/flag`, { flag: flag }, {
-				headers: {
-					Authorization: `Bearer ${jwt}`,
+			.post(
+				`${URL_ORIGIN}/ctf/${question.id}/flag`,
+				{ flag: flag },
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
 				},
-			})
+			)
 			.then((response: AxiosResponse<FlagResponse>) => {
 				if (response.data.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
@@ -176,7 +180,7 @@ export const ChallengeModal = ({
 		// viewed hints from the server
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, 				{
+			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},

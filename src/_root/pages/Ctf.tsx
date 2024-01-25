@@ -172,7 +172,7 @@ export function CtfPage() {
 	};
 	const questionList: Challenge[] = categories[sideState];
 	return (
-		<main className="flex w-full flex-col bg-[#020202] font-source-code-pro overflow-x-hidden">
+		<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
 			<div className="flex h-[80px] w-full p-10 "></div>
 			<div className="flex w-screen">
 				<div className="relative h-screen w-1/5">
@@ -190,7 +190,7 @@ export function CtfPage() {
 						</div>
 					) : (
 						<>
-							<h1 className="text-fluorescent-green my-10 text-4xl font-bold ">
+							<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
 								{sideState}
 							</h1>
 							<div className="grid w-10/12 grid-cols-2 gap-10 ">
