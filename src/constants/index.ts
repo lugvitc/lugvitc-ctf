@@ -35,7 +35,7 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 	},
 ];
 
-export const URL_ORIGIN = "https://pwncore.tripe.one/api";
+export const URL_ORIGIN = "https://pwncore.lugvitc.org/api";
 
 export const TOAST_MESSAGES = {
 	DB_ERROR: "DB error",
