@@ -15,8 +15,9 @@ const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
 	return (
 		<div className="fixed mb-8 h-screen bg-midnight-blue bg-opacity-40 px-6 py-6">
 			<h1
-				className={` mt-4 text-2xl font-semibold ${setColor ? `text-[${setColor}]` : "text-fluorescent-green"
-					} `}
+				className={` mt-4 text-2xl font-semibold ${
+					setColor ? `text-[${setColor}]` : "text-fluorescent-green"
+				} `}
 			>
 				Categories
 			</h1>
@@ -25,13 +26,15 @@ const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
 					return (
 						<li
 							key={index}
-							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${sideState !== category
+							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
+								sideState !== category
 									? "bg-transparent "
-									: `border ${setColor
-										? `text-[${setColor}] border-[${setColor}]`
-										: "border-fluorescent-green text-fluorescent-green"
-									}  bg-midnight-blue  `
-								}`}
+									: `border ${
+											setColor
+												? `text-[${setColor}] border-[${setColor}]`
+												: "border-fluorescent-green text-fluorescent-green"
+									  }  bg-midnight-blue  `
+							}`}
 							onClick={() => {
 								setSideState(category);
 							}}

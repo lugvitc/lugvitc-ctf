@@ -14,7 +14,7 @@ export default function App() {
 	return (
 		<main className="flex">
 			<Routes>
-				{(new Date() < new Date("2024-01-29")) ? (
+				{new Date() < new Date("2024-01-29") ? (
 					<>
 						<Route path="/preevent" element={<PreEvent />} />
 						<Route index element={<PreEvent />} />
