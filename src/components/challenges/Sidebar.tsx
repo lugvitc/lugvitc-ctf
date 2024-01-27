@@ -1,6 +1,6 @@
 import { SidebarProps } from "../../types";
 
-const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
+const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
 	const categoryArr = [
 		"All",
 		"Web exploitation",
@@ -14,7 +14,10 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 	];
 	return (
 		<div className="fixed mb-8 h-screen bg-midnight-blue bg-opacity-40 px-6 py-6">
-			<h1 className=" mt-4 text-2xl font-semibold text-fluorescent-green">
+			<h1
+				className={` mt-4 text-2xl font-semibold ${setColor ? `text-[${setColor}]` : "text-fluorescent-green"
+					} `}
+			>
 				Categories
 			</h1>
 			<ul className="mt-6 w-full px-4">
@@ -22,11 +25,13 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 					return (
 						<li
 							key={index}
-							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
-								sideState !== category
+							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${sideState !== category
 									? "bg-transparent "
-									: "border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
-							}`}
+									: `border ${setColor
+										? `text-[${setColor}] border-[${setColor}]`
+										: "border-fluorescent-green text-fluorescent-green"
+									}  bg-midnight-blue  `
+								}`}
 							onClick={() => {
 								setSideState(category);
 							}}

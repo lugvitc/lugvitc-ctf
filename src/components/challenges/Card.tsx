@@ -3,17 +3,17 @@ import { Tooltip } from "react-tooltip";
 import { ChallengeModal } from "./ChallengeModal";
 import { CardProps } from "../../types";
 
-export function Card({ challenge }: CardProps) {
+export function Card({ challenge, isStart, handleStartChange }: CardProps) {
 	const [isClicked, setIsClicked] = useState<boolean>(false);
 
 	const handleModalOpen = () => {
-		console.log("Opening modal");
+		// console.log("Opening modal");
 		setIsClicked(true);
 	};
 
 	const handleModalClose = (e: React.MouseEvent) => {
 		e.stopPropagation();
-		console.log("Closing modal");
+		// console.log("Closing modal");
 		setIsClicked(false);
 	};
 
@@ -86,6 +86,8 @@ export function Card({ challenge }: CardProps) {
 					<ChallengeModal
 						question={challenge}
 						isClicked={isClicked}
+						isStart={isStart}
+						handleStartChange={handleStartChange}
 						closeModal={handleModalClose}
 					/>
 				)}

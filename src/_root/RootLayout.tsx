@@ -11,7 +11,9 @@ const RootLayout = () => {
 				</AuthProvider>
 
 				<section className="flex w-full items-center justify-center">
-					<Outlet />
+					<AuthProvider>
+						<Outlet />
+					</AuthProvider>
 				</section>
 			</div>
 		</>

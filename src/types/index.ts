@@ -19,6 +19,8 @@ export interface Question {
 export interface ChallengeModalProp {
 	question: Question;
 	isClicked: boolean;
+	isStart: boolean;
+	handleStartChange: (id: number, isStart: boolean) => void;
 	closeModal: (e: React.MouseEvent) => void;
 }
 
@@ -95,10 +97,13 @@ export interface Challenge {
 
 export interface CardProps {
 	challenge: Challenge;
+	isStart: boolean;
+	handleStartChange: (id: number, isStart: boolean) => void;
 }
 export interface SidebarProps {
 	sideState: string;
 	setSideState: (newState: string) => void;
+	setColor?: string;
 }
 export interface QuestionData {
 	id: number;

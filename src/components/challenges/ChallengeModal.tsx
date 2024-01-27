@@ -18,9 +18,12 @@ import React from "react";
 export const ChallengeModal = ({
 	question,
 	isClicked,
+	isStart,
+	handleStartChange,
 	closeModal,
 }: ChallengeModalProp) => {
-	const [isStart, setIsStart] = useState<boolean>(false);
+	// console.log(question);
+	// const [isStart, setIsStart] = useState<boolean>(false);
 	const [hints, setHints] = useState<{ [key: number]: string }>({});
 
 	const [selectedHint, setSelectedHint] = useState<number | null>(null);
@@ -32,7 +35,9 @@ export const ChallengeModal = ({
 	// 	setSelectedHint(null);
 	// };
 
-	const hintList: number[] = [1, 2, 3];
+	const hintList = [0, 1, 2];
+	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -41,7 +46,7 @@ export const ChallengeModal = ({
 		) as Hints;
 
 		if (storedHints[hintNumber]) {
-			console.log("Hint:", storedHints[hintNumber]);
+			// console.log("Hint:", storedHints[hintNumber]);
 			setSelectedHint(hintNumber);
 		} else {
 			const jwt = localStorage.getItem("jwt_token");
@@ -60,7 +65,8 @@ export const ChallengeModal = ({
 						// previous hints + new hint
 						const newHints = {
 							...storedHints,
-							[hintNumber]: response.data.text,
+							// SET ORDER HINT.TEXT
+							[response.data.order as number]: response.data.text,
 						};
 						// new hints in localStorage
 						localStorage.setItem(
@@ -72,7 +78,8 @@ export const ChallengeModal = ({
 					}
 				})
 				.catch((error) => {
-					console.error("Failed to fetch hint", error);
+					toast(`Failed to fetch hint 422 error`);
+					console.log(error);
 				});
 		}
 	};
@@ -118,6 +125,7 @@ export const ChallengeModal = ({
 
 	const startContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+		//  CHECK KR
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/start`,
@@ -141,16 +149,18 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
 				}
 				const ports = response.data.ports;
-				const ctf_id = response.data.ctf_id;
+				// const ctf_id = response.data.ctf_id;
 
-				console.log(ports, ctf_id);
+				setPortsFetched(ports);
 			})
 			.catch((error) => {
-				console.error("Failed to start container", error);
+				toast("Failed to start container");
+				console.log(error);
 			});
 	};
 	const stopContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/stop`,
@@ -180,7 +190,7 @@ export const ChallengeModal = ({
 		// viewed hints from the server
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, {
+			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed_hints`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -208,6 +218,10 @@ export const ChallengeModal = ({
 				);
 
 				setHints(mergedHints);
+				const viewedHintsCount = Object.keys(mergedHints).length;
+				// const availableHints = 3 - viewedHintsCount;
+				console.log(viewedHintsCount);
+				setviewedHintsFetch(viewedHintsCount);
 			})
 			.catch((error) => {
 				console.error("Failed to fetch viewed hints", error);
@@ -271,7 +285,25 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-
+								{/* -------------------PORTS--------------------------------- */}
+								{portsFetched && portsFetched.length > 0 ? (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Ports",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(`Port: ${portsFetched?.join(",")}`)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
 								<div className="mt-10 flex justify-between">
 									<div className=" flex gap-4">
 										<input
@@ -293,7 +325,8 @@ export const ChallengeModal = ({
 									<button
 										className=" h-[47px] w-1/4 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
 										onClick={() => {
-											setIsStart(!isStart);
+											const newStartState = !isStart;
+											handleStartChange(question.id, newStartState);
 											if (isStart) {
 												stopContainer();
 											} else {
@@ -308,13 +341,24 @@ export const ChallengeModal = ({
 
 							<div className="my-16 flex items-center justify-center gap-4">
 								{hintList.map((hint) => {
+									const isDisabled =
+										((hint === 1 || hint === 2) && viewedHintsFetch === 0) ||
+										(hint === 2 &&
+											(viewedHintsFetch === 2 || viewedHintsFetch === 1));
 									return (
 										<button
-											className="h-16 w-16 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
+											className={`h-16 w-16 rounded-sm border ${
+												isDisabled ? " pointer-events-none" : ""
+											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
-											onClick={() => handleHintClick(hint)}
+											onClick={() => {
+												if (isDisabled) {
+													return;
+												}
+												handleHintClick(hint);
+											}}
 										>
-											{hint}
+											{hint + 1}
 										</button>
 									);
 								})}

@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { HomeNavbarLinks } from "../../types";
 import { homeNavbarLinks } from "../../constants";
@@ -12,6 +12,13 @@ const Navbar = () => {
 	const location = useLocation() as Location;
 	const pathname = location.pathname;
 	const { isAuthenticated } = useUserContext();
+	const navigate = useNavigate();
+
+	function handlelogOut() {
+		localStorage.removeItem("jwt_token");
+		localStorage.clear();
+		navigate("/sign-in");
+	}
 
 	return (
 		<nav className=" shadow-light-300 fixed z-50 flex h-[80px]  w-full items-center justify-between border-b-2 border-[#f8fafc0f] bg-[#0f172abf] p-6 backdrop-blur-lg sm:px-12">
@@ -51,7 +58,16 @@ const Navbar = () => {
 						})}
 					</div>
 
-					{!isAuthenticated && (
+					{isAuthenticated ? (
+						<NavLink to="/sign-in">
+							<button
+								className=" rounded-md border border-animation-green px-4 py-2 font-DM-Mono text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green hover:text-animation-green"
+								onClick={() => handlelogOut()}
+							>
+								Log Out
+							</button>
+						</NavLink>
+					) : (
 						<>
 							<NavLink to="/sign-in">
 								<button className=" rounded-md border border-animation-green px-4 py-2 font-DM-Mono text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green hover:text-animation-green">
