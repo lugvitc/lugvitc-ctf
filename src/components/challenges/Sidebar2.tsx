@@ -22,18 +22,22 @@ type lookup = {
 	[moon: string]: number;
 };
 
-export let idLookup: lookup = {};
+export const idLookup: lookup = {};
 
 moonsArray.forEach((moon, index) => {
 	idLookup[moon] = index + 1;
 });
+
+type response = {
+	meta_team__name: string;
+};
 
 const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 	const [currTeam, setCurrTeam] = useState<string>("");
 	useEffect(() => {
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get<any>(`${URL_ORIGIN}/team/me`, {
+			.get<response>(`${URL_ORIGIN}/team/me`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -64,7 +68,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 					{currTeam}
 				</li>
 				{moonsArray
-					.filter((m_name, index) => {
+					.filter((m_name) => {
 						return m_name !== currTeam;
 					})
 					.map((m_name, index) => {

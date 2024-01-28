@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import "./color.css";
 import Typewriter from "typewriter-effect";
@@ -89,7 +89,7 @@ export const ChallengeModal = ({
 						setviewedHintsFetch(viewedHintsCount);
 					}
 				})
-				.catch((error) => {
+				.catch((error: AxiosError<ResponseData>) => {
 					if (error.status === 403) toast(`Hint does not exist`);
 					else toast("Unknown error");
 					console.log(error);
@@ -130,10 +130,10 @@ export const ChallengeModal = ({
 					toast("Incorrect Flag");
 				}
 			})
-			.catch((error) => {
-				if (error.response.data.msg_code === 2) {
+			.catch((error: AxiosError<ResponseData>) => {
+				if (error?.response?.data.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (error.response.data.msg_code === 12) {
+				} else if (error?.response?.data.msg_code === 12) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
