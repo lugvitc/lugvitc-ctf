@@ -150,3 +150,25 @@ export interface SignupResponse {
 export interface TeamResponse {
 	coins: number;
 }
+export interface Port {
+	port: number;
+}
+
+export interface Problem {
+	id: number;
+	name: string;
+	author: string;
+	points: number;
+	description: string;
+}
+export interface Round2Modal {
+	container: {
+		id: number;
+		ports: Port[];
+		problem: Problem;
+		meta_team_name: string;
+		solved: boolean;
+	};
+	isClicked: boolean;
+	closeModal: (e: React.MouseEvent) => void;
+}

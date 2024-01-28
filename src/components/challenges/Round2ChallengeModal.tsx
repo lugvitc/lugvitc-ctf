@@ -10,10 +10,8 @@ import React, { useState } from "react";
 export const Round2ChallengeModal = ({
 	container,
 	isClicked,
-	closeModal
-
+	closeModal,
 }: Round2Modal) => {
-
 	const [flag, setFlag] = useState<string>("");
 
 	const handleFlagSubmit = (e: React.MouseEvent) => {
@@ -97,7 +95,9 @@ export const Round2ChallengeModal = ({
 										}}
 										onInit={(typewriter) => {
 											typewriter
-												.typeString(`Description: ${container.problem.description}`)
+												.typeString(
+													`Description: ${container.problem.description}`,
+												)
 												.start();
 										}}
 									/>
@@ -145,8 +145,9 @@ export const Round2ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
-							}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
+							isClicked ? "" : "hidden"
+						}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
