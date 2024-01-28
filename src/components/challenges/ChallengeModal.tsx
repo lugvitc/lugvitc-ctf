@@ -43,6 +43,7 @@ export const ChallengeModal = ({
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
 	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
 	const [refreshKey, setRefreshKey] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -137,7 +138,7 @@ export const ChallengeModal = ({
 
 	const startContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
-
+		setIsLoading(true);
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/start`,
@@ -158,14 +159,18 @@ export const ChallengeModal = ({
 				} else if (response.data.msg_code === 0) {
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 3) {
-					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
-				}
-				const ports = response.data.ports;
-				// const ctf_id = response.data.ctf_id;
 
-				setPortsFetched(ports);
+					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
+
+					const ports = response.data.ports;
+					setIsLoading(false);
+					toast("Container is running");
+					setPortsFetched(ports);
+				}
 			})
 			.catch((error) => {
+				setIsLoading(false);
+				handleStartChange(question.id, false);
 				toast("Failed to start container");
 				console.log(error);
 			});
@@ -388,7 +393,7 @@ export const ChallengeModal = ({
 											}
 										}}
 									>
-										{isStart ? <span>Stop</span> : <span>Start</span>}
+										{isLoading ? <span>Loading...</span> : isStart ? <span>Stop</span> : <span>Start</span>}
 									</button>
 								</div>
 							</div>
@@ -400,9 +405,8 @@ export const ChallengeModal = ({
 										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${
-												isDisabled ? " pointer-events-none" : ""
-											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
+												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -418,8 +422,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-								hints[selectedHint] &&
-								localStorage.getItem(`hints_${question.id}`)
+									hints[selectedHint] &&
+									localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -427,9 +431,8 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
-							isClicked ? "" : "hidden"
-						}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
+							}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
