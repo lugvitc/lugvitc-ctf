@@ -39,7 +39,7 @@ const LandingPage = () => {
 								<h1 className="font-source-code-pro text-[90px] font-bold leading-[140%] text-[#9FEF00] max-xl:text-[80px]">
 									<Typewriter
 										onInit={(typewriter) => {
-											typewriter.typeString("PWNC0R3").start();
+											typewriter.typeString("PASSWORDCTF").start();
 										}}
 									/>
 								</h1>
