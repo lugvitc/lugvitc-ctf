@@ -87,6 +87,24 @@ export interface LeaderboardResponse {
 	name: string;
 	tpoints: number;
 }
+
+export interface MetaLeaderboardResponse {
+	name: string;
+	tpoints: number;
+	meta_team__name: string;
+}
+
+export interface R2LeaderboardResponse {
+	name: string;
+	points: number;
+}
+
+export interface FinalLeaderboard {
+	name: string;
+	total_points: number;
+	meta_team__name: string;
+}
+
 export interface Challenge {
 	id: number;
 	author: string;
@@ -150,6 +168,12 @@ export interface SignupResponse {
 export interface TeamResponse {
 	coins: number;
 }
+
+export interface SidebarProps2 {
+	sideState: string | undefined;
+	setSideState: (newState: string) => void;
+}
+
 export interface Port {
 	port: number;
 }
@@ -161,6 +185,7 @@ export interface Problem {
 	points: number;
 	description: string;
 }
+
 export interface Round2Modal {
 	container: {
 		id: number;
@@ -171,4 +196,16 @@ export interface Round2Modal {
 	};
 	isClicked: boolean;
 	closeModal: (e: React.MouseEvent) => void;
+}
+
+export interface Container {
+	id: number;
+	ports: Port[];
+	problem: Problem;
+	meta_team_name: string;
+	solved: boolean;
+}
+
+export interface CardProps2 {
+	container: Container;
 }
