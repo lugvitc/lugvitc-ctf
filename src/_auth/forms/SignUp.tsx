@@ -218,7 +218,6 @@ const SignUp = () => {
 								</label>
 							))}
 
-
 							{/* <label className="w-full">
 								Member 1
 								<input
