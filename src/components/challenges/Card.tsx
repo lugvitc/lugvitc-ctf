@@ -3,7 +3,12 @@ import { Tooltip } from "react-tooltip";
 import { ChallengeModal } from "./ChallengeModal";
 import { CardProps } from "../../types";
 
-export function Card({ challenge, isStart, handleStartChange }: CardProps) {
+export function Card({
+	challenge,
+	isStart,
+	handleStartChange,
+	handleSolved,
+}: CardProps) {
 	const [isClicked, setIsClicked] = useState<boolean>(false);
 
 	const handleModalOpen = () => {
@@ -89,6 +94,7 @@ export function Card({ challenge, isStart, handleStartChange }: CardProps) {
 						isStart={isStart}
 						handleStartChange={handleStartChange}
 						closeModal={handleModalClose}
+						handleSolved={handleSolved}
 					/>
 				)}
 			</div>
