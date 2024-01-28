@@ -43,7 +43,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
 								sideState !== m_name
 									? "bg-transparent "
-									: "border-flouroscent-green text-flouroscent-green border bg-midnight-blue "
+									: " border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
 							}`}
 							onClick={() => {
 								setSideState(m_name);

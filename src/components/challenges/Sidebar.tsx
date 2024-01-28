@@ -1,6 +1,6 @@
 import { SidebarProps } from "../../types";
 
-const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
+const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 	const categoryArr = [
 		"All",
 		"Web exploitation",
@@ -14,13 +14,7 @@ const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
 	];
 	return (
 		<div className="fixed mb-8 h-screen bg-midnight-blue bg-opacity-40 px-6 py-6">
-			<h1
-				className={` mt-4 text-2xl font-semibold ${
-					setColor ? `text-[${setColor}]` : "text-fluorescent-green"
-				} `}
-			>
-				Categories
-			</h1>
+			<h1 className={` mt-4 text-2xl font-semibold `}>Categories</h1>
 			<ul className="mt-6 w-full px-4">
 				{categoryArr.map((category, index) => {
 					return (
@@ -29,11 +23,7 @@ const Sidebar = ({ sideState, setSideState, setColor }: SidebarProps) => {
 							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
 								sideState !== category
 									? "bg-transparent "
-									: `border ${
-											setColor
-												? `text-[${setColor}] border-[${setColor}]`
-												: "border-fluorescent-green text-fluorescent-green"
-									  }  bg-midnight-blue  `
+									: ` " " border border-fluorescent-green bg-midnight-blue text-fluorescent-green`
 							}`}
 							onClick={() => {
 								setSideState(category);
