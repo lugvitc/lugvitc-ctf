@@ -151,23 +151,23 @@ export interface SidebarProps2 {
 	setSideState: (newState: string) => void;
 }
 
-export interface Port{
-	port :number;
+export interface Port {
+	port: number;
 }
 
-export interface Problem{
+export interface Problem {
 	id: number;
-	name:string;
-	author :string;
-	points :number;
-	description :string;
+	name: string;
+	author: string;
+	points: number;
+	description: string;
 }
 export interface Container {
-	id : number;
-	ports : Port[];
-	problem :Problem;
-	meta_team_name :string;
-	solved :boolean;
+	id: number;
+	ports: Port[];
+	problem: Problem;
+	meta_team_name: string;
+	solved: boolean;
 }
 
 export interface CardProps2 {

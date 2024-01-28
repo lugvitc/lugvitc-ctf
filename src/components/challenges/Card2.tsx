@@ -8,7 +8,7 @@ export default function Card2({ container }: CardProps2) {
 	const handleModalOpen = () => {
 		// console.log("Opening modal");
 		setIsClicked(true);
-		console.log(isClicked)
+		console.log(isClicked);
 	};
 
 	// const handleModalClose = (e: React.MouseEvent) => {
@@ -62,7 +62,7 @@ export default function Card2({ container }: CardProps2) {
 								</span>
 								{container.problem.points}
 							</div>
-							<div className="my-4 items-center rounded bg-fluorescent-green bg-opacity-10 py-2 px-4 text-center max-w-fit">
+							<div className="my-4 max-w-fit items-center rounded bg-fluorescent-green bg-opacity-10 px-4 py-2 text-center">
 								{container.meta_team_name}
 							</div>
 						</div>
