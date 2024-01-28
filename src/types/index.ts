@@ -191,7 +191,7 @@ export interface Round2Modal {
 		id: number;
 		ports: Port[];
 		problem: Problem;
-		meta_team_name: string;
+		meta_team_id: number;
 		solved: boolean;
 	};
 	isClicked: boolean;

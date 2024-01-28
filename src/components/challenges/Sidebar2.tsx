@@ -64,7 +64,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 					{currTeam}
 				</li>
 				{moonsArray
-					.filter((m_name, index) => {
+					.filter((m_name) => {
 						return m_name !== currTeam;
 					})
 					.map((m_name, index) => {
