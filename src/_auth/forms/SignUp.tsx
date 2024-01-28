@@ -144,7 +144,7 @@ const SignUp = () => {
 							}}
 						>
 							<label className="w-full">
-								Team Name
+								Team Name <span className="text-red-700">*</span>
 								<input
 									className="my-2 block h-[46px] w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-4"
 									type="text"
@@ -247,7 +247,7 @@ const SignUp = () => {
 								/>
 							</label> */}
 							<label className="w-full">
-								Password
+								Password <span className="text-red-700">*</span>
 								<input
 									className="my-2 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-4"
 									type="password"
