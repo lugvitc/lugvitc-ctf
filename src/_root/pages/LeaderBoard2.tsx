@@ -24,15 +24,12 @@ const Leaderboard2 = () => {
 	const [finalLeaderboard, setFinalLeaderboard] = useState<FinalLeaderboard[]>(
 		[],
 	);
-	const [sortedLeaderboard, setSortedLeaderboard] = useState<
-		FinalLeaderboard[]
-	>([]);
 	const [isPageVisible, setIsPageVisible] = useState(true);
 	const [intervalId, setIntervalId] = useState<number>(0);
 
 	const fetchData = () => {
-		calculate();
-		sorting();
+		// calculate();
+		// sorting();
 		axios
 			.get<MetaLeaderboardResponse[]>(`${URL_ORIGIN}/leaderboard`)
 			.then((response) => response.data)
@@ -45,38 +42,42 @@ const Leaderboard2 = () => {
 			.catch((error) => console.error("Error fetching data:", error));
 	};
 
-	useEffect(() => {}, [metaleaderboardData, r2Leaderboard]);
-	const calculate = () => {
-		setFinalLeaderboard(
-			metaleaderboardData.map((team: MetaLeaderboardResponse) => {
-				let total_points = 0;
-				for (let i = 0; i < r2Leaderboard.length; i++) {
-					if (r2Leaderboard[i].name === team.meta_team__name) {
-						total_points = team.tpoints + r2Leaderboard[i].points;
+	useEffect(() => {
+		setFinalLeaderboard(() => {
+			const updated: FinalLeaderboard[] = metaleaderboardData.map(
+				(team: MetaLeaderboardResponse) => {
+					let total_points = 0;
+					for (let i = 0; i < r2Leaderboard.length; i++) {
+						if (r2Leaderboard[i].name === team.meta_team__name) {
+							total_points = team.tpoints + r2Leaderboard[i].points;
+						}
 					}
-				}
-				return {
-					name: team.name,
-					total_points: total_points,
-					meta_team__name: team.meta_team__name,
-				};
-			}),
-		);
-	};
-
-	const sorting = () => {
-		setSortedLeaderboard(
-			finalLeaderboard.sort((a, b) => {
+					return {
+						name: team.name,
+						total_points: total_points,
+						meta_team__name: team.meta_team__name,
+					};
+				},
+			);
+			console.log(updated);
+			return updated;
+		});
+		setFinalLeaderboard((prev: FinalLeaderboard[]) => {
+			const updated: FinalLeaderboard[] = prev.sort((a, b) => {
 				return b.total_points - a.total_points;
-			}),
-		);
+			});
+			console.log(updated);
+			return updated;
+		});
+
 		setr2Leaderboard(
 			r2Leaderboard.sort((a, b) => {
 				return b.points - a.points;
 			}),
 		);
-		console.log(sortedLeaderboard);
-	};
+		console.log(finalLeaderboard);
+	}, [metaleaderboardData, r2Leaderboard]);
+
 	useEffect(() => {
 		if (isPageVisible) {
 			if (document.visibilityState === "visible") {
@@ -262,8 +263,8 @@ const Leaderboard2 = () => {
 							</div>
 						</div>
 						<div className="flex h-full w-full flex-col bg-black bg-opacity-50 font-source-code-pro">
-							{metaleaderboardData &&
-								sortedLeaderboard.map((team, index) => (
+							{finalLeaderboard &&
+								finalLeaderboard.map((team, index) => (
 									<div
 										className="flex w-full drop-shadow-3xl sm:text-2xl"
 										key={index}
