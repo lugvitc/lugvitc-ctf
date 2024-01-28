@@ -29,8 +29,8 @@ moonsArray.forEach((moon, index) => {
 });
 
 type response = {
-	meta_team__name: string
-}
+	meta_team__name: string;
+};
 
 const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 	const [currTeam, setCurrTeam] = useState<string>("");

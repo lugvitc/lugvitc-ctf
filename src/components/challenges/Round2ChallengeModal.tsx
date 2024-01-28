@@ -4,7 +4,7 @@ import Typewriter from "typewriter-effect";
 import { URL_ORIGIN } from "../../constants";
 import toast, { Toaster } from "react-hot-toast";
 import { TOAST_MESSAGES } from "../../constants";
-import { FlagResponse, ResponseData, Round2Modal, } from "../../types";
+import { FlagResponse, ResponseData, Round2Modal } from "../../types";
 import React, { useState } from "react";
 
 export const Round2ChallengeModal = ({
