@@ -55,9 +55,28 @@ const SignUp = () => {
 					setTimeout(() => {
 						navigate("/sign-in");
 					}, 2000);
+				} else if (response.status === 404) {
+					toast(TOAST_MESSAGES.USERS_NOT_FOUND);
+				} else if (response.status === 401) {
+					toast(TOAST_MESSAGES.USER_ALREADY_IN_TEAM);
 				}
 			})
 			.catch((error: AxiosError) => {
+				if (error.response) {
+					if (error.response.status === 404) {
+						toast(TOAST_MESSAGES.USERS_NOT_FOUND);
+					} else if (error.response.status === 401) {
+						toast(TOAST_MESSAGES.USER_ALREADY_IN_TEAM);
+					} else {
+						toast("Unknown Error");
+					}
+				} else if (error.request) {
+					toast("No response");
+				} else {
+					toast(
+						"Something happened in setting up the request that triggered an Error",
+					);
+				}
 				console.error(error);
 			})
 			.finally(() => {
