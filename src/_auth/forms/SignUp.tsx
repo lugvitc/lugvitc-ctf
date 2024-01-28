@@ -12,7 +12,7 @@ import { SignupResponse } from "../../types";
 import "./SignUp.css";
 
 const SignUp = () => {
-	const [selected, setSelected] = useState<boolean[]>();
+	const [selected, setSelected] = useState<number>(0);
 	const { isAuthenticated } = useUserContext();
 	const navigate = useNavigate();
 	const [name, setName] = useState<string>("");
@@ -144,7 +144,7 @@ const SignUp = () => {
 							}}
 						>
 							<label className="w-full">
-								Team Name
+								Team Name <span className="text-red-700">*</span>
 								<input
 									className="my-2 block h-[46px] w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-4"
 									type="text"
@@ -153,77 +153,71 @@ const SignUp = () => {
 									required
 								/>
 							</label>
-							{selected ? (
-								selected.map((e, i) => {
-									if (e === true) {
-										return (
-											<label key={i} className="w-full">
-												Member {i + 1}:
-												<input
-													className="my-1 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-2"
-													type="text"
-													value={members[i]}
-													onChange={(e) => handleInputChange(i, e.target.value)}
-													required
-												/>
+							<label className="w-full">
+								Team Size:
+								<div className="container flex gap-4">
+									<div className="radio-wrapper">
+										<input
+											className="input"
+											name="btn"
+											id="value-1"
+											type="radio"
+											onClick={() => setSelected(1)}
+										/>
+										<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
+											<span>1</span>
+											<span className="btn__glitch">1</span>
+											<label className="number left-[60px] top-0 px-1 text-xs">
+												r1
 											</label>
-										);
-									}
-								})
-							) : (
-								<label className="w-full">
-									Team Size:
-									<div className="container flex gap-4">
-										<div className="radio-wrapper">
-											<input
-												className="input"
-												name="btn"
-												id="value-1"
-												type="radio"
-												onClick={() => setSelected([true, false, false])}
-											/>
-											<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
-												<span>1</span>
-												<span className="btn__glitch">1</span>
-												<label className="number left-[60px] top-0 px-1 text-xs">
-													r1
-												</label>
-											</div>
-										</div>
-										<div className="radio-wrapper">
-											<input
-												className="input"
-												name="btn"
-												id="value-2"
-												// checked={true}
-												type="radio"
-												onClick={() => setSelected([true, true, false])}
-											/>
-											<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
-												2<span className="btn__glitch">2</span>
-												<label className="number left-[60px] top-0 px-1 text-xs">
-													r2
-												</label>
-											</div>
-										</div>
-										<div className="radio-wrapper">
-											<input
-												className="input"
-												name="btn"
-												id="value-3"
-												type="radio"
-												onClick={() => setSelected([true, true, true])}
-											/>
-											<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
-												3<span className="btn__glitch">3</span>
-												<label className="number left-[60px] top-0 px-1 text-xs">
-													r3
-												</label>
-											</div>
 										</div>
 									</div>
+									<div className="radio-wrapper">
+										<input
+											className="input"
+											name="btn"
+											id="value-2"
+											// checked={true}
+											type="radio"
+											onClick={() => setSelected(2)}
+										/>
+										<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
+											2<span className="btn__glitch">2</span>
+											<label className="number left-[60px] top-0 px-1 text-xs">
+												r2
+											</label>
+										</div>
+									</div>
+									<div className="radio-wrapper">
+										<input
+											className="input"
+											name="btn"
+											id="value-3"
+											type="radio"
+											onClick={() => setSelected(3)}
+										/>
+										<div className="btn flex items-center justify-center text-xl text-fluorescent-green drop-shadow-3xl">
+											3<span className="btn__glitch">3</span>
+											<label className="number left-[60px] top-0 px-1 text-xs">
+												r3
+											</label>
+										</div>
+									</div>
+								</div>
+							</label>
+							{Array.from({ length: selected }).map((_, i) => (
+								<label key={i} className="w-full">
+									Member {i + 1}: <span className="text-red-700">*</span>
+									<input
+										className="my-1 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-2"
+										type="text"
+										value={members[i]}
+										onChange={(e) => handleInputChange(i, e.target.value)}
+										required
+									/>
 								</label>
-							)}
+							))}
+
 							{/* <label className="w-full">
 								Member 1
 								<input
@@ -253,7 +247,7 @@ const SignUp = () => {
 								/>
 							</label> */}
 							<label className="w-full">
-								Password
+								Password <span className="text-red-700">*</span>
 								<input
 									className="my-2 block h-[46px]  w-80 rounded-lg bg-dark-grayish-blue px-4 py-2 md:my-4"
 									type="password"

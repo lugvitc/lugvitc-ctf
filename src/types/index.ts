@@ -22,6 +22,7 @@ export interface ChallengeModalProp {
 	isStart: boolean;
 	handleStartChange: (id: number, isStart: boolean) => void;
 	closeModal: (e: React.MouseEvent) => void;
+	handleSolved: () => void;
 }
 
 export interface ResponseData {
@@ -117,11 +118,11 @@ export interface CardProps {
 	challenge: Challenge;
 	isStart: boolean;
 	handleStartChange: (id: number, isStart: boolean) => void;
+	handleSolved: () => void;
 }
 export interface SidebarProps {
 	sideState: string;
 	setSideState: (newState: string) => void;
-	setColor?: string;
 }
 export interface QuestionData {
 	id: number;
@@ -164,6 +165,10 @@ export interface SignupResponse {
 	msg_code: number;
 }
 
+export interface TeamResponse {
+	coins: number;
+}
+
 export interface SidebarProps2 {
 	sideState: string | undefined;
 	setSideState: (newState: string) => void;
@@ -180,6 +185,19 @@ export interface Problem {
 	points: number;
 	description: string;
 }
+
+export interface Round2Modal {
+	container: {
+		id: number;
+		ports: Port[];
+		problem: Problem;
+		meta_team_name: string;
+		solved: boolean;
+	};
+	isClicked: boolean;
+	closeModal: (e: React.MouseEvent) => void;
+}
+
 export interface Container {
 	id: number;
 	ports: Port[];
