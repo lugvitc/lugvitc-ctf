@@ -14,6 +14,8 @@ import {
 	Hints,
 } from "../../types";
 import React from "react";
+import coinImg from "../../assets/icons/coin.png";
+import { TeamResponse } from "../../types";
 
 export const ChallengeModal = ({
 	question,
@@ -21,6 +23,7 @@ export const ChallengeModal = ({
 	isStart,
 	handleStartChange,
 	closeModal,
+	handleSolved,
 }: ChallengeModalProp) => {
 	// console.log(question);
 	// const [isStart, setIsStart] = useState<boolean>(false);
@@ -28,6 +31,7 @@ export const ChallengeModal = ({
 
 	const [selectedHint, setSelectedHint] = useState<number | null>(null);
 	const [flag, setFlag] = useState<string>("");
+	const [coins, setCoins] = useState<number | null>(0);
 
 	// const handleCloseModal = () => {
 
@@ -38,6 +42,7 @@ export const ChallengeModal = ({
 	const hintList = [0, 1, 2];
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
 	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
+	const [refreshKey, setRefreshKey] = useState(0);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -65,7 +70,7 @@ export const ChallengeModal = ({
 						// previous hints + new hint
 						const newHints = {
 							...storedHints,
-							// SET ORDER HINT.TEXT
+
 							[response.data.order as number]: response.data.text,
 						};
 						// new hints in localStorage
@@ -75,6 +80,12 @@ export const ChallengeModal = ({
 						);
 						setHints(newHints);
 						setSelectedHint(hintNumber);
+
+						const viewedHintsCount = Object.keys(newHints).length;
+
+						setRefreshKey((prevKey) => prevKey + 1);
+						// console.log(viewedHintsCount);
+						setviewedHintsFetch(viewedHintsCount);
 					}
 				})
 				.catch((error) => {
@@ -113,6 +124,8 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
+						handleSolved();
+
 					}, 1500);
 				} else if (response.data.status) {
 					console.log(response.data.status);
@@ -125,7 +138,7 @@ export const ChallengeModal = ({
 
 	const startContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
-		//  CHECK KR
+
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/start`,
@@ -229,6 +242,20 @@ export const ChallengeModal = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		const jwt = localStorage.getItem('jwt_token');
+		axios.get<TeamResponse>(`${URL_ORIGIN}/team/me`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+			.then((response) => response.data)
+			.then((res) => setCoins(res.coins))
+			.catch((error) => {
+				console.log(error)
+			})
+	}, [refreshKey]);
+
 	return (
 		<React.Fragment>
 			{isClicked && (
@@ -249,8 +276,15 @@ export const ChallengeModal = ({
 											typewriter.typeString("Question Name").start();
 										}}
 									/>
-									<div className="flex h-[47px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
-										Points: {question.points}
+									<div className="flex gap-8">
+										<div className="flex h-[50px] items-center justify-center gap-4 border border-[#dbfa8e] bg-transparent p-4 px-4 text-[15px] text-[#dbfa8e] ">
+											<img src={coinImg} alt="coin" className=" h-[30px]" />
+											<span>{coins}</span>
+										</div>
+
+										<div className="flex h-[50px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
+											Points: {question.points}
+										</div>
 									</div>
 								</div>
 								<div className="text-[20px]">
@@ -285,6 +319,26 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
+								{coins !== null && coins < 100 ? (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Coins",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(
+														`Note: You don't have enough coins to purchase hints`,
+													)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
 								{/* -------------------PORTS--------------------------------- */}
 								{portsFetched && portsFetched.length > 0 ? (
 									<div className="text-[20px]">
@@ -343,13 +397,11 @@ export const ChallengeModal = ({
 								{hintList.map((hint) => {
 									const isDisabled =
 										((hint === 1 || hint === 2) && viewedHintsFetch === 0) ||
-										(hint === 2 &&
-											(viewedHintsFetch === 2 || viewedHintsFetch === 1));
+										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${
-												isDisabled ? " pointer-events-none" : ""
-											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
+												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -365,8 +417,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-								hints[selectedHint] &&
-								localStorage.getItem(`hints_${question.id}`)
+									hints[selectedHint] &&
+									localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -374,9 +426,8 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
-							isClicked ? "" : "hidden"
-						}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
+							}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
