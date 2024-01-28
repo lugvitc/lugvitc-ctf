@@ -70,7 +70,7 @@ const LandingPage = () => {
 						)}
 					</Element>
 
-					<Element name="rules" className="h-auto w-full mb-4">
+					<Element name="rules" className="mb-4 h-auto w-full">
 						{isScrolledDown && (
 							<div>
 								<div className="flex h-auto flex-col justify-start pl-40 pt-60">
@@ -83,14 +83,28 @@ const LandingPage = () => {
 									</h1>
 									<div className="mt-2 max-w-[1100px]  ">
 										<span className="animate-fadeIn font-source-code-pro text-[25px] font-normal delay-150 max-xl:text-[23px]">
-
-											<strong>Important Points:</strong><br />
-											<strong>1. Educational Purpose Only: </strong>All tools, techniques, and information are for learning cybersecurity, not real-world hacking.<br /><br />
-											<strong>2. Legal Compliance: </strong> Participants are reminded to abide by all applicable local, national, and international laws. Engaging in any illegal activities is strictly prohibited. <br /><br />
-											<strong>3. Ethical Conduct: </strong> We emphasize the importance of ethical behavior in cyberspace. Respect the privacy and rights of others, and avoid any actions that may cause harm or violate ethical standards.
+											<strong>Important Points:</strong>
+											<br />
+											<strong>1. Educational Purpose Only: </strong>All tools,
+											techniques, and information are for learning
+											cybersecurity, not real-world hacking.
 											<br />
 											<br />
-											By participating in PASSWORD&apos;24, you acknowledge and agree to adhere to these guidelines. The organizers and sponsors of this event are not responsible for any misuse of the knowledge gained.
+											<strong>2. Legal Compliance: </strong> Participants are
+											reminded to abide by all applicable local, national, and
+											international laws. Engaging in any illegal activities is
+											strictly prohibited. <br />
+											<br />
+											<strong>3. Ethical Conduct: </strong> We emphasize the
+											importance of ethical behavior in cyberspace. Respect the
+											privacy and rights of others, and avoid any actions that
+											may cause harm or violate ethical standards.
+											<br />
+											<br />
+											By participating in PASSWORD&apos;24, you acknowledge and
+											agree to adhere to these guidelines. The organizers and
+											sponsors of this event are not responsible for any misuse
+											of the knowledge gained.
 											<br />
 											Stay Safe Online!
 										</span>
