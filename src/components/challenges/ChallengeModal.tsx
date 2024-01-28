@@ -90,7 +90,9 @@ export const ChallengeModal = ({
 					}
 				})
 				.catch((error) => {
-					toast(`Failed to fetch hint 422 error`);
+					if (error.status === 403)
+					toast(`Hint does not exist`);
+					else toast("Unknown error");
 					console.log(error);
 				});
 		}
@@ -119,20 +121,28 @@ export const ChallengeModal = ({
 				},
 			)
 			.then((response: AxiosResponse<FlagResponse>) => {
-				if (response.data.msg_code === 2) {
-					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (response.data.msg_code === 12) {
+				if (response.data.status === true) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
 						handleSolved();
 					}, 1500);
-				} else if (response.data.status) {
-					console.log(response.data.status);
+				} else {
+					toast("Incorrect Flag");
 				}
 			})
 			.catch((error) => {
-				console.log(error);
+				if (error.response.data.msg_code === 2) {
+					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
+				} else if (error.response.data.msg_code === 12) {
+					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
+					setTimeout(() => {
+						closeModal(e);
+						handleSolved();
+					}, 1500);
+				} else {
+					toast("Unknown Error occured, no internet maybe?")
+				}
 			});
 	};
 
@@ -213,6 +223,7 @@ export const ChallengeModal = ({
 			})
 			.then((response: AxiosResponse<hintResponseData[]>) => {
 				const viewedHints = response.data.reduce((acc, hint) => {
+					console.log(hint);
 					if (hint.order !== undefined) {
 						return { ...acc, [hint.order]: hint.text };
 					} else {
@@ -277,7 +288,7 @@ export const ChallengeModal = ({
 											delay: 25,
 										}}
 										onInit={(typewriter) => {
-											typewriter.typeString("Question Name").start();
+											typewriter.typeString(question.name).start();
 										}}
 									/>
 									<div className="flex gap-8">

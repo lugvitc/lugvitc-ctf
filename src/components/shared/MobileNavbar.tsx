@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { leftSidebarLinks } from "../../constants";
 import { useUserContext } from "../../context/AuthContext";
 import { Location, Props } from "../../types";
+import logo from "../../assets/images/club-logo.png";
 
 const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 	const location = useLocation() as Location;
@@ -16,7 +17,7 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 		>
 			<div className="mt-6 flex items-center justify-start gap-4 px-6">
 				<img
-					src="src/assets/images/club-logo.png"
+					src={logo}
 					alt="logo"
 					className="h-[52px] w-[52px]"
 				/>

@@ -6,6 +6,7 @@ import { URL_ORIGIN } from "../../constants";
 import { useGlitch } from "react-powerglitch";
 import Typewriter from "typewriter-effect";
 import eventLogo from "../../assets/images/passwordctf-logo.png";
+
 import {
 	MetaLeaderboardResponse,
 	R2LeaderboardResponse,
@@ -39,7 +40,7 @@ const Leaderboard2 = () => {
 			.then((data) => setMetaleaderboardData(data))
 			.catch((error) => console.error("Error fetching data:", error));
 		axios
-			.get<R2LeaderboardResponse[]>(`${URL_ORIGIN}/round2/meat_lb`)
+			.get<R2LeaderboardResponse[]>(`${URL_ORIGIN}/round2/meta_lb`)
 			.then((response) => response.data)
 			.then((data) => setr2Leaderboard(data))
 			.catch((error) => console.error("Error fetching data:", error));

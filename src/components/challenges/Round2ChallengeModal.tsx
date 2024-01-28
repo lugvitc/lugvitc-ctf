@@ -18,7 +18,7 @@ export const Round2ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 		axios
 			.post(
-				`${URL_ORIGIN}/ctf/${container.id}/flag`,
+				`${URL_ORIGIN}/round2/${container.id}/flag`,
 				{ flag: flag },
 				{
 					headers: {
@@ -27,19 +27,28 @@ export const Round2ChallengeModal = ({
 				},
 			)
 			.then((response: AxiosResponse<FlagResponse>) => {
-				if (response.data.msg_code === 2) {
-					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (response.data.msg_code === 12) {
+				if (response.data.status === true) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
+						handleSolved();
 					}, 1500);
-				} else if (response.data.status) {
-					console.log(response.data.status);
+				} else {
+					toast("Incorrect Flag");
 				}
 			})
 			.catch((error) => {
-				console.log(error);
+				if (error.response.data.msg_code === 2) {
+					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
+				} else if (error.response.data.msg_code === 12) {
+					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
+					setTimeout(() => {
+						closeModal(e);
+						handleSolved();
+					}, 1500);
+				} else {
+					toast("Unknown Error occured, no internet maybe?")
+				}
 			});
 	};
 
@@ -53,14 +62,14 @@ export const Round2ChallengeModal = ({
 								<div className="mb-4 flex items-center justify-between text-[25px]">
 									<Typewriter
 										options={{
-											strings: ["Question Name"],
+											strings: [container.problem.name],
 											// autoStart: true,
 											loop: false,
 											cursor: "",
 											delay: 25,
 										}}
 										onInit={(typewriter) => {
-											typewriter.typeString("Question Name").start();
+											typewriter.typeString(container.problem.name).start();
 										}}
 									/>
 

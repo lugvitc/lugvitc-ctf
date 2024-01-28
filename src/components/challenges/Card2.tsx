@@ -1,6 +1,7 @@
 import { useState } from "react";
-// import { ChallengeModal } from "./ChallengeModal";
+import { Round2ChallengeModal } from "./Round2ChallengeModal";
 import { CardProps2 } from "../../types";
+import { moonsArray } from "./Sidebar2";
 
 export default function Card2({ container }: CardProps2) {
 	const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -11,11 +12,11 @@ export default function Card2({ container }: CardProps2) {
 		console.log(isClicked);
 	};
 
-	// const handleModalClose = (e: React.MouseEvent) => {
-	// 	e.stopPropagation();
-	// 	// console.log("Closing modal");
-	// 	setIsClicked(false);
-	// };
+	const handleModalClose = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		// console.log("Closing modal");
+		setIsClicked(false);
+	};
 
 	return (
 		<div>
@@ -63,18 +64,18 @@ export default function Card2({ container }: CardProps2) {
 								{container.problem.points}
 							</div>
 							<div className="my-4 max-w-fit items-center rounded bg-fluorescent-green bg-opacity-10 px-4 py-2 text-center">
-								{container.meta_team_name}
+								{moonsArray[container.meta_team_id - 1]}
 							</div>
 						</div>
 					</div>
 				</div>
-				{/* {isClicked && (
-					// <ChallengeModal
-					// 	container={container.problem}
-					// 	isClicked={isClicked}
-					// 	closeModal={handleModalClose}
-					// />
-				)} */}
+				{isClicked && (
+					<Round2ChallengeModal
+						container={container}
+						isClicked={isClicked}
+						closeModal={handleModalClose}
+					/>
+				)}
 			</div>
 		</div>
 	);

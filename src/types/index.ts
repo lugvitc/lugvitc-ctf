@@ -202,7 +202,7 @@ export interface Container {
 	id: number;
 	ports: Port[];
 	problem: Problem;
-	meta_team_name: string;
+	meta_team_id: number;
 	solved: boolean;
 }
 
