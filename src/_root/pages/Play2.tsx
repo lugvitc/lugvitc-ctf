@@ -4,10 +4,10 @@ import axios from "axios";
 import Sidebar2, { idLookup } from "../../components/challenges/Sidebar2";
 import { Container } from "../../types";
 import { URL_ORIGIN } from "../../constants";
-import { useUserContext } from "../../context/AuthContext";
+// import { useUserContext } from "../../context/AuthContext";
 import React from "react";
 import Card2 from "../../components/challenges/Card2";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 const Play2 = () => {
 	const [containers, setContainers] = useState<Container[]>([
