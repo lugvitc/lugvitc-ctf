@@ -28,3 +28,16 @@ body {
 .phelix-boomgartner {
 	font-family: 'phelix-boomgartner';
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+	height: 0.5rem;
+  }
+   
+  .custom-scrollbar::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+  }
+   
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #039d00;
+	outline: 1px solid #08FF08;
+  }
