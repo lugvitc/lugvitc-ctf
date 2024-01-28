@@ -131,9 +131,9 @@ export const ChallengeModal = ({
 				}
 			})
 			.catch((error: AxiosError<ResponseData>) => {
-				if (error.response.data.msg_code === 2) {
+				if (error?.response?.data.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (error.response.data.msg_code === 12) {
+				} else if (error?.response?.data.msg_code === 12) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
