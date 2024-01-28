@@ -67,8 +67,10 @@ const Play2 = () => {
 								<div className="grid w-10/12 grid-cols-2 gap-10 ">
 									{containers
 										.filter((container) => {
-											return container.meta_team_id === idLookup[sideState] &&
-												!container.solved;
+											return (
+												container.meta_team_id === idLookup[sideState] &&
+												!container.solved
+											);
 										})
 										.map((container) => (
 											<Card2 container={container} key={container.id} />

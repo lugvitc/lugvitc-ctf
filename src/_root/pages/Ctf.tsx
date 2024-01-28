@@ -7,8 +7,8 @@ import Sidebar from "../../components/challenges/Sidebar";
 import { Circles } from "react-loader-spinner";
 import { ChallengeCategories, Challenge, ChallengeBackend } from "../../types";
 import { categoryArr } from "../../constants";
-import { useUserContext } from "../../context/AuthContext";
-import { Navigate } from "react-router-dom";
+// import { useUserContext } from "../../context/AuthContext";
+// import { Navigate } from "react-router-dom";
 import React from "react";
 
 const bsToTags = (bs: number) => {

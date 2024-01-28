@@ -19,8 +19,8 @@ export const moonsArray = [
 ];
 
 type lookup = {
-	[moon: string]: number
-}
+	[moon: string]: number;
+};
 
 export let idLookup: lookup = {};
 
@@ -51,30 +51,39 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps2) => {
 				Categories
 			</h1>
 			<ul className="mt-6 w-full px-4">
-				<li className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
-								sideState !== currTeam
-									? "bg-transparent "
-									: " border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
-							}`} onClick={() => {
-								setSideState(currTeam);
-							}}>{currTeam}</li>
-				{moonsArray.filter((m_name, index) => {return m_name !== currTeam}).map((m_name, index) => {
-					return (
-						<li
-							key={index}
-							className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
-								sideState !== m_name
-									? "bg-transparent "
-									: " border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
-							}`}
-							onClick={() => {
-								setSideState(m_name);
-							}}
-						>
-							{m_name}
-						</li>
-					);
-				})}
+				<li
+					className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
+						sideState !== currTeam
+							? "bg-transparent "
+							: " border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
+					}`}
+					onClick={() => {
+						setSideState(currTeam);
+					}}
+				>
+					{currTeam}
+				</li>
+				{moonsArray
+					.filter((m_name, index) => {
+						return m_name !== currTeam;
+					})
+					.map((m_name, index) => {
+						return (
+							<li
+								key={index}
+								className={`my-4 cursor-pointer rounded px-6 py-3 text-lg hover:bg-midnight-blue hover:bg-opacity-50 ${
+									sideState !== m_name
+										? "bg-transparent "
+										: " border border-fluorescent-green bg-midnight-blue text-fluorescent-green "
+								}`}
+								onClick={() => {
+									setSideState(m_name);
+								}}
+							>
+								{m_name}
+							</li>
+						);
+					})}
 			</ul>
 		</div>
 	);

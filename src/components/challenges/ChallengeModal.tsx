@@ -90,8 +90,7 @@ export const ChallengeModal = ({
 					}
 				})
 				.catch((error) => {
-					if (error.status === 403)
-					toast(`Hint does not exist`);
+					if (error.status === 403) toast(`Hint does not exist`);
 					else toast("Unknown error");
 					console.log(error);
 				});
@@ -141,7 +140,7 @@ export const ChallengeModal = ({
 						handleSolved();
 					}, 1500);
 				} else {
-					toast("Unknown Error occured, no internet maybe?")
+					toast("Unknown Error occured, no internet maybe?");
 				}
 			});
 	};

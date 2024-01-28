@@ -47,7 +47,7 @@ export const Round2ChallengeModal = ({
 						handleSolved();
 					}, 1500);
 				} else {
-					toast("Unknown Error occured, no internet maybe?")
+					toast("Unknown Error occured, no internet maybe?");
 				}
 			});
 	};

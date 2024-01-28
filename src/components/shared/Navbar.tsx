@@ -24,11 +24,7 @@ const Navbar = () => {
 	return (
 		<nav className=" shadow-light-300 fixed z-50 flex h-[80px]  w-full items-center justify-between border-b-2 border-[#f8fafc0f] bg-[#0f172abf] p-6 backdrop-blur-lg sm:px-12">
 			<div className="flex items-center justify-center gap-4">
-				<img
-					src={logo}
-					alt="logo"
-					className="h-[60px] w-[60px]"
-				/>
+				<img src={logo} alt="logo" className="h-[60px] w-[60px]" />
 				<span className="font-DM-Mono text-[20px] font-bold text-animation-green max-lg:hidden">
 					Linux Club VITC
 				</span>
