@@ -14,17 +14,24 @@ import {
 	Hints,
 } from "../../types";
 import React from "react";
+import coinImg from "../../assets/icons/coin.png";
+import { TeamResponse } from "../../types";
 
 export const ChallengeModal = ({
 	question,
 	isClicked,
+	isStart,
+	handleStartChange,
 	closeModal,
+	handleSolved,
 }: ChallengeModalProp) => {
-	const [isStart, setIsStart] = useState<boolean>(false);
+	// console.log(question);
+	// const [isStart, setIsStart] = useState<boolean>(false);
 	const [hints, setHints] = useState<{ [key: number]: string }>({});
 
 	const [selectedHint, setSelectedHint] = useState<number | null>(null);
 	const [flag, setFlag] = useState<string>("");
+	const [coins, setCoins] = useState<number | null>(0);
 
 	// const handleCloseModal = () => {
 
@@ -32,7 +39,11 @@ export const ChallengeModal = ({
 	// 	setSelectedHint(null);
 	// };
 
-	const hintList: number[] = [1, 2, 3];
+	const hintList = [0, 1, 2];
+	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
+	const [refreshKey, setRefreshKey] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -41,7 +52,7 @@ export const ChallengeModal = ({
 		) as Hints;
 
 		if (storedHints[hintNumber]) {
-			console.log("Hint:", storedHints[hintNumber]);
+			// console.log("Hint:", storedHints[hintNumber]);
 			setSelectedHint(hintNumber);
 		} else {
 			const jwt = localStorage.getItem("jwt_token");
@@ -60,7 +71,8 @@ export const ChallengeModal = ({
 						// previous hints + new hint
 						const newHints = {
 							...storedHints,
-							[hintNumber]: response.data.text,
+
+							[response.data.order as number]: response.data.text,
 						};
 						// new hints in localStorage
 						localStorage.setItem(
@@ -69,10 +81,17 @@ export const ChallengeModal = ({
 						);
 						setHints(newHints);
 						setSelectedHint(hintNumber);
+
+						const viewedHintsCount = Object.keys(newHints).length;
+
+						setRefreshKey((prevKey) => prevKey + 1);
+						// console.log(viewedHintsCount);
+						setviewedHintsFetch(viewedHintsCount);
 					}
 				})
 				.catch((error) => {
-					console.error("Failed to fetch hint", error);
+					toast(`Failed to fetch hint 422 error`);
+					console.log(error);
 				});
 		}
 	};
@@ -106,6 +125,7 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
+						handleSolved();
 					}, 1500);
 				} else if (response.data.status) {
 					console.log(response.data.status);
@@ -118,6 +138,7 @@ export const ChallengeModal = ({
 
 	const startContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+		setIsLoading(true);
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/start`,
@@ -139,18 +160,23 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 3) {
 					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
-				}
-				const ports = response.data.ports;
-				const ctf_id = response.data.ctf_id;
 
-				console.log(ports, ctf_id);
+					const ports = response.data.ports;
+					setIsLoading(false);
+					toast("Container is running");
+					setPortsFetched(ports);
+				}
 			})
 			.catch((error) => {
-				console.error("Failed to start container", error);
+				setIsLoading(false);
+				handleStartChange(question.id, false);
+				toast("Failed to start container");
+				console.log(error);
 			});
 	};
 	const stopContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/stop`,
@@ -180,7 +206,7 @@ export const ChallengeModal = ({
 		// viewed hints from the server
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, {
+			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed_hints`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -208,12 +234,31 @@ export const ChallengeModal = ({
 				);
 
 				setHints(mergedHints);
+				const viewedHintsCount = Object.keys(mergedHints).length;
+				// const availableHints = 3 - viewedHintsCount;
+				console.log(viewedHintsCount);
+				setviewedHintsFetch(viewedHintsCount);
 			})
 			.catch((error) => {
 				console.error("Failed to fetch viewed hints", error);
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		const jwt = localStorage.getItem("jwt_token");
+		axios
+			.get<TeamResponse>(`${URL_ORIGIN}/team/me`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
+			.then((response) => response.data)
+			.then((res) => setCoins(res.coins))
+			.catch((error) => {
+				console.log(error);
+			});
+	}, [refreshKey]);
 
 	return (
 		<React.Fragment>
@@ -235,8 +280,15 @@ export const ChallengeModal = ({
 											typewriter.typeString("Question Name").start();
 										}}
 									/>
-									<div className="flex h-[47px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
-										Points: {question.points}
+									<div className="flex gap-8">
+										<div className="flex h-[50px] items-center justify-center gap-4 border border-[#dbfa8e] bg-transparent p-4 px-4 text-[15px] text-[#dbfa8e] ">
+											<img src={coinImg} alt="coin" className=" h-[30px]" />
+											<span>{coins}</span>
+										</div>
+
+										<div className="flex h-[50px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
+											Points: {question.points}
+										</div>
 									</div>
 								</div>
 								<div className="text-[20px]">
@@ -271,7 +323,45 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-
+								{coins !== null && coins < 100 ? (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Coins",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(
+														`Note: You don't have enough coins to purchase hints`,
+													)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
+								{/* -------------------PORTS--------------------------------- */}
+								{portsFetched && portsFetched.length > 0 ? (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Ports",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(`Port: ${portsFetched?.join(",")}`)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
 								<div className="mt-10 flex justify-between">
 									<div className=" flex gap-4">
 										<input
@@ -293,7 +383,8 @@ export const ChallengeModal = ({
 									<button
 										className=" h-[47px] w-1/4 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
 										onClick={() => {
-											setIsStart(!isStart);
+											const newStartState = !isStart;
+											handleStartChange(question.id, newStartState);
 											if (isStart) {
 												stopContainer();
 											} else {
@@ -301,20 +392,36 @@ export const ChallengeModal = ({
 											}
 										}}
 									>
-										{isStart ? <span>Stop</span> : <span>Start</span>}
+										{isLoading ? (
+											<span>Loading...</span>
+										) : isStart ? (
+											<span>Stop</span>
+										) : (
+											<span>Start</span>
+										)}
 									</button>
 								</div>
 							</div>
 
 							<div className="my-16 flex items-center justify-center gap-4">
 								{hintList.map((hint) => {
+									const isDisabled =
+										((hint === 1 || hint === 2) && viewedHintsFetch === 0) ||
+										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className="h-16 w-16 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
+											className={`h-16 w-16 rounded-sm border ${
+												isDisabled ? " pointer-events-none" : ""
+											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
-											onClick={() => handleHintClick(hint)}
+											onClick={() => {
+												if (isDisabled) {
+													return;
+												}
+												handleHintClick(hint);
+											}}
 										>
-											{hint}
+											{hint + 1}
 										</button>
 									);
 								})}
