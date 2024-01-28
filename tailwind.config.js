@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import lb from "./src/assets/images/leaderboard.png";
+
 module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
@@ -8,8 +10,8 @@ module.exports = {
 				custom: "0px 0px 60px 10px rgba(0, 255, 117, 0.30)",
 			},
 			backgroundImage: {
-				landing: "url('./src/assets/images/background.svg')",
-				leaderboard: "url('./src/assets/images/leaderboard.png')",
+				landing: "url('/src/assets/images/background.svg')",
+				leaderboard: "url('/src/assets/images/leaderboard.png')",
 			},
 			backgroundPosition: {
 				landingPos: "left 10em top 12em",

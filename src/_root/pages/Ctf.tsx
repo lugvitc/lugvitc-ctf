@@ -7,8 +7,8 @@ import Sidebar from "../../components/challenges/Sidebar";
 import { Circles } from "react-loader-spinner";
 import { ChallengeCategories, Challenge, ChallengeBackend } from "../../types";
 import { categoryArr } from "../../constants";
-import { useUserContext } from "../../context/AuthContext";
-import { Navigate } from "react-router-dom";
+// import { useUserContext } from "../../context/AuthContext";
+// import { Navigate } from "react-router-dom";
 import React from "react";
 
 const bsToTags = (bs: number) => {
@@ -38,7 +38,7 @@ export function CtfPage() {
 		Promise.all([
 			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/list`),
 			// assuming completed problem interface === problems in /api/ctf/list
-			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/completed`, {
+			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/completed`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -103,50 +103,46 @@ export function CtfPage() {
 	const handleStartChange = (id: number, isStart: boolean) => {
 		setStartStates((prevStates) => ({ ...prevStates, [id]: isStart }));
 	};
-	const { isAuthenticated } = useUserContext();
+	// const { isAuthenticated } = useUserContext();
 	return (
 		<React.Fragment>
-			{isAuthenticated ? (
-				<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
-					<div className="flex h-[80px] w-full p-10 "></div>
-					<div className="flex w-screen">
-						<div className="relative h-screen w-1/5">
-							<Sidebar sideState={sideState} setSideState={setSideState} />
-						</div>
-						<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
-							{loading ? (
-								<div className="flex h-screen items-center justify-center">
-									<Circles
-										height="80"
-										width="80"
-										color="green"
-										ariaLabel="three-dots-loading"
-									/>
-								</div>
-							) : (
-								<>
-									<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
-										{sideState}
-									</h1>
-									<div className="grid w-10/12 grid-cols-2 gap-10 ">
-										{questionList.map((challenge) => (
-											<Card
-												challenge={challenge}
-												key={challenge.id}
-												isStart={startStates[challenge.id]}
-												handleStartChange={handleStartChange}
-												handleSolved={refreshData}
-											/>
-										))}
-									</div>
-								</>
-							)}
-						</div>
+			<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
+				<div className="flex h-[80px] w-full p-10 "></div>
+				<div className="flex w-screen">
+					<div className="relative h-screen w-1/5">
+						<Sidebar sideState={sideState} setSideState={setSideState} />
 					</div>
-				</main>
-			) : (
-				<Navigate to={"/sign-in"} />
-			)}
+					<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
+						{loading ? (
+							<div className="flex h-screen items-center justify-center">
+								<Circles
+									height="80"
+									width="80"
+									color="green"
+									ariaLabel="three-dots-loading"
+								/>
+							</div>
+						) : (
+							<>
+								<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
+									{sideState}
+								</h1>
+								<div className="grid w-10/12 grid-cols-2 gap-10 ">
+									{questionList.map((challenge) => (
+										<Card
+											challenge={challenge}
+											key={challenge.id}
+											isStart={startStates[challenge.id]}
+											handleStartChange={handleStartChange}
+											handleSolved={refreshData}
+										/>
+									))}
+								</div>
+							</>
+						)}
+					</div>
+				</div>
+			</main>
 		</React.Fragment>
 	);
 }

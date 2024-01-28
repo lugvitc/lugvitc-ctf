@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { leftSidebarLinks } from "../../constants";
 import { useUserContext } from "../../context/AuthContext";
 import { Location, Props } from "../../types";
+import logo from "../../assets/images/club-logo.png";
 
 const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 	const location = useLocation() as Location;
@@ -15,11 +16,7 @@ const MobileNavbar = ({ isOpen, setIsOpen }: Props) => {
 			}`}
 		>
 			<div className="mt-6 flex items-center justify-start gap-4 px-6">
-				<img
-					src="src/assets/images/club-logo.png"
-					alt="logo"
-					className="h-[52px] w-[52px]"
-				/>
+				<img src={logo} alt="logo" className="h-[52px] w-[52px]" />
 				<span className="font-DM-Mono text-white">Linux Club VITC</span>
 			</div>
 			<div className="mt-24 flex flex-1 flex-col justify-start gap-6  ">

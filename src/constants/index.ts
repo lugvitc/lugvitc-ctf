@@ -35,7 +35,7 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 	},
 ];
 
-export const URL_ORIGIN = "https://pwncore.tripe.one/api";
+export const URL_ORIGIN = "http://localhost:8000/api";
 
 export const TOAST_MESSAGES = {
 	DB_ERROR: "DB error",
@@ -50,6 +50,7 @@ export const TOAST_MESSAGES = {
 	HINT_LIMIT_REACHED: "Hint limit reached",
 	TEAM_NOT_FOUND: "Team not found",
 	USER_NOT_FOUND: "User not found",
+	CTF_ALR_SOLVED: "CTF already solved",
 	CTF_SOLVED: "CTF solved",
 	SIGNUP_SUCCESS: "Signup success",
 	WRONG_PASSWORD: "Wrong password",
