@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import "./color.css";
 import Typewriter from "typewriter-effect";
 import { URL_ORIGIN } from "../../constants";
 import toast, { Toaster } from "react-hot-toast";
 import { TOAST_MESSAGES } from "../../constants";
-import { FlagResponse, Round2Modal } from "../../types";
+import { FlagResponse, ResponseData, Round2Modal, } from "../../types";
 import React, { useState } from "react";
 
 export const Round2ChallengeModal = ({
@@ -37,10 +37,10 @@ export const Round2ChallengeModal = ({
 					toast("Incorrect Flag");
 				}
 			})
-			.catch((error) => {
-				if (error.response.data.msg_code === 2) {
+			.catch((error: AxiosError<ResponseData>) => {
+				if (error?.response?.data?.msg_code === 2) {
 					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (error.response.data.msg_code === 12) {
+				} else if (error?.response?.data?.msg_code === 12) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
