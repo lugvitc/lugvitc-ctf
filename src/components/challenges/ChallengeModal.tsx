@@ -125,7 +125,6 @@ export const ChallengeModal = ({
 					setTimeout(() => {
 						closeModal(e);
 						handleSolved();
-
 					}, 1500);
 				} else if (response.data.status) {
 					console.log(response.data.status);
@@ -243,17 +242,18 @@ export const ChallengeModal = ({
 	}, []);
 
 	useEffect(() => {
-		const jwt = localStorage.getItem('jwt_token');
-		axios.get<TeamResponse>(`${URL_ORIGIN}/team/me`, {
-			headers: {
-				Authorization: `Bearer ${jwt}`,
-			},
-		})
+		const jwt = localStorage.getItem("jwt_token");
+		axios
+			.get<TeamResponse>(`${URL_ORIGIN}/team/me`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
 			.then((response) => response.data)
 			.then((res) => setCoins(res.coins))
 			.catch((error) => {
-				console.log(error)
-			})
+				console.log(error);
+			});
 	}, [refreshKey]);
 
 	return (
@@ -400,8 +400,9 @@ export const ChallengeModal = ({
 										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
-												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${
+												isDisabled ? " pointer-events-none" : ""
+											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -417,8 +418,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-									hints[selectedHint] &&
-									localStorage.getItem(`hints_${question.id}`)
+								hints[selectedHint] &&
+								localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -426,8 +427,9 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
-							}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
+							isClicked ? "" : "hidden"
+						}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
