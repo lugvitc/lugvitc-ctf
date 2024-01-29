@@ -56,14 +56,32 @@ const Navbar = () => {
 					</div>
 
 					{isAuthenticated ? (
-						<NavLink to="/sign-in">
-							<button
-								className=" rounded-md border border-animation-green px-4 py-2 font-DM-Mono text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green hover:text-animation-green"
-								onClick={() => handlelogOut()}
+						<>
+							<NavLink
+								key="Play"
+								to="/play"
+								className={`${
+									pathname === "/play"
+										? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
+										: ""
+								} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
+								onClick={() => {
+									if (isMoreActive === true) {
+										setIsMoreActive(false);
+									}
+								}}
 							>
-								Log Out
-							</button>
-						</NavLink>
+								Play
+							</NavLink>
+							<NavLink to="/sign-in">
+								<button
+									className=" rounded-md border border-animation-green px-4 py-2 font-DM-Mono text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green hover:text-animation-green"
+									onClick={() => handlelogOut()}
+								>
+									Log Out
+								</button>
+							</NavLink>
+						</>
 					) : (
 						<>
 							<NavLink to="/sign-in">

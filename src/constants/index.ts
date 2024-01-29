@@ -23,11 +23,11 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 		route: "/",
 		label: "Home",
 	},
-	{
-		img: "/src/assets/icons/home.svg",
-		route: "/play",
-		label: "Play",
-	},
+	// {
+	// 	img: "/src/assets/icons/home.svg",
+	// 	route: "/play",
+	// 	label: "Play",
+	// },
 	{
 		img: "/src/assets/icons/home.svg",
 		route: "/leaderboard",

@@ -13,10 +13,11 @@ import Leaderboard2 from "./_root/pages/LeaderBoard2";
 // import RoundTwoLeaderboard from "./_root/pages/RoundTwoLeaderboard";
 // import { RoundTwoCTF } from "./_root/pages/RoundTwoCTF";
 export default function App() {
+	// console.log(new Date() >= new Date("2024-01-29"))
 	return (
 		<main className="flex">
 			<Routes>
-				{new Date() >= new Date("2024-01-29") ? (
+				{false ? (
 					<>
 						<Route path="/preevent" element={<PreEvent />} />
 						<Route index element={<PreEvent />} />
