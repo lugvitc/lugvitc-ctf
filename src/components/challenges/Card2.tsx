@@ -54,7 +54,7 @@ export default function Card2({ container, handleSolved }: CardProps2) {
 									description@lug@ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
-								<span className="line-clamp-3">
+								<span className="line-clamp-2">
 									{container.problem.description}
 								</span>
 							</div>
