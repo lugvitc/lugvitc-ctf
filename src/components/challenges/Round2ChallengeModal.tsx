@@ -11,6 +11,7 @@ export const Round2ChallengeModal = ({
 	container,
 	isClicked,
 	closeModal,
+	handleSolved,
 }: Round2Modal) => {
 	const [flag, setFlag] = useState<string>("");
 
@@ -31,7 +32,7 @@ export const Round2ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
-						// handleSolved();
+						handleSolved();
 					}, 1500);
 				} else {
 					toast("Incorrect Flag");
@@ -44,7 +45,7 @@ export const Round2ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
-						// handleSolved();
+						handleSolved();
 					}, 1500);
 				} else {
 					toast("Unknown Error occured, no internet maybe?");

@@ -196,6 +196,7 @@ export interface Round2Modal {
 	};
 	isClicked: boolean;
 	closeModal: (e: React.MouseEvent) => void;
+	handleSolved: () => void;
 }
 
 export interface Container {
@@ -208,4 +209,5 @@ export interface Container {
 
 export interface CardProps2 {
 	container: Container;
+	handleSolved: () => void;
 }

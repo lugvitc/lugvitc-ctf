@@ -36,7 +36,11 @@ export function CtfPage() {
 		const jwt = localStorage.getItem("jwt_token");
 
 		Promise.all([
-			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/list`),
+			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/list`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}),
 			// assuming completed problem interface === problems in /api/ctf/list
 			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/completed`, {
 				headers: {

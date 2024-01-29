@@ -81,8 +81,8 @@ const LandingPage = () => {
 											}}
 										/>
 									</h1>
-									<div className="mt-2 max-w-[1100px]  ">
-										<span className="animate-fadeIn font-source-code-pro text-[25px] font-normal delay-150 max-xl:text-[23px]">
+									<div className="mt-2 max-w-[900px]  ">
+										<span className="animate-fadeIn font-source-code-pro text-[20px] font-normal drop-shadow-black delay-150 max-xl:text-[23px]">
 											<strong>Important Points:</strong>
 											<br />
 											<strong>1. Educational Purpose Only: </strong>All tools,

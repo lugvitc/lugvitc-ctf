@@ -1,13 +1,13 @@
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import eventLogo from "../../assets/images/passwordctf-logo.png";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { useState } from "react";
 import { useUserContext } from "../../context/AuthContext";
 import { TOAST_MESSAGES, URL_ORIGIN } from "../../constants";
 import Background from "../../components/shared/Background";
 import toast, { Toaster } from "react-hot-toast";
-import { LoginResponse } from "../../types";
+import { LoginResponse, ResponseData } from "../../types";
 
 const LoginPage = () => {
 	// DUMMY AUTHENTICATION
@@ -58,13 +58,15 @@ const LoginPage = () => {
 					setTimeout(() => {
 						navigate("/play");
 					}, 2000);
-				} else if (response.data.msg_code === 10) {
-					toast(TOAST_MESSAGES.TEAM_NOT_FOUND);
-				} else if (response.data.msg_code === 14) {
-					toast(TOAST_MESSAGES.WRONG_PASSWORD);
 				}
 			})
-			.catch((error) => {
+			.catch((error: AxiosError<ResponseData>) => {
+				if (error?.response?.data?.msg_code === 10) {
+					toast(TOAST_MESSAGES.TEAM_NOT_FOUND);
+				} else if (error?.response?.data?.msg_code === 14) {
+					toast(TOAST_MESSAGES.WRONG_PASSWORD);
+				}
+				setSubmitted(false);
 				console.log(error);
 			})
 			.finally(() => {

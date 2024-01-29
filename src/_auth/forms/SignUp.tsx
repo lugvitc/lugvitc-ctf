@@ -46,19 +46,13 @@ const SignUp = () => {
 				tags: members.filter((val) => val),
 			})
 			.then((response: AxiosResponse<SignupResponse>) => {
-				if (response.data.msg_code === 17) {
-					toast(TOAST_MESSAGES.TEAM_EXISTS);
-				} else if (response.data.msg_code === 0) {
-					toast(TOAST_MESSAGES.DB_ERROR);
-				} else if (response.data.msg_code === 13) {
+				if (response.data.msg_code === 13) {
 					toast(TOAST_MESSAGES.SIGNUP_SUCCESS);
 					setTimeout(() => {
 						navigate("/sign-in");
 					}, 2000);
-				} else if (response.status === 404) {
-					toast(TOAST_MESSAGES.USERS_NOT_FOUND);
-				} else if (response.status === 401) {
-					toast(TOAST_MESSAGES.USER_ALREADY_IN_TEAM);
+				} else {
+					toast("Something unexpected occured");
 				}
 			})
 			.catch((error: AxiosError) => {
@@ -67,6 +61,10 @@ const SignUp = () => {
 						toast(TOAST_MESSAGES.USERS_NOT_FOUND);
 					} else if (error.response.status === 401) {
 						toast(TOAST_MESSAGES.USER_ALREADY_IN_TEAM);
+					} else if (error.response.status === 406) {
+						toast(TOAST_MESSAGES.TEAM_EXISTS);
+					} else if (error.response.status === 500) {
+						toast(TOAST_MESSAGES.DB_ERROR);
 					} else {
 						toast("Unknown Error");
 					}
@@ -77,6 +75,7 @@ const SignUp = () => {
 						"Something happened in setting up the request that triggered an Error",
 					);
 				}
+				setSubmitted(false);
 				console.error(error);
 			})
 			.finally(() => {

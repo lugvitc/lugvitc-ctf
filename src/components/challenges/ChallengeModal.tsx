@@ -87,6 +87,7 @@ export const ChallengeModal = ({
 						setRefreshKey((prevKey) => prevKey + 1);
 						// console.log(viewedHintsCount);
 						setviewedHintsFetch(viewedHintsCount);
+						handleSolved();
 					}
 				})
 				.catch((error: AxiosError<ResponseData>) => {

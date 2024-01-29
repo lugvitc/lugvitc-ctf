@@ -27,10 +27,20 @@ const Play2 = () => {
 	]);
 	const [loading, setLoading] = useState(false);
 	const [sideState, setSideState] = useState<string>("");
+	const [refreshKey, setRefreshKey] = useState(0);
+
+	function refreshData() {
+		setRefreshKey((prevKey) => prevKey + 1);
+	}
 
 	useEffect(() => {
+		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get<Container[]>(`${URL_ORIGIN}/round2/list`)
+			.get<Container[]>(`${URL_ORIGIN}/round2/list`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
 			.then((res) => {
 				setContainers(res.data);
 				setLoading(false);
@@ -38,7 +48,7 @@ const Play2 = () => {
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
+	}, [refreshKey]);
 
 	// const { isAuthenticated } = useUserContext();
 	return (
@@ -73,7 +83,11 @@ const Play2 = () => {
 											);
 										})
 										.map((container) => (
-											<Card2 container={container} key={container.id} />
+											<Card2
+												container={container}
+												key={container.id}
+												handleSolved={refreshData}
+											/>
 										))}
 								</div>
 							</>

@@ -3,7 +3,7 @@ import { Round2ChallengeModal } from "./Round2ChallengeModal";
 import { CardProps2 } from "../../types";
 import { moonsArray } from "./Sidebar2";
 
-export default function Card2({ container }: CardProps2) {
+export default function Card2({ container, handleSolved }: CardProps2) {
 	const [isClicked, setIsClicked] = useState<boolean>(false);
 
 	const handleModalOpen = () => {
@@ -74,6 +74,7 @@ export default function Card2({ container }: CardProps2) {
 						container={container}
 						isClicked={isClicked}
 						closeModal={handleModalClose}
+						handleSolved={handleSolved}
 					/>
 				)}
 			</div>
