@@ -30,7 +30,7 @@ const Leaderboard = () => {
 				const id = setInterval(() => {
 					fetchData();
 					if (!isPageVisible) clearInterval(id);
-				}, 1500);
+				}, 30000);
 				console.log(id);
 				setIntervalId(id);
 			} else {
@@ -52,7 +52,7 @@ const Leaderboard = () => {
 			setIsPageVisible(false);
 			if (document.visibilityState === "visible") {
 				// Page is visible, start the interval
-				const id = setInterval(fetchData, 1500);
+				const id = setInterval(fetchData, 30000);
 				setIntervalId(id);
 			} else {
 				// Page is not visible, clear the interval
