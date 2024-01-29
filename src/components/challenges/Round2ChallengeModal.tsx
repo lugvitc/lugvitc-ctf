@@ -126,7 +126,7 @@ export const Round2ChallengeModal = ({
 											onInit={(typewriter) => {
 												typewriter
 													.typeString(
-														`Connect with: challenges.lugvitc.ctf:${container.ports.map((val) => val.port).join(', ')}`,
+														`Connect with: 122.173.187.8:${container.ports.map((val) => val.port).join(', ')}`,
 													)
 													.start();
 											}}
