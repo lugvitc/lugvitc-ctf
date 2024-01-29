@@ -101,7 +101,7 @@ export const Round2ChallengeModal = ({
 											// autoStart: true,
 											loop: false,
 											cursor: "|",
-											delay: 25,
+											delay: 1,
 										}}
 										onInit={(typewriter) => {
 											typewriter
@@ -135,7 +135,7 @@ export const Round2ChallengeModal = ({
 									<div className=" flex gap-4">
 										<input
 											type="text"
-											placeholder="flag{}"
+											placeholder="passwd{ }"
 											onChange={(e) => {
 												setFlag(e.target.value);
 											}}

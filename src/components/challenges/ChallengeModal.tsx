@@ -275,7 +275,7 @@ export const ChallengeModal = ({
 		<React.Fragment>
 			{isClicked && (
 				<>
-					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
+					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
 						<div className="  h-full  animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
 							<div className=" flex w-full flex-col gap-4">
 								<div className="mb-4 flex items-center justify-between text-[25px]">
@@ -325,7 +325,7 @@ export const ChallengeModal = ({
 											// autoStart: true,
 											loop: false,
 											cursor: "|",
-											delay: 25,
+											delay: 1,
 										}}
 										onInit={(typewriter) => {
 											typewriter
@@ -377,7 +377,7 @@ export const ChallengeModal = ({
 									<div className=" flex gap-4">
 										<input
 											type="text"
-											placeholder="flag{}"
+											placeholder="passwd{ }"
 											onChange={(e) => {
 												setFlag(e.target.value);
 											}}
