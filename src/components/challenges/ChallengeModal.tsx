@@ -178,6 +178,7 @@ export const ChallengeModal = ({
 					setPortsFetched(ports);
 				}
 			})
+
 			.catch((error) => {
 				setIsLoading(false);
 				handleStartChange(question.id, false);
