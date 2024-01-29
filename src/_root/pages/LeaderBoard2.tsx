@@ -235,7 +235,7 @@ const Leaderboard2 = () => {
 											{team.name}
 										</div>
 										<div className="custom-scrollbar w-full basis-1/5 overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green border-opacity-50 px-2 py-3 text-center">
-											{team.points}
+											{Math.floor(team.points)}
 										</div>
 									</div>
 								))}
@@ -277,7 +277,7 @@ const Leaderboard2 = () => {
 											{team.name}
 										</div>
 										<div className="custom-scrollbar flex w-1/6 basis-1/6 items-center justify-center overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green border-opacity-50 px-2 py-3 text-center">
-											{team.total_points}
+											{Math.floor(team.total_points)}
 										</div>
 										<div className="custom-scrollbar flex w-2/6 basis-2/6 items-center justify-center overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green border-opacity-50 px-2 py-3 text-center">
 											{team.meta_team__name}
