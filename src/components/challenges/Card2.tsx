@@ -54,7 +54,9 @@ export default function Card2({ container, handleSolved }: CardProps2) {
 									description@lug@ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
-								{container.problem.description}
+								<span className="line-clamp-3">
+									{container.problem.description}
+								</span>
 							</div>
 							<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 								<span className="text-white">

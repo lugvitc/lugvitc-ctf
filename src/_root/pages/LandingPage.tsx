@@ -34,7 +34,7 @@ const LandingPage = () => {
 			<div className="bg-opacity-55 flex w-full flex-col items-start justify-center overflow-x-hidden bg-landing bg-cover bg-fixed bg-landingPos bg-repeat-x">
 				<div className="bg-black bg-opacity-30">
 					<Element name="home" className="h-screen w-screen ">
-						{!isScrolledDown && (
+						{
 							<div className="pt-30 flex h-screen w-4/5 flex-col items-start justify-center pl-40 ">
 								<h1 className="font-source-code-pro text-[90px] font-bold leading-[140%] text-[#9FEF00] max-xl:text-[80px]">
 									<Typewriter
@@ -67,7 +67,7 @@ const LandingPage = () => {
 									Rules
 								</Button>
 							</div>
-						)}
+						}
 					</Element>
 
 					<Element name="rules" className="mb-4 h-auto w-full">

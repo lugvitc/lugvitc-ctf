@@ -41,7 +41,7 @@ export const ChallengeModal = ({
 
 	const hintList = [0, 1, 2];
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
-	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>();
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -91,7 +91,7 @@ export const ChallengeModal = ({
 					}
 				})
 				.catch((error: AxiosError<ResponseData>) => {
-					if (error.status === 403) toast(`Hint does not exist`);
+					if (error?.response?.status === 403) toast(`This hint does not exist, you need more hints?!`);
 					else toast("Unknown error");
 					console.log(error);
 				});
@@ -206,6 +206,7 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 4) {
 					toast(`${TOAST_MESSAGES.CONTAINER_STOP}`);
+					setPortsFetched(undefined);
 				}
 			})
 			.catch((error) => {
@@ -275,7 +276,7 @@ export const ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 
 		axios
-			.get(`${URL_ORIGIN}/containers`, {
+			.get(`${URL_ORIGIN}/team/containers`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -285,7 +286,7 @@ export const ChallengeModal = ({
 				if (ports) {
 					setPortsFetched(ports);
 				} else {
-					toast("No ports found for this question");
+					// toast("No ports found for this question");
 				}
 			})
 			.catch((error) => {
@@ -391,7 +392,7 @@ export const ChallengeModal = ({
 									<div className=" flex gap-4">
 										<input
 											type="text"
-											placeholder="flag{}"
+											placeholder="passwd{ }"
 											onChange={(e) => {
 												setFlag(e.target.value);
 											}}
