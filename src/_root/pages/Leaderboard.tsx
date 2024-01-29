@@ -152,14 +152,14 @@ const Leaderboard = () => {
 							<div className="phelix-boomgartner m-6 mt-2 flex h-full items-center justify-center text-3xl uppercase drop-shadow-black sm:text-5xl md:text-6xl lg:text-8xl">
 								HackerBoard
 							</div>
-							<div className="flex w-full font-source-code-pro font-bold uppercase drop-shadow-black sm:text-2xl lg:text-4xl">
-								<div className="w-full basis-1/5 border-2 border-l-0 border-fluorescent-green py-4 text-center">
+							<div className="flex w-full font-source-code-pro font-bold uppercase drop-shadow-black md:text-lg lg:text-2xl">
+								<div className="custom-scrollbar w-1/5 basis-1/5 overflow-auto whitespace-nowrap border-2 border-l-0 border-fluorescent-green py-4 text-center">
 									[Ranking]
 								</div>
-								<div className="w-full basis-3/5 border-2 border-fluorescent-green py-4 text-center">
+								<div className="custom-scrollbar w-3/5 basis-3/5 overflow-auto whitespace-nowrap border-2 border-fluorescent-green py-4 text-center">
 									[Team]
 								</div>
-								<div className="w-full basis-1/5 border-2 border-r-0 border-fluorescent-green py-4 text-center">
+								<div className="custom-scrollbar w-1/5 basis-1/5 overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green py-4 text-center">
 									[Points]
 								</div>
 							</div>
@@ -171,13 +171,13 @@ const Leaderboard = () => {
 										className="flex w-full drop-shadow-3xl sm:text-3xl"
 										key={index}
 									>
-										<div className="w-full basis-1/5 border-2 border-l-0 border-fluorescent-green border-opacity-50 py-3 text-center">
+										<div className="custom-scrollbar w-1/5 basis-1/5 overflow-auto whitespace-nowrap border-2 border-l-0 border-fluorescent-green border-opacity-50 py-3 text-center">
 											{index + 1}
 										</div>
-										<div className="w-full basis-3/5 border-2 border-fluorescent-green border-opacity-50 py-3 text-center">
+										<div className="custom-scrollbar w-3/5 basis-3/5 overflow-auto whitespace-nowrap border-2 border-fluorescent-green border-opacity-50 py-3 text-center">
 											{team.name}
 										</div>
-										<div className="w-full basis-1/5 border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
+										<div className="custom-scrollbar w-1/5 basis-1/5 overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
 											{team.tpoints}
 										</div>
 									</div>

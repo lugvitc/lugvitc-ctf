@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import lb from "./src/assets/images/leaderboard.png";
+
 module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
@@ -8,8 +10,8 @@ module.exports = {
 				custom: "0px 0px 60px 10px rgba(0, 255, 117, 0.30)",
 			},
 			backgroundImage: {
-				landing: "url('./src/assets/images/background.svg')",
-				leaderboard: "url('./src/assets/images/leaderboard.png')",
+				landing: "url('/src/assets/images/background.svg')",
+				leaderboard: "url('/src/assets/images/leaderboard.png')",
 			},
 			backgroundPosition: {
 				landingPos: "left 10em top 12em",
@@ -17,6 +19,7 @@ module.exports = {
 			dropShadow: {
 				"3xl": "0 3px 3px rgba(57, 255, 20, 1)",
 				"3xl-v2": "0 2px 6px #74ff14 ",
+				"3xl-v3": "0 2px 6px #f30f10",
 				"black": "4.5px 3px 0px #000000",
 				"circle": "0 0 25px rgba(57, 255, 20, 1)",
 				"4xl": "0 1px 1px rgba(57, 255, 20, 1)"
@@ -36,8 +39,8 @@ module.exports = {
 				"gold": "#FFD700",
 				"silver": "#c0c0c0",
 				"bronze": "#CD7F32",
-        "green-black": "#000502",
-      },
+				"green-black": "#000502",
+			},
 			fontFamily: {
 				"source-code-pro": ["Source Code Pro", "monospace"],
 				"DM-Mono": ["DM Mono", "monospace"],

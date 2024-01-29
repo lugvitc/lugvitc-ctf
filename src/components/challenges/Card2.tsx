@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { Tooltip } from "react-tooltip";
-import { ChallengeModal } from "./ChallengeModal";
-import { CardProps } from "../../types";
+import { Round2ChallengeModal } from "./Round2ChallengeModal";
+import { CardProps2 } from "../../types";
+import { moonsArray } from "./Sidebar2";
 
-export function Card({
-	challenge,
-	isStart,
-	handleStartChange,
-	handleSolved,
-}: CardProps) {
+export default function Card2({ container, handleSolved }: CardProps2) {
 	const [isClicked, setIsClicked] = useState<boolean>(false);
 
 	const handleModalOpen = () => {
 		// console.log("Opening modal");
 		setIsClicked(true);
+		console.log(isClicked);
 	};
 
 	const handleModalClose = (e: React.MouseEvent) => {
@@ -25,8 +21,8 @@ export function Card({
 	return (
 		<div>
 			<div onClick={() => handleModalOpen()}>
-				<div className=" h-[20rem] w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150">
-					<div className=" h-[20rem] w-full bg-midnight-blue transition-all duration-150 hover:scale-[0.99] hover:rounded-xl">
+				<div className=" h w-full overflow-x-clip rounded-xl bg-[#08FF08] transition-all duration-150">
+					<div className=" h w-full bg-midnight-blue transition-all duration-150 hover:scale-[0.99] hover:rounded-xl">
 						<div className=" flex items-center px-3 ">
 							<div className="flex items-center">
 								<div className=" px-1 ">
@@ -41,7 +37,7 @@ export function Card({
 							</div>
 
 							<div className="mb-3 mt-3 grow text-center text-2xl font-semibold text-[#08FF08]">
-								{challenge.name}
+								{container.problem.name}
 							</div>
 						</div>
 						<hr className="m-auto w-[95%] border border-[#08FF08] opacity-30" />
@@ -51,48 +47,34 @@ export function Card({
 									author@lug.ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
-								{challenge.author}
+								{container.problem.author}
 							</div>
 							<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 								<span className="text-white">
 									description@lug@ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
-								<span className="line-clamp-2">{challenge.description}</span>
+								<span className="line-clamp-2">
+									{container.problem.description}
+								</span>
 							</div>
 							<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 								<span className="text-white">
 									points@lug@ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
-								{challenge.points}
+								{container.problem.points}
 							</div>
-							<div className="my-4 flex flex-wrap items-center gap-3">
-								{challenge.tags.map((tag, index) => (
-									<div
-										key={index}
-										className="line-clamp-1 h-9 w-[8.5rem] rounded bg-fluorescent-green bg-opacity-10 p-2 text-center"
-										data-tooltip-id={`tags${challenge.id}`}
-										data-tooltip-content={tag}
-										data-tooltip-place="bottom"
-									>
-										{tag}
-									</div>
-								))}
-								<Tooltip
-									id={`tags${challenge.id}`}
-									style={{ backgroundColor: "rgb(0, 255, 30)", color: "#222" }}
-								/>
+							<div className="my-4 max-w-fit items-center rounded bg-fluorescent-green bg-opacity-10 px-4 py-2 text-center">
+								{moonsArray[container.meta_team_id - 1]}
 							</div>
 						</div>
 					</div>
 				</div>
 				{isClicked && (
-					<ChallengeModal
-						question={challenge}
+					<Round2ChallengeModal
+						container={container}
 						isClicked={isClicked}
-						isStart={isStart}
-						handleStartChange={handleStartChange}
 						closeModal={handleModalClose}
 						handleSolved={handleSolved}
 					/>

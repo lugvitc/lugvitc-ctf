@@ -23,11 +23,11 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 		route: "/",
 		label: "Home",
 	},
-	{
-		img: "/src/assets/icons/home.svg",
-		route: "/play",
-		label: "Play",
-	},
+	// {
+	// 	img: "/src/assets/icons/home.svg",
+	// 	route: "/play",
+	// 	label: "Play",
+	// },
 	{
 		img: "/src/assets/icons/home.svg",
 		route: "/leaderboard",
@@ -50,6 +50,7 @@ export const TOAST_MESSAGES = {
 	HINT_LIMIT_REACHED: "Hint limit reached",
 	TEAM_NOT_FOUND: "Team not found",
 	USER_NOT_FOUND: "User not found",
+	CTF_ALR_SOLVED: "CTF already solved",
 	CTF_SOLVED: "CTF solved",
 	SIGNUP_SUCCESS: "Signup success",
 	WRONG_PASSWORD: "Wrong password",
@@ -74,3 +75,5 @@ export const categoryArr = [
 	"Scripting",
 	"Miscellaneous",
 ].reverse();
+
+export const challengeDomain = "challenges.lugvitc.org:";

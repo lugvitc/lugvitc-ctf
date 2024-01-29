@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import "./color.css";
 import Typewriter from "typewriter-effect";
-import { URL_ORIGIN } from "../../constants";
+import { URL_ORIGIN, challengeDomain } from "../../constants";
 import toast, { Toaster } from "react-hot-toast";
 import { TOAST_MESSAGES } from "../../constants";
 import {
@@ -14,17 +14,24 @@ import {
 	Hints,
 } from "../../types";
 import React from "react";
+import coinImg from "../../assets/icons/coin.png";
+import { TeamResponse } from "../../types";
 
 export const ChallengeModal = ({
 	question,
 	isClicked,
+	isStart,
+	handleStartChange,
 	closeModal,
+	handleSolved,
 }: ChallengeModalProp) => {
-	const [isStart, setIsStart] = useState<boolean>(false);
+	// console.log(question);
+	// const [isStart, setIsStart] = useState<boolean>(false);
 	const [hints, setHints] = useState<{ [key: number]: string }>({});
 
 	const [selectedHint, setSelectedHint] = useState<number | null>(null);
 	const [flag, setFlag] = useState<string>("");
+	const [coins, setCoins] = useState<number | null>(0);
 
 	// const handleCloseModal = () => {
 
@@ -32,7 +39,11 @@ export const ChallengeModal = ({
 	// 	setSelectedHint(null);
 	// };
 
-	const hintList: number[] = [1, 2, 3];
+	const hintList = [0, 1, 2];
+	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>();
+	const [refreshKey, setRefreshKey] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleHintClick = (hintNumber: number) => {
 		// Try to get the hint from localStorage first
@@ -41,7 +52,7 @@ export const ChallengeModal = ({
 		) as Hints;
 
 		if (storedHints[hintNumber]) {
-			console.log("Hint:", storedHints[hintNumber]);
+			// console.log("Hint:", storedHints[hintNumber]);
 			setSelectedHint(hintNumber);
 		} else {
 			const jwt = localStorage.getItem("jwt_token");
@@ -60,7 +71,8 @@ export const ChallengeModal = ({
 						// previous hints + new hint
 						const newHints = {
 							...storedHints,
-							[hintNumber]: response.data.text,
+
+							[response.data.order as number]: response.data.text,
 						};
 						// new hints in localStorage
 						localStorage.setItem(
@@ -69,10 +81,20 @@ export const ChallengeModal = ({
 						);
 						setHints(newHints);
 						setSelectedHint(hintNumber);
+
+						const viewedHintsCount = Object.keys(newHints).length;
+
+						setRefreshKey((prevKey) => prevKey + 1);
+						// console.log(viewedHintsCount);
+						setviewedHintsFetch(viewedHintsCount);
+						handleSolved();
 					}
 				})
-				.catch((error) => {
-					console.error("Failed to fetch hint", error);
+				.catch((error: AxiosError<ResponseData>) => {
+					if (error?.response?.status === 403)
+						toast(`This hint does not exist, you need more hints?!`);
+					else toast("Unknown error");
+					console.log(error);
 				});
 		}
 	};
@@ -100,24 +122,34 @@ export const ChallengeModal = ({
 				},
 			)
 			.then((response: AxiosResponse<FlagResponse>) => {
-				if (response.data.msg_code === 2) {
-					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
-				} else if (response.data.msg_code === 12) {
+				if (response.data.status === true) {
 					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
 					setTimeout(() => {
 						closeModal(e);
+						handleSolved();
 					}, 1500);
-				} else if (response.data.status) {
-					console.log(response.data.status);
+				} else {
+					toast("Incorrect Flag");
 				}
 			})
-			.catch((error) => {
-				console.log(error);
+			.catch((error: AxiosError<ResponseData>) => {
+				if (error?.response?.data.msg_code === 2) {
+					toast(`${TOAST_MESSAGES.CTF_NOT_FOUND}`);
+				} else if (error?.response?.data.msg_code === 12) {
+					toast(`${TOAST_MESSAGES.CTF_SOLVED}`);
+					setTimeout(() => {
+						closeModal(e);
+						handleSolved();
+					}, 1500);
+				} else {
+					toast("Unknown Error occured, no internet maybe?");
+				}
 			});
 	};
 
 	const startContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+		setIsLoading(true);
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/start`,
@@ -139,18 +171,23 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 3) {
 					toast(`${TOAST_MESSAGES.CONTAINER_START}`);
-				}
-				const ports = response.data.ports;
-				const ctf_id = response.data.ctf_id;
 
-				console.log(ports, ctf_id);
+					const ports = response.data.ports;
+					setIsLoading(false);
+					toast("Container is running");
+					setPortsFetched(ports);
+				}
 			})
 			.catch((error) => {
-				console.error("Failed to start container", error);
+				setIsLoading(false);
+				handleStartChange(question.id, false);
+				toast("Failed to start container");
+				console.log(error);
 			});
 	};
 	const stopContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+
 		axios
 			.post(
 				`${URL_ORIGIN}/ctf/${question.id}/stop`,
@@ -170,6 +207,7 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 4) {
 					toast(`${TOAST_MESSAGES.CONTAINER_STOP}`);
+					setPortsFetched(undefined);
 				}
 			})
 			.catch((error) => {
@@ -180,13 +218,14 @@ export const ChallengeModal = ({
 		// viewed hints from the server
 		const jwt = localStorage.getItem("jwt_token");
 		axios
-			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed-hints`, {
+			.get(`${URL_ORIGIN}/ctf/${question.id}/viewed_hints`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
 			})
 			.then((response: AxiosResponse<hintResponseData[]>) => {
 				const viewedHints = response.data.reduce((acc, hint) => {
+					console.log(hint);
 					if (hint.order !== undefined) {
 						return { ...acc, [hint.order]: hint.text };
 					} else {
@@ -208,6 +247,10 @@ export const ChallengeModal = ({
 				);
 
 				setHints(mergedHints);
+				const viewedHintsCount = Object.keys(mergedHints).length;
+				// const availableHints = 3 - viewedHintsCount;
+				console.log(viewedHintsCount);
+				setviewedHintsFetch(viewedHintsCount);
 			})
 			.catch((error) => {
 				console.error("Failed to fetch viewed hints", error);
@@ -215,12 +258,50 @@ export const ChallengeModal = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		const jwt = localStorage.getItem("jwt_token");
+		axios
+			.get<TeamResponse>(`${URL_ORIGIN}/team/me`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
+			.then((response) => response.data)
+			.then((res) => setCoins(res.coins))
+			.catch((error) => {
+				console.log(error);
+			});
+	}, [refreshKey]);
+
+	useEffect(() => {
+		const jwt = localStorage.getItem("jwt_token");
+
+		axios
+			.get(`${URL_ORIGIN}/team/containers`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
+			.then((response: AxiosResponse<{ [key: string]: number[] }>) => {
+				const ports = response.data[question.id];
+				if (ports) {
+					setPortsFetched(ports);
+				} else {
+					// toast("No ports found for this question");
+				}
+			})
+			.catch((error) => {
+				toast("Network error: Could not fetch ports");
+				console.log(error);
+			});
+	}, [question.id]);
+
 	return (
 		<React.Fragment>
 			{isClicked && (
 				<>
-					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
-						<div className="  h-full  animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
+					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-5/6 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
+						<div className="  h-full animate-tv-flicker overflow-y-scroll  bg-black-green p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2">
 							<div className=" flex w-full flex-col gap-4">
 								<div className="mb-4 flex items-center justify-between text-[25px]">
 									<Typewriter
@@ -232,11 +313,18 @@ export const ChallengeModal = ({
 											delay: 25,
 										}}
 										onInit={(typewriter) => {
-											typewriter.typeString("Question Name").start();
+											typewriter.typeString(question.name).start();
 										}}
 									/>
-									<div className="flex h-[47px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
-										Points: {question.points}
+									<div className="flex gap-8">
+										<div className="flex h-[50px] items-center justify-center gap-4 border border-[#dbfa8e] bg-transparent p-4 px-4 text-[15px] text-[#dbfa8e] ">
+											<img src={coinImg} alt="coin" className=" h-[30px]" />
+											<span>{coins}</span>
+										</div>
+
+										<div className="flex h-[50px] w-[10rem] items-center justify-center rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[15px] text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]">
+											Points: {question.points}
+										</div>
 									</div>
 								</div>
 								<div className="text-[20px]">
@@ -255,28 +343,57 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-								<div className="text-[20px]">
-									<Typewriter
-										options={{
-											strings: ["Description"],
-											// autoStart: true,
-											loop: false,
-											cursor: "|",
-											delay: 25,
-										}}
-										onInit={(typewriter) => {
-											typewriter
-												.typeString(`Description: ${question.description}`)
-												.start();
-										}}
-									/>
+								<div className="my-4 overflow-x-hidden rounded border border-[#dbfa8e] p-4 text-[20px] ">
+									<span>Description: {question.description}</span>
 								</div>
-
+								{coins !== null && coins < 100 ? (
+									<div className="w-1/2 text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Coins",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(
+														`Note: You don't have enough coins to purchase hints`,
+													)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
+								{/* -------------------PORTS--------------------------------- */}
+								{portsFetched && portsFetched.length > 0 ? (
+									<div className="text-[20px]">
+										<Typewriter
+											options={{
+												strings: "Ports",
+												// autoStart: true,
+												loop: false,
+												cursor: "|",
+												delay: 25,
+											}}
+											onInit={(typewriter) => {
+												typewriter
+													.typeString(
+														`Connect with: ${challengeDomain}${portsFetched?.join(
+															",",
+														)}`,
+													)
+													.start();
+											}}
+										/>
+									</div>
+								) : null}
 								<div className="mt-10 flex justify-between">
 									<div className=" flex gap-4">
 										<input
 											type="text"
-											placeholder="flag{}"
+											placeholder="passwd{ }"
 											onChange={(e) => {
 												setFlag(e.target.value);
 											}}
@@ -293,7 +410,8 @@ export const ChallengeModal = ({
 									<button
 										className=" h-[47px] w-1/4 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
 										onClick={() => {
-											setIsStart(!isStart);
+											const newStartState = !isStart;
+											handleStartChange(question.id, newStartState);
 											if (isStart) {
 												stopContainer();
 											} else {
@@ -301,20 +419,36 @@ export const ChallengeModal = ({
 											}
 										}}
 									>
-										{isStart ? <span>Stop</span> : <span>Start</span>}
+										{isLoading ? (
+											<span>Loading...</span>
+										) : isStart ? (
+											<span>Stop</span>
+										) : (
+											<span>Start</span>
+										)}
 									</button>
 								</div>
 							</div>
 
 							<div className="my-16 flex items-center justify-center gap-4">
 								{hintList.map((hint) => {
+									const isDisabled =
+										((hint === 1 || hint === 2) && viewedHintsFetch === 0) ||
+										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className="h-16 w-16 rounded-sm border border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]"
+											className={`h-16 w-16 rounded-sm border ${
+												isDisabled ? " pointer-events-none" : ""
+											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
-											onClick={() => handleHintClick(hint)}
+											onClick={() => {
+												if (isDisabled) {
+													return;
+												}
+												handleHintClick(hint);
+											}}
 										>
-											{hint}
+											{hint + 1}
 										</button>
 									);
 								})}

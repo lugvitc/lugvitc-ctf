@@ -19,7 +19,10 @@ export interface Question {
 export interface ChallengeModalProp {
 	question: Question;
 	isClicked: boolean;
+	isStart: boolean;
+	handleStartChange: (id: number, isStart: boolean) => void;
 	closeModal: (e: React.MouseEvent) => void;
+	handleSolved: () => void;
 }
 
 export interface ResponseData {
@@ -84,6 +87,24 @@ export interface LeaderboardResponse {
 	name: string;
 	tpoints: number;
 }
+
+export interface MetaLeaderboardResponse {
+	name: string;
+	tpoints: number;
+	meta_team__name: string;
+}
+
+export interface R2LeaderboardResponse {
+	name: string;
+	points: number;
+}
+
+export interface FinalLeaderboard {
+	name: string;
+	total_points: number;
+	meta_team__name: string;
+}
+
 export interface Challenge {
 	id: number;
 	author: string;
@@ -95,6 +116,9 @@ export interface Challenge {
 
 export interface CardProps {
 	challenge: Challenge;
+	isStart: boolean;
+	handleStartChange: (id: number, isStart: boolean) => void;
+	handleSolved: () => void;
 }
 export interface SidebarProps {
 	sideState: string;
@@ -139,4 +163,51 @@ export interface Props {
 }
 export interface SignupResponse {
 	msg_code: number;
+}
+
+export interface TeamResponse {
+	coins: number;
+}
+
+export interface SidebarProps2 {
+	sideState: string | undefined;
+	setSideState: (newState: string) => void;
+}
+
+export interface Port {
+	port: number;
+}
+
+export interface Problem {
+	id: number;
+	name: string;
+	author: string;
+	points: number;
+	description: string;
+}
+
+export interface Round2Modal {
+	container: {
+		id: number;
+		ports: Port[];
+		problem: Problem;
+		meta_team_id: number;
+		solved: boolean;
+	};
+	isClicked: boolean;
+	closeModal: (e: React.MouseEvent) => void;
+	handleSolved: () => void;
+}
+
+export interface Container {
+	id: number;
+	ports: Port[];
+	problem: Problem;
+	meta_team_id: number;
+	solved: boolean;
+}
+
+export interface CardProps2 {
+	container: Container;
+	handleSolved: () => void;
 }

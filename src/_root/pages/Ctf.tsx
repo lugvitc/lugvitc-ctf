@@ -7,6 +7,9 @@ import Sidebar from "../../components/challenges/Sidebar";
 import { Circles } from "react-loader-spinner";
 import { ChallengeCategories, Challenge, ChallengeBackend } from "../../types";
 import { categoryArr } from "../../constants";
+// import { useUserContext } from "../../context/AuthContext";
+// import { Navigate } from "react-router-dom";
+import React from "react";
 
 const bsToTags = (bs: number) => {
 	const tags = [];
@@ -23,124 +26,45 @@ export function CtfPage() {
 	const [challenges, setChallenges] = useState<Challenge[]>([]);
 	// const [question, setQuestion] = useState<Challenge[]>([]);
 	const [loading, setLoading] = useState(false);
+	const [refreshKey, setRefreshKey] = useState(0);
 
-	// // seed some challenges
-	// if (challenges.length === 0) {
-	// 	setChallenges([
-	// 		{
-	// 			id: 1,
-	// 			author: "author",
-	// 			name: "Challenge 1",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Web exploitation", "Cryptography"],
-	// 		},
-	// 		{
-	// 			id: 2,
-	// 			author: "author",
-	// 			name: "Challenge 2",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Cryptography", "Forensics"],
-	// 		},
-	// 		{
-	// 			id: 3,
-	// 			author: "author",
-	// 			name: "Challenge 3",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Web exploitation", "Forensics", "Miscellaneous"],
-	// 		},
-	// 		{
-	// 			id: 4,
-	// 			author: "author",
-	// 			name: "Challenge 4",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Cryptography", "Reverse engineering"],
-	// 		},
-	// 		{
-	// 			id: 5,
-	// 			author: "author",
-	// 			name: "Challenge 5",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Web exploitation", "Binary exploitation"],
-	// 		},
-	// 		{
-	// 			id: 6,
-	// 			author: "author",
-	// 			name: "Challenge 6",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
-	// 		},
-	// 		{
-	// 			id: 7,
-	// 			author: "author",
-	// 			name: "Challenge 7",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Reverse engineering", "OSINT"],
-	// 		},
-	// 		{
-	// 			id: 8,
-	// 			author: "author",
-	// 			name: "Challenge 8",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: [
-	// 				"Binary exploitation",
-	// 				"Reverse engineering",
-	// 				"Miscellaneous",
-	// 				"OSINT",
-	// 				"Scripting",
-	// 			],
-	// 		},
-	// 		{
-	// 			id: 9,
-	// 			author: "author",
-	// 			name: "Challenge 6",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Binary exploitation", "Scripting", "Miscellaneous"],
-	// 		},
-	// 		{
-	// 			id: 10,
-	// 			author: "author",
-	// 			name: "Challenge 7",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Reverse engineering", "OSINT"],
-	// 		},
-	// 		{
-	// 			id: 11,
-	// 			author: "author",
-	// 			name: "Challenge 8",
-	// 			description: "This is a description",
-	// 			points: 100,
-	// 			tags: ["Binary exploitation", "Reverse engineering", "Miscellaneous"],
-	// 		},
-	// 	]);
-	// }
+	function refreshData() {
+		setRefreshKey((prevKey) => prevKey + 1);
+	}
 
 	useEffect(() => {
-		axios
-			.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/list`)
-			.then((res) => {
-				setChallenges(
-					res.data.map((x: ChallengeBackend) => {
+		const jwt = localStorage.getItem("jwt_token");
+
+		Promise.all([
+			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/list`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}),
+			// assuming completed problem interface === problems in /api/ctf/list
+			axios.get<ChallengeBackend[]>(`${URL_ORIGIN}/ctf/completed`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}),
+		])
+			.then(([challengeResponse, completedResponse]) => {
+				const completedChallengeIds = new Set(
+					completedResponse.data.map((c) => c.id),
+				);
+				const challenges = challengeResponse.data
+					.filter((challenge) => !completedChallengeIds.has(challenge.id))
+					.map((x: ChallengeBackend) => {
 						x.tags = bsToTags(x.tags as number);
 						return x as unknown as Challenge;
-					}) as unknown as Challenge[],
-				);
+					}) as unknown as Challenge[];
+				setChallenges(challenges);
 				setLoading(false);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
-	// TODO: Fetch challenges from the server
+	}, [refreshKey]);
 
 	const [sideState, setSideState] = useState<string>("All");
 	const categories: ChallengeCategories = {
@@ -171,37 +95,58 @@ export function CtfPage() {
 		}),
 	};
 	const questionList: Challenge[] = categories[sideState];
+	const initialStartStates = questionList.reduce<{ [key: number]: boolean }>(
+		(acc, challenges) => {
+			acc[challenges.id] = false;
+			return acc;
+		},
+		{},
+	);
+
+	const [startStates, setStartStates] = useState(initialStartStates);
+	const handleStartChange = (id: number, isStart: boolean) => {
+		setStartStates((prevStates) => ({ ...prevStates, [id]: isStart }));
+	};
+	// const { isAuthenticated } = useUserContext();
 	return (
-		<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
-			<div className="flex h-[80px] w-full p-10 "></div>
-			<div className="flex w-screen">
-				<div className="relative h-screen w-1/5">
-					<Sidebar sideState={sideState} setSideState={setSideState} />
-				</div>
-				<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
-					{loading ? (
-						<div className="flex h-screen items-center justify-center">
-							<Circles
-								height="80"
-								width="80"
-								color="green"
-								ariaLabel="three-dots-loading"
-							/>
-						</div>
-					) : (
-						<>
-							<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
-								{sideState}
-							</h1>
-							<div className="grid w-10/12 grid-cols-2 gap-10 ">
-								{questionList.map((challenge) => (
-									<Card challenge={challenge} key={challenge.id} />
-								))}
+		<React.Fragment>
+			<main className="flex w-full flex-col overflow-x-hidden bg-[#020202] font-source-code-pro">
+				<div className="flex h-[80px] w-full p-10 "></div>
+				<div className="flex w-screen">
+					<div className="relative h-screen w-1/5">
+						<Sidebar sideState={sideState} setSideState={setSideState} />
+					</div>
+					<div className="flex min-h-screen w-4/5 flex-col flex-wrap items-center overflow-y-auto bg-[#020202]">
+						{loading ? (
+							<div className="flex h-screen items-center justify-center">
+								<Circles
+									height="80"
+									width="80"
+									color="green"
+									ariaLabel="three-dots-loading"
+								/>
 							</div>
-						</>
-					)}
+						) : (
+							<>
+								<h1 className="my-10 text-4xl font-bold text-fluorescent-green ">
+									{sideState}
+								</h1>
+								<div className="grid w-10/12 grid-cols-2 gap-10 ">
+									{questionList.map((challenge) => (
+										<Card
+											challenge={challenge}
+											key={challenge.id}
+											isStart={startStates[challenge.id]}
+											handleStartChange={handleStartChange}
+											handleSolved={refreshData}
+										/>
+									))}
+								</div>
+							</>
+						)}
+					</div>
 				</div>
-			</div>
-		</main>
+			</main>
+		</React.Fragment>
 	);
 }
