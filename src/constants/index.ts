@@ -30,7 +30,7 @@ export const homeNavbarLinks: HomeNavbarLinks[] = [
 	// },
 	{
 		img: "/src/assets/icons/home.svg",
-		route: "/leaderboard",
+		route: "/round-2/leaderboard-2",
 		label: "Top",
 	},
 ];
