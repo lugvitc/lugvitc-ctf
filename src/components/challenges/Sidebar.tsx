@@ -1,4 +1,7 @@
+import toast from "react-hot-toast";
 import { SidebarProps } from "../../types";
+import axios from "axios";
+import { URL_ORIGIN } from "../../constants";
 
 const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 	const categoryArr = [
@@ -12,6 +15,33 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 		"Scripting",
 		"Miscellaneous",
 	];
+	// /ctf/stopall jwt auth send
+
+	function stopAllContainers() {
+		const jwt = localStorage.getItem("jwt_token");
+
+		axios
+			.post(
+				`${URL_ORIGIN}/ctf/stopall`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
+				},
+			)
+			.then((response) => {
+				toast("Successfully stopped all the containers");
+				console.log(response);
+				// Handle successful response here
+			})
+			.catch((error) => {
+				toast("Containers not stopped");
+				console.log(error);
+				// Handle error here
+			});
+	}
+
 	return (
 		<div className="fixed mb-8 h-screen bg-midnight-blue bg-opacity-40 px-6 py-6">
 			<h1 className={` mt-4 text-2xl font-semibold`}>Categories</h1>
@@ -33,6 +63,12 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 						</li>
 					);
 				})}
+				<button
+					onClick={stopAllContainers}
+					className="rounded-sm border border-fluorescent-green bg-midnight-blue p-2 text-fluorescent-green"
+				>
+					Stop All
+				</button>
 			</ul>
 		</div>
 	);
