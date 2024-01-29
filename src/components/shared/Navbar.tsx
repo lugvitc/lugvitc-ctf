@@ -38,11 +38,10 @@ const Navbar = () => {
 								<NavLink
 									key={item.label}
 									to={item.route}
-									className={`${
-										isActive
-											? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
-											: ""
-									} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
+									className={`${isActive
+										? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
+										: ""
+										} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
 									onClick={() => {
 										if (isMoreActive === true) {
 											setIsMoreActive(false);
@@ -59,12 +58,11 @@ const Navbar = () => {
 						<>
 							<NavLink
 								key="Play"
-								to="/play"
-								className={`${
-									pathname === "/play"
-										? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
-										: ""
-								} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
+								to="/round-2/play-2"
+								className={`${pathname === "/round-2/play-2"
+									? " rounded-md border border-animation-green px-4 py-2 text-[15px] font-bold leading-[140%] shadow-sm shadow-animation-green"
+									: ""
+									} flex  justify-center px-4 py-2 font-DM-Mono text-animation-green outline-none`}
 								onClick={() => {
 									if (isMoreActive === true) {
 										setIsMoreActive(false);

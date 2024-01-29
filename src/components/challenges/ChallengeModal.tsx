@@ -178,6 +178,7 @@ export const ChallengeModal = ({
 					setPortsFetched(ports);
 				}
 			})
+
 			.catch((error) => {
 				setIsLoading(false);
 				handleStartChange(question.id, false);
@@ -187,6 +188,7 @@ export const ChallengeModal = ({
 	};
 	const stopContainer = () => {
 		const jwt = localStorage.getItem("jwt_token");
+		setPortsFetched([]);
 
 		axios
 			.post(
@@ -287,6 +289,7 @@ export const ChallengeModal = ({
 				if (ports) {
 					setPortsFetched(ports);
 					handleStartChange(question.id, true);
+
 				} else {
 					// toast("No ports found for this question");
 				}
@@ -296,6 +299,7 @@ export const ChallengeModal = ({
 				console.log(error);
 			});
 	}, [question.id]);
+
 
 	return (
 		<React.Fragment>
@@ -438,9 +442,8 @@ export const ChallengeModal = ({
 										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${
-												isDisabled ? " pointer-events-none" : ""
-											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
+												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -456,8 +459,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-								hints[selectedHint] &&
-								localStorage.getItem(`hints_${question.id}`)
+									hints[selectedHint] &&
+									localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -465,9 +468,8 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
-							isClicked ? "" : "hidden"
-						}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
+							}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
