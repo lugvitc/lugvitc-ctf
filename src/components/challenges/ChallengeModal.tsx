@@ -91,7 +91,7 @@ export const ChallengeModal = ({
 					}
 				})
 				.catch((error: AxiosError<ResponseData>) => {
-					if (error.status === 403) toast(`Hint does not exist`);
+					if (error?.response?.status === 403) toast(`This hint does not exist, you need more hints?!`);
 					else toast("Unknown error");
 					console.log(error);
 				});
