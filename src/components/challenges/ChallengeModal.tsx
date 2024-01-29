@@ -286,6 +286,7 @@ export const ChallengeModal = ({
 				const ports = response.data[question.id];
 				if (ports) {
 					setPortsFetched(ports);
+					handleStartChange(question.id, true);
 				} else {
 					// toast("No ports found for this question");
 				}
