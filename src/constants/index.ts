@@ -75,3 +75,5 @@ export const categoryArr = [
 	"Scripting",
 	"Miscellaneous",
 ].reverse();
+
+export const challengeDomain = "challenges.lugvitc.org:";

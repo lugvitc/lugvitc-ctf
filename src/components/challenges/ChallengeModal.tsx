@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import "./color.css";
 import Typewriter from "typewriter-effect";
-import { URL_ORIGIN } from "../../constants";
+import { URL_ORIGIN, challengeDomain } from "../../constants";
 import toast, { Toaster } from "react-hot-toast";
 import { TOAST_MESSAGES } from "../../constants";
 import {
@@ -41,7 +41,9 @@ export const ChallengeModal = ({
 
 	const hintList = [0, 1, 2];
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
-	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([
+		3000, 5173,
+	]);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -271,6 +273,29 @@ export const ChallengeModal = ({
 			});
 	}, [refreshKey]);
 
+	useEffect(() => {
+		const jwt = localStorage.getItem("jwt_token");
+
+		axios
+			.get(`${URL_ORIGIN}/containers`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			})
+			.then((response: AxiosResponse<{ [key: string]: number[] }>) => {
+				const ports = response.data[question.id];
+				if (ports) {
+					setPortsFetched(ports);
+				} else {
+					toast("No ports found for this question");
+				}
+			})
+			.catch((error) => {
+				toast("Network error: Could not fetch ports");
+				console.log(error);
+			});
+	}, [question.id]);
+
 	return (
 		<React.Fragment>
 			{isClicked && (
@@ -367,7 +392,11 @@ export const ChallengeModal = ({
 											}}
 											onInit={(typewriter) => {
 												typewriter
-													.typeString(`Port: ${portsFetched?.join(",")}`)
+													.typeString(
+														`Connect with: ${challengeDomain}${portsFetched?.join(
+															",",
+														)}`,
+													)
 													.start();
 											}}
 										/>
