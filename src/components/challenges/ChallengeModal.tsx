@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import "./color.css";
 import Typewriter from "typewriter-effect";
-import { URL_ORIGIN } from "../../constants";
+import { URL_ORIGIN, challengeDomain } from "../../constants";
 import toast, { Toaster } from "react-hot-toast";
 import { TOAST_MESSAGES } from "../../constants";
 import {
@@ -41,7 +41,9 @@ export const ChallengeModal = ({
 
 	const hintList = [0, 1, 2];
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
-	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([]);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([
+		3000, 5173,
+	]);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -275,24 +277,21 @@ export const ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 
 		axios
-			.get(
-				`${URL_ORIGIN}/containers`,
-				{
-					headers: {
-						Authorization: `Bearer ${jwt}`,
-					},
+			.get(`${URL_ORIGIN}/containers`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
 				},
-			)
+			})
 			.then((response: AxiosResponse<{ [key: string]: number[] }>) => {
 				const ports = response.data[question.id];
 				if (ports) {
 					setPortsFetched(ports);
 				} else {
-					toast('No ports found for this question');
+					toast("No ports found for this question");
 				}
 			})
 			.catch((error) => {
-				toast("Error");
+				toast("Network error: Could not fetch ports");
 				console.log(error);
 			});
 	}, [question.id]);
@@ -393,7 +392,11 @@ export const ChallengeModal = ({
 											}}
 											onInit={(typewriter) => {
 												typewriter
-													.typeString(`Port: ${portsFetched?.join(",")}`)
+													.typeString(
+														`Connect with: ${challengeDomain}${portsFetched?.join(
+															",",
+														)}`,
+													)
 													.start();
 											}}
 										/>
@@ -447,8 +450,9 @@ export const ChallengeModal = ({
 										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
-												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${
+												isDisabled ? " pointer-events-none" : ""
+											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -464,8 +468,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-									hints[selectedHint] &&
-									localStorage.getItem(`hints_${question.id}`)
+								hints[selectedHint] &&
+								localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -473,8 +477,9 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
-							}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
+							isClicked ? "" : "hidden"
+						}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
