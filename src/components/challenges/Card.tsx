@@ -53,13 +53,13 @@ export function Card({
 								</span>
 								{challenge.author}
 							</div>
-							<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
+							{/* <div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 								<span className="text-white">
 									description@lug@ctf:
 									<span className="font-bold text-sky-blue">~</span>${" "}
 								</span>
 								{challenge.description}
-							</div>
+							</div> */}
 							<div className="flex gap-1 font-source-code-pro text-xs text-[#08FF08] md:text-sm lg:text-base">
 								<span className="text-white">
 									points@lug@ctf:
