@@ -50,7 +50,7 @@ const Leaderboard2 = () => {
 					let total_points = 0;
 					for (let i = 0; i < r2Leaderboard.length; i++) {
 						if (r2Leaderboard[i].name === team.meta_team__name) {
-							total_points = team.tpoints + r2Leaderboard[i].points;
+							total_points = team.tpoints + r2Leaderboard[i].points / 12;
 						}
 					}
 					return {
