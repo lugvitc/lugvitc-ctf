@@ -125,7 +125,11 @@ export const Round2ChallengeModal = ({
 											}}
 											onInit={(typewriter) => {
 												typewriter
-													.typeString(`Port: ${container.ports?.join(",")}`)
+													.typeString(
+														`Connect with: challenges.lugvitc.ctf:${container.ports?.join(
+															",",
+														)}`,
+													)
 													.start();
 											}}
 										/>

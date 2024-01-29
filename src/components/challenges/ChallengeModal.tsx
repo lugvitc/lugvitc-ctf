@@ -41,9 +41,7 @@ export const ChallengeModal = ({
 
 	const hintList = [0, 1, 2];
 	const [viewedHintsFetch, setviewedHintsFetch] = useState<number | null>(null);
-	const [portsFetched, setPortsFetched] = useState<number[] | undefined>([
-		3000, 5173,
-	]);
+	const [portsFetched, setPortsFetched] = useState<number[] | undefined>();
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -208,6 +206,7 @@ export const ChallengeModal = ({
 					toast(`${TOAST_MESSAGES.DB_ERROR}`);
 				} else if (response.data.msg_code === 4) {
 					toast(`${TOAST_MESSAGES.CONTAINER_STOP}`);
+					setPortsFetched(undefined);
 				}
 			})
 			.catch((error) => {
@@ -277,7 +276,7 @@ export const ChallengeModal = ({
 		const jwt = localStorage.getItem("jwt_token");
 
 		axios
-			.get(`${URL_ORIGIN}/containers`, {
+			.get(`${URL_ORIGIN}/team/containers`, {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
@@ -287,7 +286,7 @@ export const ChallengeModal = ({
 				if (ports) {
 					setPortsFetched(ports);
 				} else {
-					toast("No ports found for this question");
+					// toast("No ports found for this question");
 				}
 			})
 			.catch((error) => {
@@ -300,7 +299,7 @@ export const ChallengeModal = ({
 		<React.Fragment>
 			{isClicked && (
 				<>
-					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
+					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
 						<div className="  h-full  animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
 							<div className=" flex w-full flex-col gap-4">
 								<div className="mb-4 flex items-center justify-between text-[25px]">
