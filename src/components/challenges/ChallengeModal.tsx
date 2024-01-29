@@ -299,8 +299,8 @@ export const ChallengeModal = ({
 		<React.Fragment>
 			{isClicked && (
 				<>
-					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-3/4 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
-						<div className="  h-full  animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
+					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-5/6 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
+						<div className="  h-full animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
 							<div className=" flex w-full flex-col gap-4">
 								<div className="mb-4 flex items-center justify-between text-[25px]">
 									<Typewriter
@@ -342,24 +342,11 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-								<div className="text-[20px]">
-									<Typewriter
-										options={{
-											strings: ["Description"],
-											// autoStart: true,
-											loop: false,
-											cursor: "|",
-											delay: 1,
-										}}
-										onInit={(typewriter) => {
-											typewriter
-												.typeString(`Description: ${question.description}`)
-												.start();
-										}}
-									/>
+								<div className="text-[20px] max-h-[150px] my-4 overflow-x-hidden overflow-y-scroll border border-[#dbfa8e] p-4 pb-8 rounded ">
+									<span>Description: {question.description}</span>
 								</div>
 								{coins !== null && coins < 100 ? (
-									<div className="text-[20px]">
+									<div className="text-[20px] w-1/2">
 										<Typewriter
 											options={{
 												strings: "Coins",
@@ -449,9 +436,8 @@ export const ChallengeModal = ({
 										(hint === 2 && viewedHintsFetch === 1);
 									return (
 										<button
-											className={`h-16 w-16 rounded-sm border ${
-												isDisabled ? " pointer-events-none" : ""
-											} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
+											className={`h-16 w-16 rounded-sm border ${isDisabled ? " pointer-events-none" : ""
+												} border-[#dbfa8e] bg-transparent px-4 text-[#dbfa8e] transition delay-75 hover:bg-[#dbfa8e] hover:text-[#006400]`}
 											key={hint}
 											onClick={() => {
 												if (isDisabled) {
@@ -467,8 +453,8 @@ export const ChallengeModal = ({
 							</div>
 							<p>
 								{selectedHint !== null &&
-								hints[selectedHint] &&
-								localStorage.getItem(`hints_${question.id}`)
+									hints[selectedHint] &&
+									localStorage.getItem(`hints_${question.id}`)
 									? `${getHintFromLocalStorage(selectedHint)}`
 									: ``}
 							</p>
@@ -476,9 +462,8 @@ export const ChallengeModal = ({
 					</div>
 
 					<div
-						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${
-							isClicked ? "" : "hidden"
-						}`}
+						className={`fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm ${isClicked ? "" : "hidden"
+							}`}
 						onClick={(e) => closeModal(e)}
 					/>
 				</>
