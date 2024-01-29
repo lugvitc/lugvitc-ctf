@@ -178,7 +178,7 @@ const Leaderboard = () => {
 											{team.name}
 										</div>
 										<div className="custom-scrollbar w-1/5 basis-1/5 overflow-auto whitespace-nowrap border-2 border-r-0 border-fluorescent-green border-opacity-50 py-3 text-center">
-											{team.tpoints}
+											{Math.floor(team.tpoints)}
 										</div>
 									</div>
 								))}
