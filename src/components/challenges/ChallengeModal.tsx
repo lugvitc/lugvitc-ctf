@@ -300,7 +300,7 @@ export const ChallengeModal = ({
 			{isClicked && (
 				<>
 					<div className=" add-color crtBackground fixed inset-0 left-[15%] top-[15%] z-50 h-5/6 w-3/4 overflow-x-hidden overflow-y-hidden rounded-md bg-black p-2 after:pointer-events-none after:absolute after:h-full after:w-full after:animate-crtAnimation after:content-['']">
-						<div className="  h-full animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 ">
+						<div className="  h-full animate-tv-flicker bg-black-green  p-20 text-xl text-[#dbfa8e] drop-shadow-3xl-v2 overflow-y-scroll">
 							<div className=" flex w-full flex-col gap-4">
 								<div className="mb-4 flex items-center justify-between text-[25px]">
 									<Typewriter
@@ -342,7 +342,7 @@ export const ChallengeModal = ({
 										}}
 									/>
 								</div>
-								<div className="text-[20px] max-h-[150px] my-4 overflow-x-hidden overflow-y-scroll border border-[#dbfa8e] p-4 pb-8 rounded ">
+								<div className="text-[20px] my-4 overflow-x-hidden border border-[#dbfa8e] p-4 rounded ">
 									<span>Description: {question.description}</span>
 								</div>
 								{coins !== null && coins < 100 ? (
