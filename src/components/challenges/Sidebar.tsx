@@ -65,7 +65,7 @@ const Sidebar = ({ sideState, setSideState }: SidebarProps) => {
 				})}
 				<button
 					onClick={stopAllContainers}
-					className="rounded-sm border border-fluorescent-green bg-midnight-blue p-2"
+					className="rounded-sm border border-fluorescent-green bg-midnight-blue p-2 text-fluorescent-green"
 				>
 					Stop All
 				</button>
